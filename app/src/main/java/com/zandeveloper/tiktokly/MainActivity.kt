@@ -117,7 +117,7 @@ binding.textInput.doOnTextChanged { text, _, _, _ ->
     .into(binding.itemThumbnail)
     
     } else {
-        binding.debugText.text = "❌ Gagal ambil data"
+        binding.titleVideo.text = "❌ Gagal ambil data"
     }
 }
             } else {

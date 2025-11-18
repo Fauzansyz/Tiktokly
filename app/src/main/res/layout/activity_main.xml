@@ -2,122 +2,105 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorSurface"
-    android:fitsSystemWindows="true">
+    android:id="@+id/root_layout">
 
-    <!-- AppBar dengan sedikit bayangan -->
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/topAppBar"
+    <!-- TOOLBAR -->
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorSurface"
-        app:title="Tiktokly"
-        app:titleCentered="true"
-        app:titleTextColor="?attr/colorOnPrimaryContainer"
-        app:menu="@menu/top_app_bar_menu"
-        app:navigationIconTint="?attr/colorOnPrimaryContainer"
-        app:elevation="4dp"
-        android:paddingHorizontal="8dp" />
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
 
-    <!-- Konten utama -->
-    <ScrollView
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorSurface"
+            app:title="Tiktokly"
+            app:titleCentered="true"
+            app:menu="@menu/top_app_bar_menu"
+            app:titleTextColor="?attr/colorOnPrimaryContainer" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- SEMUA KONTEN DALAM NESTED SCROLL -->
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:background="?attr/colorSurface"
         android:padding="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center_horizontal"
-            android:layout_gravity="center"
-            android:animateLayoutChanges="true">
+            android:animateLayoutChanges="true"  
+            android:orientation="vertical">
 
             <!-- Judul -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="16dp"
                 android:text="Tempel URL video di sini"
-                android:textColor="?attr/colorOnSurface"
                 android:textSize="20sp"
                 android:fontFamily="@font/poppins_semibold"
-                android:layout_marginBottom="16dp" />
+                android:textColor="?attr/colorOnSurface" />
 
             <!-- Input -->
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Url video"
-                app:boxCornerRadiusTopStart="18dp"
+                app:boxCornerRadiusBottomEnd="18dp"  
                 app:boxCornerRadiusTopEnd="18dp"
+                app:boxCornerRadiusTopStart="18dp"
                 app:boxCornerRadiusBottomStart="18dp"
-                app:boxCornerRadiusBottomEnd="18dp"
-                app:boxStrokeColor="?attr/colorPrimary"
-                app:startIconDrawable="@drawable/ic_link_24">
+                app:startIconDrawable="@drawable/ic_link_24"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/textInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textUri"
-                    android:textColor="?attr/colorOnSurface"
-                    android:textSize="16sp"
-                    app:hintTextColor="?attr/colorOutline" />
+                    android:textSize="16sp"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Tombol download -->
+            <!-- Button -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonDownload"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Download"
-                android:layout_marginTop="20dp"
                 android:visibility="gone"
-                app:cornerRadius="20dp"
-                android:elevation="4dp"
-                android:fontFamily="@font/poppins_semibold"
-                app:icon="@drawable/ic_download_24"
+                android:layout_marginTop="20dp"
                 app:iconGravity="textStart"
-                app:iconPadding="8dp"
-                android:paddingVertical="10dp" />
+                android:text="Download"
+                app:icon="@drawable/ic_download_24"
+                app:cornerRadius="20dp"/>
 
-<TextView
-  android:id="@+id/debugText"
-  android:layout_width="wrap_content"
-  android:padding="10dp"
-android:layout_height="wrap_content"/>
+            <!-- THUMBNAIL -->
+            <TextView
+                android:id="@+id/titleVideo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:textAlignment="center"
+                android:textSize="15sp"
+                android:fontFamily="@font/poppins_semibold"
+                android:textColor="?attr/colorOnSurface" />
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:padding="5dp">
-
-  <TextView
-        android:id="@+id/titleVideo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_semibold"
-        android:layout_weight="1"
-        android:textSize="15sp"
-        android:textAlignment="center"
-     android:textColor="?attr/colorOnSurface" />
-
-    <ImageView
-        android:id="@+id/itemThumbnail"
-        android:layout_width="255dp"
-        android:layout_height="255dp"
-        android:scaleType="centerCrop"
-        android:layout_marginTop="20dp"/>
-</LinearLayout>
+            <ImageView
+                android:id="@+id/itemThumbnail"
+                android:layout_width="255dp"
+                android:layout_height="255dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:scaleType="centerCrop" />
 
         </LinearLayout>
-    </ScrollView>
+
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
