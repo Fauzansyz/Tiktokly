@@ -69,62 +69,60 @@ binding.textInput.doOnTextChanged { text, _, _, _ ->
 }
 
         binding.buttonDownload.setOnClickListener {
-            val url = binding.textInput.text.toString().trim()
-            if (url.isNotEmpty()) {
-                Toast.makeText(this, "URL: $url", Toast.LENGTH_SHORT).show()
-                val filename = "tiktokly_${System.currentTimeMillis()}.mp4"
 
-   lifecycleScope.launch {
-    val apiUrl = "https://dl-server-core.vercel.app/download"
-    val data = df.fetchDataVideo(apiUrl, url)
-    
-    if (data != null) {
-    
-        val platform = data["platform"] ?: "Unknown"
-        val result = data["result"] as? Map<*, *>
+    val inputUrl = binding.textInput.text.toString().trim()
 
-        val developer = result?.get("developer") ?: "-"
-        val contact = result?.get("contactme") ?: "-"
-        val title = result?.get("title") ?: "-"
-        val author = result?.get("author") ?: "-"
-        val mp4 = result?.get("mp4") ?: "NaN"
-        val url = result?.get("url") ?: "NaN"
-        val thumbnail = result?.get("thumbnail") ?: "-"
-        
-        val downloadUrl = if (url == "NaN") mp4 else url
-
-      // binding.debugText.text = """
-          //  📱 Platform: $platform
-         //   👨‍💻 Developer: $developer
-         //   ☎️ Contact: $contact
-         //   🎵 Title: $title
-         //   ✍️ Author: $author
-          //  Links: $downloadUrl
-           // Thumbnail $thumbnail
-     //   """.trimIndent()
-        binding.titleVideo.text = title.toString()
-        binding.textInput.text = null
-        
-        ads.showInterstitial(this@MainActivity) {
-        dm.download(downloadUrl.toString(), filename)
+    when {
+        inputUrl.isEmpty() -> {
+            Toast.makeText(this, "Masukkan URL dulu!", Toast.LENGTH_SHORT).show()
         }
-        
-        
-        Glide.with(this@MainActivity)
-    .load(thumbnail.toString())
-    .centerCrop()               
-    .transform(RoundedCorners(20))
-    .into(binding.itemThumbnail)
-    
-    } else {
-        binding.titleVideo.text = "❌ Gagal ambil data"
-    }
-}
-            } else {
-                Toast.makeText(this, "Masukkan URL dulu!", Toast.LENGTH_SHORT).show()
+
+        else -> {
+            Toast.makeText(this, "URL: $inputUrl", Toast.LENGTH_SHORT).show()
+            val filename = "tiktokly_${System.currentTimeMillis()}.mp4"
+
+            lifecycleScope.launch {
+                val apiUrl = "https://dl-server-core.vercel.app/download"
+                val data = df.fetchDataVideo(apiUrl, inputUrl)
+
+                Toast.makeText(this@MainActivity, "error: $data", Toast.LENGTH_SHORT).show()
+
+                when (data) {
+
+                    null -> {
+                        binding.titleVideo.text = "❌ Gagal ambil data"
+                    }
+
+                    else -> {
+                        val result = data["result"] as? Map<*, *>
+
+                        val title = result?.get("title") ?: "-"
+                        val mp4 = result?.get("mp4") ?: "NaN"
+                        val urlResult = result?.get("url") ?: "NaN"
+                        val thumbnail = result?.get("thumbnail") ?: "-"
+
+                        val downloadUrl = if (urlResult == "NaN") mp4 else urlResult
+
+                        binding.titleVideo.text = title.toString()
+                        binding.textInput.text = null
+
+                        ads.showInterstitial(this@MainActivity) {
+                            dm.download(downloadUrl.toString(), filename)
+                        }
+
+                        Glide.with(this@MainActivity)
+                            .load(thumbnail.toString())
+                            .centerCrop()
+                            .transform(RoundedCorners(20))
+                            .into(binding.itemThumbnail)
+                    }
+                }
             }
         }
     }
+  }
+
+}
 
 
     override fun onDestroy() {
