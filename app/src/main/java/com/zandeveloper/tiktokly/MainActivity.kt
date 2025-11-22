@@ -28,6 +28,10 @@ import androidx.core.widget.doOnTextChanged
 import android.graphics.drawable.Drawable
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import www.sanju.motiontoast.MotionToast
+import androidx.core.content.res.ResourcesCompat
+import www.sanju.motiontoast.MotionToastStyle
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -74,7 +78,15 @@ binding.textInput.doOnTextChanged { text, _, _, _ ->
 
     when {
         inputUrl.isEmpty() -> {
-            Toast.makeText(this, "Masukkan URL dulu!", Toast.LENGTH_SHORT).show()
+        MotionToast.createColorToast(
+                    this@MainActivity,
+                    "Gagal mengunduh!!",
+                    "Silahkan masukan Url video yang valid",
+                    MotionToastStyle.ERROR,
+                    MotionToast.GRAVITY_BOTTOM,
+                    MotionToast.LONG_DURATION,
+                    ResourcesCompat.getFont(this@MainActivity, R.font.helvetica_regular)
+                )
         }
 
         else -> {
@@ -90,8 +102,17 @@ binding.textInput.doOnTextChanged { text, _, _, _ ->
                 when (data) {
 
                     null -> {
-                        binding.titleVideo.text = "❌ Gagal ambil data"
-                    }
+                        
+                        MotionToast.createColorToast(
+                    this@MainActivity,
+                    "Gagal mengunduh!!",
+                    "Silahkan Coba lagi beberapa saat",
+                    MotionToastStyle.ERROR,
+                    MotionToast.GRAVITY_BOTTOM,
+                    MotionToast.LONG_DURATION,
+                    ResourcesCompat.getFont(this@MainActivity, R.font.helvetica_regular)
+                )
+      }
 
                     else -> {
                         val result = data["result"] as? Map<*, *>
@@ -105,9 +126,11 @@ binding.textInput.doOnTextChanged { text, _, _, _ ->
 
                         binding.titleVideo.text = title.toString()
                         binding.textInput.text = null
+                
 
                         ads.showInterstitial(this@MainActivity) {
                             dm.download(downloadUrl.toString(), filename)
+                
                         }
 
                         Glide.with(this@MainActivity)
