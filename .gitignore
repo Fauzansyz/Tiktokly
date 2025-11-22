@@ -84,3 +84,9 @@ lint/tmp/
 
 # androidide
 .androidide
+
+#env 
+key.properties
+
+#release key
+*.jks
