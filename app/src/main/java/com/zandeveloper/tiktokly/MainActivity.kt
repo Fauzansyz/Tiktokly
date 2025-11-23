@@ -32,7 +32,6 @@ import www.sanju.motiontoast.MotionToast
 import androidx.core.content.res.ResourcesCompat
 import www.sanju.motiontoast.MotionToastStyle
 
-
 class MainActivity : AppCompatActivity() {
 
     private var _binding: ActivityMainBinding? = null
@@ -68,6 +67,7 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
+
 binding.textInput.doOnTextChanged { text, _, _, _ ->
     binding.buttonDownload.visibility = if (text.isNullOrEmpty()) View.GONE else View.VISIBLE
 }
@@ -102,7 +102,7 @@ binding.textInput.doOnTextChanged { text, _, _, _ ->
                 val apiUrl = "https://dl-server-core.vercel.app/download"
                 val data = df.fetchDataVideo(apiUrl, inputUrl)
 
-                Toast.makeText(this@MainActivity, "error: $data", Toast.LENGTH_SHORT).show()
+            //    Toast.makeText(this@MainActivity, "error: $data", Toast.LENGTH_SHORT).show()
 
                 when (data) {
 
