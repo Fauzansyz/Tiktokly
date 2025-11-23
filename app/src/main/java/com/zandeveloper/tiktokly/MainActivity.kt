@@ -90,7 +90,12 @@ binding.textInput.doOnTextChanged { text, _, _, _ ->
         }
 
         else -> {
-            Toast.makeText(this, "URL: $inputUrl", Toast.LENGTH_SHORT).show()
+        
+        binding.shimmerRoot.startShimmer()
+    binding.shimmerRoot.visibility = View.VISIBLE
+    binding.contentContainer.visibility = View.GONE
+
+            
             val filename = "tiktokly_${System.currentTimeMillis()}.mp4"
 
             lifecycleScope.launch {
@@ -102,6 +107,10 @@ binding.textInput.doOnTextChanged { text, _, _, _ ->
                 when (data) {
 
                     null -> {
+                    
+                    binding.shimmerRoot.stopShimmer()
+            binding.shimmerRoot.visibility = View.GONE
+            binding.contentContainer.visibility = View.VISIBLE
                         
                         MotionToast.createColorToast(
                     this@MainActivity,
@@ -132,6 +141,12 @@ binding.textInput.doOnTextChanged { text, _, _, _ ->
                             dm.download(downloadUrl.toString(), filename)
                 
                         }
+                        
+                        dm.download(downloadUrl.toString(), filename)
+                        
+                        binding.shimmerRoot.stopShimmer()
+            binding.shimmerRoot.visibility = View.GONE
+            binding.contentContainer.visibility = View.VISIBLE
 
                         Glide.with(this@MainActivity)
                             .load(thumbnail.toString())

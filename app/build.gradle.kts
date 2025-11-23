@@ -74,6 +74,7 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach 
 
 dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
+    implementation("com.facebook.shimmer:shimmer:0.5.0")
     implementation("com.google.code.gson:gson:2.11.0")
     implementation("com.github.Spikeysanju:MotionToast:1.4")
 

@@ -80,24 +80,63 @@
                 app:icon="@drawable/ic_download_24"
                 app:cornerRadius="20dp"/>
 
-            <!-- THUMBNAIL -->
-            <TextView
-                android:id="@+id/titleVideo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:textAlignment="center"
-                android:textSize="15sp"
-                android:fontFamily="@font/poppins_semibold"
-                android:textColor="?attr/colorOnSurface" />
+<com.facebook.shimmer.ShimmerFrameLayout
+    android:id="@+id/shimmerRoot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    app:shimmer_auto_start="true"
+    android:visibility="gone"
+    app:shimmer_duration="1000">
 
-            <ImageView
-                android:id="@+id/itemThumbnail"
-                android:layout_width="255dp"
-                android:layout_height="255dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
-                android:scaleType="centerCrop" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Skeleton Title -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:layout_marginTop="30dp"
+            android:background="@color/skeleton_bg"/>
+
+        <!-- Skeleton Thumbnail -->
+        <View
+            android:layout_width="255dp"
+            android:layout_height="255dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:background="@color/skeleton_bg"/>
+    </LinearLayout>
+</com.facebook.shimmer.ShimmerFrameLayout>
+
+<!-- Konten asli -->
+<LinearLayout
+    android:id="@+id/contentContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:visibility="gone">
+
+    <TextView
+        android:id="@+id/titleVideo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:textAlignment="center"
+        android:textSize="15sp"
+        android:fontFamily="@font/poppins_semibold"
+        android:textColor="?attr/colorOnSurface" />
+
+    <ImageView
+        android:id="@+id/itemThumbnail"
+        android:layout_width="255dp"
+        android:layout_height="255dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:scaleType="centerCrop" />
+</LinearLayout>
 
         </LinearLayout>
 
