@@ -36,4 +36,4 @@
 
 | Feature        | Screenshot   |
 | -------------- | ------------ |
-| Download View   | ![Download View]![phone 2](assets/242shots_so.png)|
+| Download View   | ![phone 2](assets/242shots_so.png)|
