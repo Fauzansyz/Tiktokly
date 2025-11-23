@@ -32,3 +32,8 @@
 - **Responsive Design**: Adapts to any screen size.
 - **Language**: Available in Bahasa Indonesia.
 
+## Screenshot
+
+| Feature        | Screenshot   |
+| -------------- | ------------ |
+| Download View   | ![Download View]![phone 2](assets/242shots_so.png)|
