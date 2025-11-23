@@ -5,7 +5,9 @@
   A simple video downloader for Tiktok, YouTube, Instagram and other 
 <p>
 
-<img width=90 src="assets/20251122_205527.png">
+![oimg](assets/20251122_205527.png)
+
+
 
 <p align="left">
 <!-- Latest release -->
