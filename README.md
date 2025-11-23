@@ -26,4 +26,8 @@
 - **Support all media social**: Supoorted media social, ex Tiktok, Instagram, YouTube.
 - **Simple and minimalist**: Simple and minimalist appearance and easy to use.
 - **Responsive Design**: Adapts to any screen size.
+<<<<<<< HEAD
 - **Language**: Available in Bahasa Indonesia.
+=======
+- **Language**: Available in Bahasa Indonesia.
+>>>>>>> 7de09ecc6e6e2657950abbd523355360e15e4fed
