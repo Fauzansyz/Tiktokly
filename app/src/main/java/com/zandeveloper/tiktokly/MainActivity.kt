@@ -31,7 +31,6 @@ import androidx.core.view.WindowInsetsCompat
 import www.sanju.motiontoast.MotionToast
 import androidx.core.content.res.ResourcesCompat
 import www.sanju.motiontoast.MotionToastStyle
-
 class MainActivity : AppCompatActivity() {
 
     private var _binding: ActivityMainBinding? = null
@@ -41,13 +40,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var dm: downloadManager
     
     private lateinit var ads: AdsApp
-
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         
-        dm = downloadManager(this@MainActivity)
+        dm = downloadManager(this)
         
         ads = AdsApp(this)
         ads.loadInterstitialAd()
@@ -73,92 +72,97 @@ binding.textInput.doOnTextChanged { text, _, _, _ ->
 }
 
         binding.buttonDownload.setOnClickListener {
-
     val inputUrl = binding.textInput.text.toString().trim()
-
-    when {
-        inputUrl.isEmpty() -> {
+    if (inputUrl.isEmpty()) {
         MotionToast.createColorToast(
-                    this@MainActivity,
-                    "Gagal mengunduh!!",
-                    "Silahkan masukan Url video yang valid",
-                    MotionToastStyle.ERROR,
-                    MotionToast.GRAVITY_BOTTOM,
-                    MotionToast.LONG_DURATION,
-                    ResourcesCompat.getFont(this@MainActivity, R.font.helvetica_regular)
-                )
-        }
+            this@MainActivity,
+            "Gagal mengunduh!!",
+            "Silahkan masukan Url video yang valid",
+            MotionToastStyle.ERROR,
+            MotionToast.GRAVITY_BOTTOM,
+            MotionToast.LONG_DURATION,
+            ResourcesCompat.getFont(this@MainActivity, R.font.helvetica_regular)
+        )
+        return@setOnClickListener
+    }
 
-        else -> {
-        
-        binding.shimmerRoot.startShimmer()
+    binding.shimmerRoot.startShimmer()
     binding.shimmerRoot.visibility = View.VISIBLE
     binding.contentContainer.visibility = View.GONE
 
-            
-            val filename = "tiktokly_${System.currentTimeMillis()}.mp4"
+    val filename = "tiktokly_${System.currentTimeMillis()}.mp4"
 
-            lifecycleScope.launch {
-                val apiUrl = "https://dl-server-core.vercel.app/download"
-                val data = df.fetchDataVideo(apiUrl, inputUrl)
+    lifecycleScope.launch {
+        val apiUrl = "https://dl-server-core.vercel.app/download"
+        val data = df.fetchDataVideo(apiUrl, inputUrl)
 
-            //    Toast.makeText(this@MainActivity, "error: $data", Toast.LENGTH_SHORT).show()
-
-                when (data) {
-
-                    null -> {
-                    
-                    binding.shimmerRoot.stopShimmer()
-            binding.shimmerRoot.visibility = View.GONE
-            binding.contentContainer.visibility = View.VISIBLE
-                        
-                        MotionToast.createColorToast(
-                    this@MainActivity,
-                    "Gagal mengunduh!!",
-                    "Silahkan Coba lagi beberapa saat",
-                    MotionToastStyle.ERROR,
-                    MotionToast.GRAVITY_BOTTOM,
-                    MotionToast.LONG_DURATION,
-                    ResourcesCompat.getFont(this@MainActivity, R.font.helvetica_regular)
-                )
-      }
-
-                    else -> {
-                        val result = data["result"] as? Map<*, *>
-
-                        val title = result?.get("title") ?: "-"
-                        val mp4 = result?.get("mp4") ?: "NaN"
-                        val urlResult = result?.get("url") ?: "NaN"
-                        val thumbnail = result?.get("thumbnail") ?: "-"
-
-                        val downloadUrl = if (urlResult == "NaN") mp4 else urlResult
-
-                        binding.titleVideo.text = title.toString()
-                        binding.textInput.text = null
-                
-
-                        ads.showInterstitial(this@MainActivity) {
-                            dm.download(downloadUrl.toString(), filename)
-                
-                        }
-                        
-                        dm.download(downloadUrl.toString(), filename)
-                        
-                        binding.shimmerRoot.stopShimmer()
+        if (data == null) {
+            binding.shimmerRoot.stopShimmer()
             binding.shimmerRoot.visibility = View.GONE
             binding.contentContainer.visibility = View.VISIBLE
 
-                        Glide.with(this@MainActivity)
-                            .load(thumbnail.toString())
-                            .centerCrop()
-                            .transform(RoundedCorners(20))
-                            .into(binding.itemThumbnail)
-                    }
-                }
-            }
+            MotionToast.createColorToast(
+                this@MainActivity,
+                "Gagal mengunduh!!",
+                "Silahkan coba lagi beberapa saat",
+                MotionToastStyle.ERROR,
+                MotionToast.GRAVITY_BOTTOM,
+                MotionToast.LONG_DURATION,
+                ResourcesCompat.getFont(this@MainActivity, R.font.helvetica_regular)
+            )
+            return@launch
         }
-    }
-  }
+
+        val result = data["result"] as? Map<*, *>
+        val title = result?.get("title") ?: "-"
+        val mp4 = result?.get("mp4") ?: "NaN"
+        val urlResult = result?.get("url") ?: "NaN"
+        val thumbnail = result?.get("thumbnail") ?: "-"
+
+        val downloadUrl = if (urlResult == "NaN") mp4 else urlResult
+
+        binding.titleVideo.text = title.toString()
+        binding.textInput.text = null
+
+        ads.showInterstitial(this@MainActivity) {
+            dm.download(
+            downloadUrl.toString(), 
+            filename, 
+            
+            onProgress = { p ->
+        runOnUiThread {
+           // binding.progressText.text = "Progress: $p%"
+        }
+    },
+
+    onCompleted = { filePath ->
+        runOnUiThread {
+         Toast.makeText(this@MainActivity, "Download selesai", Toast.LENGTH_LONG).show()
+        }
+    },
+
+    onError = {
+        runOnUiThread {
+            Toast.makeText(this@MainActivity, "Gagal download", Toast.LENGTH_SHORT).show()
+        }
+    })
+            
+                binding.shimmerRoot.stopShimmer()
+                binding.shimmerRoot.visibility = View.GONE
+                binding.contentContainer.visibility = View.VISIBLE
+        }
+        
+        binding.shimmerRoot.stopShimmer()
+                binding.shimmerRoot.visibility = View.GONE
+                binding.contentContainer.visibility = View.VISIBLE
+
+        Glide.with(this@MainActivity)
+            .load(thumbnail.toString())
+            .centerCrop()
+            .transform(RoundedCorners(20))
+            .into(binding.itemThumbnail)
+               }
+         }
 
 }
 
