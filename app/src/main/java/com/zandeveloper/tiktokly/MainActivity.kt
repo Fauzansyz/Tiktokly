@@ -137,13 +137,29 @@ binding.textInput.doOnTextChanged { text, _, _, _ ->
 
     onCompleted = { filePath ->
         runOnUiThread {
-         Toast.makeText(this@MainActivity, "Download selesai", Toast.LENGTH_LONG).show()
+         MotionToast.createColorToast(
+                this@MainActivity,
+                "Berhasil mengunduh!!",
+                "Video berhasil di unduh",
+                MotionToastStyle.SUCCESS,
+                MotionToast.GRAVITY_BOTTOM,
+                MotionToast.LONG_DURATION,
+                ResourcesCompat.getFont(this@MainActivity, R.font.helvetica_regular)
+            )
         }
     },
 
     onError = {
         runOnUiThread {
-            Toast.makeText(this@MainActivity, "Gagal download", Toast.LENGTH_SHORT).show()
+                  MotionToast.createColorToast(
+                this@MainActivity,
+                "Gagal mengunduh!!",
+                "Silahkan coba lagi beberapa saat",
+                MotionToastStyle.ERROR,
+                MotionToast.GRAVITY_BOTTOM,
+                MotionToast.LONG_DURATION,
+                ResourcesCompat.getFont(this@MainActivity, R.font.helvetica_regular)
+            )
         }
     })
             
