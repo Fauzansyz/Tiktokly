@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "627062258546",
+    "project_id": "tiktokly-a19f2",
+    "storage_bucket": "tiktokly-a19f2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:627062258546:android:72461507110d8b4b9c7beb",
+        "android_client_info": {
+          "package_name": "com.zandeveloper.tiktokly"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRkn3jLmz1ngml0LOAD25qEGaMcPqcT6s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

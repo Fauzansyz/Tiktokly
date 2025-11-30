@@ -5,6 +5,8 @@ plugins {
     id("com.android.application")
     id("kotlin-android")
     id("com.google.devtools.ksp")
+    id("com.google.firebase.firebase-perf")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -13,7 +15,7 @@ android {
 
     defaultConfig {
         applicationId = "com.zandeveloper.tiktokly"
-        minSdk = 21
+        minSdk = 23
         targetSdk = 35
         versionCode = 1
         versionName = "1.5.5"
@@ -77,6 +79,8 @@ dependencies {
     implementation("com.facebook.shimmer:shimmer:0.5.0")
     implementation("com.google.code.gson:gson:2.11.0")
     implementation("com.github.Spikeysanju:MotionToast:1.4")
+    implementation("com.google.firebase:firebase-perf")
+    implementation(platform("com.google.firebase:firebase-bom:34.6.0"))
     implementation("com.google.android.gms:play-services-ads:22.6.0")
 
     implementation("com.github.bumptech.glide:glide:4.16.0")
