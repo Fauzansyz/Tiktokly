@@ -35,6 +35,7 @@ import www.sanju.motiontoast.MotionToastStyle
 import com.google.firebase.perf.FirebasePerformance
 import com.google.firebase.perf.metrics.Trace
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.zandeveloper.tiktokly.utils.alerts.Alerts
 
 
 class MainActivity : AppCompatActivity() {
@@ -44,6 +45,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var df: DataFetch
     private lateinit var dm: downloadManager
+    private lateinit var alert: Alerts
     
     private lateinit var ads: AdsApp
     
@@ -55,6 +57,7 @@ class MainActivity : AppCompatActivity() {
         dm = downloadManager(this)
         
         ads = AdsApp(this)
+        alert = Alerts(this@MainActivity)
         ads.loadInterstitialAd()
         
         df = DataFetch()
@@ -102,15 +105,7 @@ var trace = FirebasePerformance.getInstance().newTrace("Fetch_data")
     val inputUrl = binding.textInput.text.toString().trim()
     val formats = listOf("mp4", "mp3")
     if (inputUrl.isEmpty()) {
-        MotionToast.createColorToast(
-            this@MainActivity,
-            "Gagal mengunduh!!",
-            "Silahkan masukan Url video yang valid",
-            MotionToastStyle.ERROR,
-            MotionToast.GRAVITY_BOTTOM,
-            MotionToast.LONG_DURATION,
-            ResourcesCompat.getFont(this@MainActivity, R.font.helvetica_regular)
-        )
+        alert.requiredInput()
         return@setOnClickListener
     }
 
@@ -128,15 +123,7 @@ var trace = FirebasePerformance.getInstance().newTrace("Fetch_data")
             binding.shimmerRoot.visibility = View.GONE
             binding.contentContainer.visibility = View.VISIBLE
 
-            MotionToast.createColorToast(
-                this@MainActivity,
-                "Gagal mengunduh!!",
-                "Silahkan coba lagi beberapa saat",
-                MotionToastStyle.ERROR,
-                MotionToast.GRAVITY_BOTTOM,
-                MotionToast.LONG_DURATION,
-                ResourcesCompat.getFont(this@MainActivity, R.font.helvetica_regular)
-            )
+            alert.failed()
             return@launch
         }
 
@@ -169,29 +156,13 @@ var trace = FirebasePerformance.getInstance().newTrace("Fetch_data")
 
     onCompleted = { filePath ->
         runOnUiThread {
-         MotionToast.createColorToast(
-                this@MainActivity,
-                "Berhasil mengunduh!!",
-                "Video berhasil di unduh",
-                MotionToastStyle.SUCCESS,
-                MotionToast.GRAVITY_BOTTOM,
-                MotionToast.LONG_DURATION,
-                ResourcesCompat.getFont(this@MainActivity, R.font.helvetica_regular)
-            )
+         alert.success()
         }
     },
 
     onError = {
         runOnUiThread {
-                  MotionToast.createColorToast(
-                this@MainActivity,
-                "Gagal mengunduh!!",
-                "Silahkan coba lagi beberapa saat",
-                MotionToastStyle.ERROR,
-                MotionToast.GRAVITY_BOTTOM,
-                MotionToast.LONG_DURATION,
-                ResourcesCompat.getFont(this@MainActivity, R.font.helvetica_regular)
-                        )
+                  alert.failed()
                      }
                  })
                } else {
@@ -209,29 +180,13 @@ var trace = FirebasePerformance.getInstance().newTrace("Fetch_data")
 
     onCompleted = { filePath ->
         runOnUiThread {
-         MotionToast.createColorToast(
-                this@MainActivity,
-                "Berhasil mengunduh!!",
-                "Video berhasil di unduh",
-                MotionToastStyle.SUCCESS,
-                MotionToast.GRAVITY_BOTTOM,
-                MotionToast.LONG_DURATION,
-                ResourcesCompat.getFont(this@MainActivity, R.font.helvetica_regular)
-            )
+         alert.success()
         }
     },
 
     onError = {
         runOnUiThread {
-                  MotionToast.createColorToast(
-                this@MainActivity,
-                "Gagal mengunduh!!",
-                "Silahkan coba lagi beberapa saat",
-                MotionToastStyle.ERROR,
-                MotionToast.GRAVITY_BOTTOM,
-                MotionToast.LONG_DURATION,
-                ResourcesCompat.getFont(this@MainActivity, R.font.helvetica_regular)
-            )
+                  alert.failed()
         }
     })
                }
@@ -251,29 +206,13 @@ var trace = FirebasePerformance.getInstance().newTrace("Fetch_data")
 
     onCompleted = { filePath ->
         runOnUiThread {
-         MotionToast.createColorToast(
-                this@MainActivity,
-                "Berhasil mengunduh!!",
-                "Video berhasil di unduh",
-                MotionToastStyle.SUCCESS,
-                MotionToast.GRAVITY_BOTTOM,
-                MotionToast.LONG_DURATION,
-                ResourcesCompat.getFont(this@MainActivity, R.font.helvetica_regular)
-            )
+         alert.success()
         }
     },
 
     onError = {
         runOnUiThread {
-                  MotionToast.createColorToast(
-                this@MainActivity,
-                "Gagal mengunduh!!",
-                "Silahkan coba lagi beberapa saat",
-                MotionToastStyle.ERROR,
-                MotionToast.GRAVITY_BOTTOM,
-                MotionToast.LONG_DURATION,
-                ResourcesCompat.getFont(this@MainActivity, R.font.helvetica_regular)
-            )
+                  alert.failed()
         }
     })
     }
