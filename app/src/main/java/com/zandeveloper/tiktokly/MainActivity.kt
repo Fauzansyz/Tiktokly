@@ -75,6 +75,11 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
+fun isValidUrl(url: String?): Boolean {
+    if (url.isNullOrBlank()) return false
+    return url.startsWith("http://") || url.startsWith("https://")
+}
+
 fun showVideoFormatDialog(
     context: Context,
     availableFormats: List<String>,
@@ -140,7 +145,7 @@ var trace = FirebasePerformance.getInstance().newTrace("Fetch_data")
         binding.textInput.text = null
 
         ads.showInterstitial(this@MainActivity) {
-        if(mp3 != "NaN") {
+        if(isValidUrl(mp3.toString())) {
            showVideoFormatDialog(this@MainActivity, formats){ selectedItems ->
            if(selectedItems == "mp3"){
            val filename = "tiktokly_${System.currentTimeMillis()}.mp3"
