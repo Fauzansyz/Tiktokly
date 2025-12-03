@@ -1,3 +1,5 @@
+> This project is currently under maintenance due to having 1 problem in the application, thank you 
+
 <img width=80 src="app/src/main/res/mipmap-xxxhdpi/ic_launcher.png">
 
 <h2 align="left"><b>Tiktoly</b></h2>
