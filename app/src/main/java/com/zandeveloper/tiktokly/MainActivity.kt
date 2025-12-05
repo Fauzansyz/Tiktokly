@@ -145,33 +145,19 @@ var trace = FirebasePerformance.getInstance().newTrace("Fetch_data")
         binding.textInput.text = null
 
         ads.showInterstitial(this@MainActivity) {
-        if(isValidUrl(mp3.toString())) {
+        if(isValidUrl(mp3.toString()) || mp3.toString() != null) {
            showVideoFormatDialog(this@MainActivity, formats){ selectedItems ->
-           if(selectedItems == "mp3"){
-           val filename = "tiktokly_${System.currentTimeMillis()}.mp3"
-                dm.download(
-            mp3.toString(), 
-            filename, 
-            
-            onProgress = { p ->
-        runOnUiThread {
-           // binding.progressText.text = "Progress: $p%"
-        }
-    },
-
-    onCompleted = { filePath ->
-        runOnUiThread {
-         alert.success()
-        }
-    },
-
-    onError = {
-        runOnUiThread {
-                  alert.failed()
-                     }
-                 })
-               } else {
-                  val filename = "tiktokly_${System.currentTimeMillis()}.mp4"
+           
+           if(selectedItems == "mp3" && selectedItems == "mp4"){
+                
+      alert.failed()
+    
+       }
+       
+       }
+    
+     } else {
+     val filename = "tiktokly_${System.currentTimeMillis()}.mp4"
         
      dm.download(
             downloadUrl.toString(), 
@@ -191,36 +177,11 @@ var trace = FirebasePerformance.getInstance().newTrace("Fetch_data")
 
     onError = {
         runOnUiThread {
-                  alert.failed()
+          alert.failed()
         }
     })
-               }
-           }
-        } else {
-        val filename = "tiktokly_${System.currentTimeMillis()}.mp4"
-        
-     dm.download(
-            downloadUrl.toString(), 
-            filename, 
-            
-            onProgress = { p ->
-        runOnUiThread {
-           // binding.progressText.text = "Progress: $p%"
-        }
-    },
-
-    onCompleted = { filePath ->
-        runOnUiThread {
-         alert.success()
-        }
-    },
-
-    onError = {
-        runOnUiThread {
-                  alert.failed()
-        }
-    })
-    }
+     }
+ 
             
                 binding.shimmerRoot.stopShimmer()
                 binding.shimmerRoot.visibility = View.GONE
@@ -240,7 +201,7 @@ var trace = FirebasePerformance.getInstance().newTrace("Fetch_data")
          }
          trace.stop()
 
-}
+  }
 
 
     override fun onDestroy() {
