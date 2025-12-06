@@ -133,6 +133,7 @@ var trace = FirebasePerformance.getInstance().newTrace("Fetch_data")
         }
 
         val result = data["result"] as? Map<*, *>
+        val platform = data?.get("platform")
         val title = result?.get("title") ?: "-"
         val mp4 = result?.get("mp4") ?: "NaN"
         val mp3 = result?.get("mp3") ?: "NaN"
@@ -145,18 +146,13 @@ var trace = FirebasePerformance.getInstance().newTrace("Fetch_data")
         binding.textInput.text = null
 
         ads.showInterstitial(this@MainActivity) {
-        if(isValidUrl(mp3.toString()) || mp3.toString() != null) {
-           showVideoFormatDialog(this@MainActivity, formats){ selectedItems ->
-           
-           if(selectedItems == "mp3" && selectedItems == "mp4"){
+        if(isValidUrl(mp3.toString()) || mp3.toString() != null || platform.toString() == "YouTube") {
                 
-      alert.failed()
+      alert.warn("Pegunduhan tidak bisa dilanjutkan!!", "Ada sedikit masalah untuk pengunduhan video Youtube, tunggu update selanjutnya")
     
-       }
-       
-       }
-    
-     } else {
+     } 
+     
+     if(platform.toString() == "Instagram") {
      val filename = "tiktokly_${System.currentTimeMillis()}.mp4"
         
      dm.download(

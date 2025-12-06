@@ -7,6 +7,18 @@ import android.content.Context
 import android.app.Activity
 
 class Alerts(private var activity: Activity) {
+   fun warn(Title: String, subText: String) {
+   MotionToast.createColorToast(
+            activity,
+            Title,
+            subText,
+            MotionToastStyle.WARNING,
+            MotionToast.GRAVITY_BOTTOM,
+            MotionToast.LONG_DURATION,
+            ResourcesCompat.getFont(activity, R.font.helvetica_regular)
+        )
+   }
+
   fun requiredInput() {
         MotionToast.createColorToast(
             activity,
@@ -26,7 +38,7 @@ MotionToast.createColorToast(
                 activity,
                 "Berhasil mengunduh!!",
                 "Video berhasil di unduh",
-                MotionToastStyle.ERROR,
+                MotionToastStyle.SUCCESS,
                 MotionToast.GRAVITY_BOTTOM,
                 MotionToast.LONG_DURATION,
                 ResourcesCompat.getFont(activity, R.font.helvetica_regular)
