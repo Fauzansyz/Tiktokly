@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         alert = Alerts(this@MainActivity)
         ads.loadInterstitialAd()
         
-        df = DataFetch()
+        df = DataFetch(this)
         
         
         binding.topAppBar.setOnMenuItemClickListener { item ->
