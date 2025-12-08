@@ -24,6 +24,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.zandeveloper.tiktokly.utils.ads.AdsApp
 import com.google.android.material.appbar.MaterialToolbar
+import android.view.LayoutInflater
 import android.view.View
 import androidx.core.widget.doOnTextChanged
 import android.graphics.drawable.Drawable
@@ -37,10 +38,21 @@ import com.google.firebase.perf.metrics.Trace
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.zandeveloper.tiktokly.utils.alerts.Alerts
 
+import com.takusemba.spotlight.OnSpotlightListener
+import com.takusemba.spotlight.Spotlight
+import com.takusemba.spotlight.Target
+import com.takusemba.spotlight.OnTargetListener
+import com.takusemba.spotlight.shape.Circle
+
+import android.view.animation.DecelerateInterpolator
+
 
 class MainActivity : AppCompatActivity() {
 
     private var _binding: ActivityMainBinding? = null
+    private lateinit var spotlight: Spotlight
+    private lateinit var targets: List<Target>
+    
     private val binding get() = _binding!!
 
     private lateinit var df: DataFetch
@@ -53,6 +65,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        
+        val prefs = getSharedPreferences("tutorial", MODE_PRIVATE)
+        val firstRun = prefs.getBoolean("firstRun", true)
+
+        if (firstRun) {
+            startTutorial()
+            prefs.edit().putBoolean("firstRun", false).apply()
+        }
         
         dm = downloadManager(this)
         
@@ -79,6 +99,7 @@ fun isValidUrl(url: String?): Boolean {
     if (url.isNullOrBlank()) return false
     return url.startsWith("http://") || url.startsWith("https://")
 }
+
 
 fun showVideoFormatDialog(
     context: Context,
@@ -146,11 +167,16 @@ var trace = FirebasePerformance.getInstance().newTrace("Fetch_data")
         binding.textInput.text = null
 
         ads.showInterstitial(this@MainActivity) {
-        if(isValidUrl(mp3.toString()) || mp3.toString() != null || platform.toString() == "YouTube") {
+        
+        // ============== 
+        
+        // Youtube feature in maintance mode
+        
+        if(platform.toString() == "YouTube") {
                 
       alert.warn("Pegunduhan tidak bisa dilanjutkan!!", "Ada sedikit masalah untuk pengunduhan video Youtube, tunggu update selanjutnya")
     
-     } 
+     }
      
      if(platform.toString() == "Instagram") {
      val filename = "tiktokly_${System.currentTimeMillis()}.mp4"
@@ -198,6 +224,65 @@ var trace = FirebasePerformance.getInstance().newTrace("Fetch_data")
          trace.stop()
 
   }
+  
+  
+  private fun startTutorial() {
+
+        val target1 = Target.Builder()
+            .setAnchor(binding.inputTextContainer)
+            .setShape(Circle(150f))
+            .setOverlay(createOverlay("Masukan Url video yang ingin anda unduh"))
+            .setOnTargetListener(object : OnTargetListener {
+                override fun onStarted() {}
+
+                override fun onEnded() {
+                    // Called each tap when moving to next target
+                    spotlight.finish()
+                }
+            })
+            .build()
+
+        val target2 = Target.Builder()
+            .setAnchor(binding.buttonDownload)
+            .setShape(Circle(150f))
+            .setOverlay(createOverlay("Klik tombol 'Download', untuk memulai mengunduh"))
+                        .setOnTargetListener(object : OnTargetListener {
+                override fun onStarted() {
+                binding.buttonDownload.visibility = View.VISIBLE
+                }
+
+                override fun onEnded() {
+                    // Called each tap when moving to next target
+                    binding.buttonDownload.visibility = View.GONE
+                    spotlight.finish()
+                }
+            })
+            .build()
+
+        targets = listOf(target1, target2)
+
+        spotlight = Spotlight.Builder(this)
+            .setTargets(targets)
+            .setBackgroundColorRes(R.color.black_80)
+            .setDuration(300L)
+            .setAnimation(DecelerateInterpolator(2f))
+            .build()
+
+        spotlight.start()
+    }
+
+ private fun createOverlay(text: String): View {
+    val overlayBinding = com.zandeveloper.tiktokly.databinding.SpotlightOverlayBinding
+        .inflate(LayoutInflater.from(this))
+
+    overlayBinding.tvHint.text = text
+
+    overlayBinding.root.setOnClickListener {
+        spotlight.next()
+    }
+
+    return overlayBinding.root
+}
 
 
     override fun onDestroy() {
