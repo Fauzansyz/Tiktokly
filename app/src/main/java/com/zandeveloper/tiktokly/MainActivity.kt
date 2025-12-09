@@ -43,6 +43,7 @@ import com.takusemba.spotlight.Spotlight
 import com.takusemba.spotlight.Target
 import com.takusemba.spotlight.OnTargetListener
 import com.takusemba.spotlight.shape.Circle
+import com.takusemba.spotlight.shape.RoundedRectangle
 
 import android.view.animation.DecelerateInterpolator
 
@@ -70,7 +71,9 @@ class MainActivity : AppCompatActivity() {
         val firstRun = prefs.getBoolean("firstRun", true)
 
         if (firstRun) {
-            startTutorial()
+            binding.root.post {
+           startTutorial()
+            }
             prefs.edit().putBoolean("firstRun", false).apply()
         }
         
@@ -122,9 +125,6 @@ fun showVideoFormatDialog(
 }
 
 
-binding.textInput.doOnTextChanged { text, _, _, _ ->
-    binding.buttonDownload.visibility = if (text.isNullOrEmpty()) View.GONE else View.VISIBLE
-}
 var trace = FirebasePerformance.getInstance().newTrace("Fetch_data")
 
         binding.buttonDownload.setOnClickListener {
@@ -194,12 +194,14 @@ var trace = FirebasePerformance.getInstance().newTrace("Fetch_data")
     onCompleted = { filePath ->
         runOnUiThread {
          alert.success()
+         binding.textInput.text?.clear()
         }
     },
 
     onError = {
         runOnUiThread {
           alert.failed()
+          binding.textInput.text?.clear()
         }
     })
      }
@@ -230,22 +232,25 @@ var trace = FirebasePerformance.getInstance().newTrace("Fetch_data")
 
         val target1 = Target.Builder()
             .setAnchor(binding.inputTextContainer)
-            .setShape(Circle(150f))
-            .setOverlay(createOverlay("Masukan Url video yang ingin anda unduh"))
+            .setShape(RoundedRectangle(width = binding.inputTextContainer.width.toFloat() + 40f,  // 40px padding
+        height = binding.inputTextContainer.height.toFloat() + 40f,
+        radius = 20f ))
+            .setOverlay(createOverlay("Masukkan url/link video", "Masukan Url video yang ingin anda unduh"))
             .setOnTargetListener(object : OnTargetListener {
                 override fun onStarted() {}
 
                 override fun onEnded() {
-                    // Called each tap when moving to next target
-                    spotlight.finish()
+                
                 }
             })
             .build()
 
         val target2 = Target.Builder()
             .setAnchor(binding.buttonDownload)
-            .setShape(Circle(150f))
-            .setOverlay(createOverlay("Klik tombol 'Download', untuk memulai mengunduh"))
+            .setShape(RoundedRectangle(width = binding.buttonDownload.width.toFloat() + 40f,  // 40px padding
+        height = binding.buttonDownload.height.toFloat() + 40f,
+        radius = 20f ))
+            .setOverlay(createOverlay("Unduh sekarang!!", "Tekan tombol 'Download', untuk memulai mendownload"))
                         .setOnTargetListener(object : OnTargetListener {
                 override fun onStarted() {
                 binding.buttonDownload.visibility = View.VISIBLE
@@ -253,7 +258,6 @@ var trace = FirebasePerformance.getInstance().newTrace("Fetch_data")
 
                 override fun onEnded() {
                     // Called each tap when moving to next target
-                    binding.buttonDownload.visibility = View.GONE
                     spotlight.finish()
                 }
             })
@@ -271,11 +275,12 @@ var trace = FirebasePerformance.getInstance().newTrace("Fetch_data")
         spotlight.start()
     }
 
- private fun createOverlay(text: String): View {
+ private fun createOverlay(titleText:String, textSub: String): View {
     val overlayBinding = com.zandeveloper.tiktokly.databinding.SpotlightOverlayBinding
         .inflate(LayoutInflater.from(this))
 
-    overlayBinding.tvHint.text = text
+    overlayBinding.tvTitle.text = titleText
+    overlayBinding.tvSubText.text = textSub
 
     overlayBinding.root.setOnClickListener {
         spotlight.next()

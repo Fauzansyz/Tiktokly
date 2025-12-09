@@ -74,7 +74,6 @@
                 android:id="@+id/buttonDownload"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:layout_marginTop="20dp"
                 app:iconGravity="textStart"
                 android:text="Download"
