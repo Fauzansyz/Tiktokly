@@ -156,17 +156,21 @@ var trace = FirebasePerformance.getInstance().newTrace("Fetch_data")
         val result = data["result"] as? Map<*, *>
         val platform = data?.get("platform")
         val title = result?.get("title") ?: "-"
-        val mp4 = result?.get("mp4") ?: "NaN"
-        val mp3 = result?.get("mp3") ?: "NaN"
         val urlResult = result?.get("url") ?: "NaN"
         val thumbnail = result?.get("thumbnail") ?: "-"
-
-        val downloadUrl = if (urlResult == "NaN") mp4 else urlResult
 
         binding.titleVideo.text = title.toString()
         binding.textInput.text = null
 
         ads.showInterstitial(this@MainActivity) {
+        
+        if (platform.toString() == "TikTok") {
+        
+    binding.debugText.text = result.toString()
+
+    val filename = "tiktokly_${title.toString()}.mp4"
+
+}
         
         // ============== 
         
@@ -179,10 +183,10 @@ var trace = FirebasePerformance.getInstance().newTrace("Fetch_data")
      }
      
      if(platform.toString() == "Instagram") {
-     val filename = "tiktokly_${System.currentTimeMillis()}.mp4"
+     val filename = "tiktokly_${platform.toString()}.mp4"
         
      dm.download(
-            downloadUrl.toString(), 
+            urlResult.toString(), 
             filename, 
             
             onProgress = { p ->
