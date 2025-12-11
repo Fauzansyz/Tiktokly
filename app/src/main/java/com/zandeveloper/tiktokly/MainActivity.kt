@@ -207,10 +207,11 @@ dm.download(
      }
      
      if(platform.toString() == "Instagram") {
-     val filename = "tiktokly_${platform.toString()}.mp4"
+     val videoUrl = result?.get("url") ?:"NaN"
+     val filename = "insta_${System.currentTimeMillis()}.mp4"
         
      dm.download(
-            urlResult.toString(), 
+            videoUrl.toString(), 
             filename, 
             
             onProgress = { p ->

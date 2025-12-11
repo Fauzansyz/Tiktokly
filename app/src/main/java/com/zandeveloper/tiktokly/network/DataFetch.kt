@@ -11,7 +11,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class DataFetch(private val context: Context) {
+class DataFetch(private var context: Context) {
 
     suspend fun fetchDataVideo(apiUrl: String, postUrl: String): Map<String, Any?>? {
         return withContext(Dispatchers.IO) {
@@ -25,7 +25,7 @@ class DataFetch(private val context: Context) {
                     .post(body)
                     .header(
                         "User-Agent",
-                        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36"
+                        "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
                     )
                     .build()
 
@@ -41,9 +41,22 @@ class DataFetch(private val context: Context) {
                     val platform = jsonObj["platform"]?.asString ?: "Unknown"
                     val result = jsonObj["result"]
 
-                    val resultMap: Map<String, Any?> = if (result != null && result.isJsonObject) {
-                        result.asJsonObject.entrySet().associate { it.key to parseJsonElement(it.value) }
-                    } else emptyMap()
+                    val resultMap: Map<String, Any?> = when {
+                        result.isJsonObject -> {
+                            // TIKTOK/YT
+                            result.asJsonObject.entrySet()
+                                .associate { it.key to parseJson(it.value) }
+                        }
+
+                        result.isJsonArray -> {
+                            // INSTAGRAM → ambil index 0
+                            val firstObj = result.asJsonArray.get(0).asJsonObject
+                            firstObj.entrySet()
+                                .associate { it.key to parseJson(it.value) }
+                        }
+
+                        else -> emptyMap()
+                    }
 
                     mapOf(
                         "platform" to platform,
@@ -58,11 +71,13 @@ class DataFetch(private val context: Context) {
         }
     }
 
-    private fun parseJsonElement(elem: JsonElement): Any? {
+
+    private fun parseJson(elem: JsonElement): Any? {
         return when {
             elem.isJsonPrimitive -> elem.asString
-            elem.isJsonArray -> elem.asJsonArray.map { parseJsonElement(it) }
-            elem.isJsonObject -> elem.asJsonObject.entrySet().associate { it.key to parseJsonElement(it.value) }
+            elem.isJsonArray -> elem.asJsonArray.map { parseJson(it) }
+            elem.isJsonObject -> elem.asJsonObject.entrySet()
+                .associate { it.key to parseJson(it.value) }
             else -> null
         }
     }
