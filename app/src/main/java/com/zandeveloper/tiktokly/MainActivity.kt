@@ -140,8 +140,7 @@ var trace = FirebasePerformance.getInstance().newTrace("Fetch_data")
     binding.shimmerRoot.startShimmer()
     binding.shimmerRoot.visibility = View.VISIBLE
     binding.contentContainer.visibility = View.GONE
-    trace.start()
-
+    
     lifecycleScope.launch {
         val apiUrl = "https://dl-server-core.vercel.app/download"
         val data = df.fetchDataVideo(apiUrl, inputUrl)
@@ -252,7 +251,6 @@ dm.download(
             .into(binding.itemThumbnail)
                }
          }
-         trace.stop()
 
   }
   
