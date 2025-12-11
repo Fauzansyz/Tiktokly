@@ -47,6 +47,8 @@ import com.takusemba.spotlight.shape.RoundedRectangle
 
 import android.view.animation.DecelerateInterpolator
 
+import com.google.gson.reflect.TypeToken
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -164,12 +166,35 @@ var trace = FirebasePerformance.getInstance().newTrace("Fetch_data")
 
         ads.showInterstitial(this@MainActivity) {
         
-        if (platform.toString() == "TikTok") {
-        
-    binding.debugText.text = result.toString()
+if (platform == "TikTok") {
+    val videoList = result?.get("video") as? List<*>
+    val mp4 = videoList?.firstOrNull()?.toString() ?: "NaN"
 
-    val filename = "tiktokly_${title.toString()}.mp4"
+    val filename = "tiktokly_${System.currentTimeMillis()}.mp4"
 
+dm.download(
+            mp4.toString(), 
+            filename, 
+            
+            onProgress = { p ->
+        runOnUiThread {
+           // binding.progressText.text = "Progress: $p%"
+        }
+    },
+
+    onCompleted = { filePath ->
+        runOnUiThread {
+         alert.success()
+         binding.textInput.text?.clear()
+        }
+    },
+
+    onError = {
+        runOnUiThread {
+          alert.failed()
+          binding.textInput.text?.clear()
+        }
+    })
 }
         
         // ============== 
