@@ -1,4 +1,4 @@
-package com.zandeveloper.tiktokly.network
+package com.zandeveloper.tiktokly.network.updateService
 
 import android.content.Context
 import android.content.Intent
@@ -12,6 +12,7 @@ import java.io.File
 import android.os.Build
 import java.io.FileOutputStream
 import android.provider.Settings
+import com.zandeveloper.tiktokly.model.UpdateInfo
 
 
 class UpdateServiceApp(private val context: Context) {
