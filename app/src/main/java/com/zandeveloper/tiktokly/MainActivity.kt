@@ -41,6 +41,8 @@ import com.zandeveloper.tiktokly.utils.alerts.Alerts
 
 import com.zandeveloper.tiktokly.utils.userHelp.UserHelpApp
 
+import com.zandeveloper.tiktokly.network.updateService.UpdateService
+
 import android.view.animation.DecelerateInterpolator
 
 import com.google.gson.reflect.TypeToken
@@ -62,6 +64,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        
+        val updateManager = UpdateManager(this)
+        updateManager.checkUpdate()
         
         val prefs = getSharedPreferences("tutorial", MODE_PRIVATE)
         val firstRun = prefs.getBoolean("firstRun", true)
@@ -86,20 +91,6 @@ class MainActivity : AppCompatActivity() {
         
         df = DataFetch(this)
         
-        val currentVersion = BuildConfig.VERSION_CODE
-        lifecycleScope.launch {
-    val release = df.checkUpdate()
-    if (release != null) {
-        val latestVersion = release.tag_name.replace("v", "").trim()
-        val currentVersion = BuildConfig.VERSION_NAME
-
-        if (latestVersion != currentVersion) {
-            // ada update bang
-        }else if(latestVersion  ==currentVersion) {
-           Toast.makeText(this@MainActivity, "No update need", Toast.LENGTH_SHORT).show()
-        }
-    }
-}
         
         binding.topAppBar.setOnMenuItemClickListener { item ->
     when (item.itemId) {
