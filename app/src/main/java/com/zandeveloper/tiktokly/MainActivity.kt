@@ -38,12 +38,7 @@ import com.google.firebase.perf.metrics.Trace
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.zandeveloper.tiktokly.utils.alerts.Alerts
 
-import com.takusemba.spotlight.OnSpotlightListener
-import com.takusemba.spotlight.Spotlight
-import com.takusemba.spotlight.Target
-import com.takusemba.spotlight.OnTargetListener
-import com.takusemba.spotlight.shape.Circle
-import com.takusemba.spotlight.shape.RoundedRectangle
+import com.zandeveloper.tiktokly.utils.userHelp.UserHelpApp
 
 import android.view.animation.DecelerateInterpolator
 
@@ -53,8 +48,6 @@ import com.google.gson.reflect.TypeToken
 class MainActivity : AppCompatActivity() {
 
     private var _binding: ActivityMainBinding? = null
-    private lateinit var spotlight: Spotlight
-    private lateinit var targets: List<Target>
     
     private val binding get() = _binding!!
 
@@ -73,8 +66,13 @@ class MainActivity : AppCompatActivity() {
         val firstRun = prefs.getBoolean("firstRun", true)
 
         if (firstRun) {
+        val help = UserHelpApp.Builder()
+         .setActivity(this)
+         .setBinding(binding)
+         .build()
+    
             binding.root.post {
-           startTutorial()
+        help.startHelp()
             }
             prefs.edit().putBoolean("firstRun", false).apply()
         }
@@ -254,68 +252,6 @@ dm.download(
          }
 
   }
-  
-  
-  private fun startTutorial() {
-
-        val target1 = Target.Builder()
-            .setAnchor(binding.inputTextContainer)
-            .setShape(RoundedRectangle(width = binding.inputTextContainer.width.toFloat() + 40f,  // 40px padding
-        height = binding.inputTextContainer.height.toFloat() + 40f,
-        radius = 20f ))
-            .setOverlay(createOverlay("Masukkan url/link video", "Masukan Url video yang ingin anda unduh"))
-            .setOnTargetListener(object : OnTargetListener {
-                override fun onStarted() {}
-
-                override fun onEnded() {
-                
-                }
-            })
-            .build()
-
-        val target2 = Target.Builder()
-            .setAnchor(binding.buttonDownload)
-            .setShape(RoundedRectangle(width = binding.buttonDownload.width.toFloat() + 40f,  // 40px padding
-        height = binding.buttonDownload.height.toFloat() + 40f,
-        radius = 20f ))
-            .setOverlay(createOverlay("Unduh sekarang!!", "Tekan tombol 'Download', untuk memulai mendownload"))
-                        .setOnTargetListener(object : OnTargetListener {
-                override fun onStarted() {
-                binding.buttonDownload.visibility = View.VISIBLE
-                }
-
-                override fun onEnded() {
-                    // Called each tap when moving to next target
-                    spotlight.finish()
-                }
-            })
-            .build()
-
-        targets = listOf(target1, target2)
-
-        spotlight = Spotlight.Builder(this)
-            .setTargets(targets)
-            .setBackgroundColorRes(R.color.black_80)
-            .setDuration(300L)
-            .setAnimation(DecelerateInterpolator(2f))
-            .build()
-
-        spotlight.start()
-    }
-
- private fun createOverlay(titleText:String, textSub: String): View {
-    val overlayBinding = com.zandeveloper.tiktokly.databinding.SpotlightOverlayBinding
-        .inflate(LayoutInflater.from(this))
-
-    overlayBinding.tvTitle.text = titleText
-    overlayBinding.tvSubText.text = textSub
-
-    overlayBinding.root.setOnClickListener {
-        spotlight.next()
-    }
-
-    return overlayBinding.root
-}
 
 
     override fun onDestroy() {
