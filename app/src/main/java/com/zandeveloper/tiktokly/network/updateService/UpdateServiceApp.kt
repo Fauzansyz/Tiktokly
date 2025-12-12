@@ -1,4 +1,4 @@
-package com.zandeveloper.tiktokly.utils
+package com.zandeveloper.tiktokly.network
 
 import android.content.Context
 import android.content.Intent
@@ -9,10 +9,12 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import com.google.gson.Gson
 import java.io.File
+import android.os.Build
 import java.io.FileOutputStream
+import android.provider.Settings
 
 
-class UpdateManager(private val context: Context) {
+class UpdateServiceApp(private val context: Context) {
 
     private val client = OkHttpClient()
 
@@ -38,8 +40,15 @@ class UpdateManager(private val context: Context) {
                         if (apkAsset != null) {
                             val file = File(context.getExternalFilesDir(null), apkAsset.name)
                             downloadApk(apkAsset.browser_download_url, file)
-                            withContext(Dispatchers.Main) {
-                                installApk(file)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (!packageManager.canRequestPackageInstalls()) {
+            val intent = Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES)
+            intent.data = Uri.parse("package:$packageName")
+            startActivity(intent)
+        }
+    }
+                withContext(Dispatchers.Main) {
+                        installApk(file)
                             }
                         }
                     }

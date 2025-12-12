@@ -41,7 +41,7 @@ import com.zandeveloper.tiktokly.utils.alerts.Alerts
 
 import com.zandeveloper.tiktokly.utils.userHelp.UserHelpApp
 
-import com.zandeveloper.tiktokly.network.updateService.UpdateService
+import com.zandeveloper.tiktokly.network.updateService.UpdateServiceApp
 
 import android.view.animation.DecelerateInterpolator
 
@@ -65,8 +65,8 @@ class MainActivity : AppCompatActivity() {
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         
-        val updateManager = UpdateManager(this)
-        updateManager.checkUpdate()
+        val updateServices = UpdateServiceApp(this)
+        updateServices.checkUpdate()
         
         val prefs = getSharedPreferences("tutorial", MODE_PRIVATE)
         val firstRun = prefs.getBoolean("firstRun", true)
