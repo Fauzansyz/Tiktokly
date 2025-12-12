@@ -8,10 +8,31 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
+import com.zandeveloper.tiktokly.model.UpdateInfo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class DataFetch(private var context: Context) {
+
+suspend fun checkUpdate(): UpdateInfo? = withContext(Dispatchers.IO) {
+    try {
+        val client = OkHttpClient()
+        val request = Request.Builder()
+            .url("https://api.github.com/repos/Fauzansyz/Tiktokly/releases/latest")
+            .header("Accept", "application/vnd.github+json")
+            .build()
+
+        client.newCall(request).execute().use { res ->
+            if (!res.isSuccessful) return@withContext null
+            val body = res.body?.string() ?: return@withContext null
+
+            return@withContext Gson().fromJson(body, UpdateInfo::class.java)
+        }
+    } catch (e: Exception) {
+        e.printStackTrace()
+        null
+    }
+}
 
     suspend fun fetchDataVideo(apiUrl: String, postUrl: String): Map<String, Any?>? {
         return withContext(Dispatchers.IO) {

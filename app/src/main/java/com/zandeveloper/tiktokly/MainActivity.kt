@@ -1,5 +1,6 @@
 package com.zandeveloper.tiktokly
 
+import com.zandeveloper.tiktokly.BuildConfig
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -85,6 +86,20 @@ class MainActivity : AppCompatActivity() {
         
         df = DataFetch(this)
         
+        val currentVersion = BuildConfig.VERSION_CODE
+        lifecycleScope.launch {
+    val release = df.checkUpdate()
+    if (release != null) {
+        val latestVersion = release.tag_name.replace("v", "").trim()
+        val currentVersion = BuildConfig.VERSION_NAME
+
+        if (latestVersion != currentVersion) {
+            // ada update bang
+        }else if(latestVersion  ==currentVersion) {
+           Toast.makeText(this@MainActivity, "No update need", Toast.LENGTH_SHORT).show()
+        }
+    }
+}
         
         binding.topAppBar.setOnMenuItemClickListener { item ->
     when (item.itemId) {
