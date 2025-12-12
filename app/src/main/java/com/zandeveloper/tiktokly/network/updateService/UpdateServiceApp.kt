@@ -12,6 +12,7 @@ import java.io.File
 import android.os.Build
 import java.io.FileOutputStream
 import android.provider.Settings
+import android.content.pm.PackageManager
 import com.zandeveloper.tiktokly.model.UpdateInfo
 
 
@@ -42,10 +43,11 @@ class UpdateServiceApp(private val context: Context) {
                             val file = File(context.getExternalFilesDir(null), apkAsset.name)
                             downloadApk(apkAsset.browser_download_url, file)
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        if (!packageManager.canRequestPackageInstalls()) {
+        if (!context.packageManager.canRequestPackageInstalls()) {
             val intent = Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES)
-            intent.data = Uri.parse("package:$packageName")
-            startActivity(intent)
+            intent.data = Uri.parse("package:$context.packageName")
+            
+            context.startActivity(intent)
         }
     }
                 withContext(Dispatchers.Main) {
