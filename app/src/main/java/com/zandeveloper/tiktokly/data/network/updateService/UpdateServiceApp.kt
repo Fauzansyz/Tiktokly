@@ -1,4 +1,4 @@
-package com.zandeveloper.tiktokly.network.updateService
+package com.zandeveloper.tiktokly.data.network.updateService
 
 import android.content.Context
 import android.content.Intent

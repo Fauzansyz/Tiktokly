@@ -75,10 +75,10 @@ class MainActivity : AppCompatActivity() {
         val firstRun = prefs.getBoolean("firstRun", true)
 
         if (firstRun) {
-        val help = UserHelpApp.Builder()
-         .setActivity(this)
-         .setBinding(binding)
-         .build()
+          val help = UserHelpApp.Builder()
+             .setActivity(this)
+             .setBinding(binding)
+             .build()
     
             binding.root.post {
         help.startHelp()
@@ -169,10 +169,10 @@ var trace = FirebasePerformance.getInstance().newTrace("Fetch_data")
 
         binding.titleVideo.text = title.toString()
         binding.textInput.text = null
-
-        ads.showInterstitial(this@MainActivity) {
         
-if (platform == "TikTok") {
+          ads.showInterstitial(this@MainActivity) {
+        
+   if (platform == "TikTok") {
     val videoList = result?.get("video") as? List<*>
     val mp4 = videoList?.firstOrNull()?.toString() ?: "NaN"
 
@@ -259,10 +259,7 @@ dm.download(
             .into(binding.itemThumbnail)
                }
          }
-
-  }
-
-
+}
     override fun onDestroy() {
         super.onDestroy()
         _binding = null

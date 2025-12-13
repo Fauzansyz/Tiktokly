@@ -1,4 +1,4 @@
-package com.zandeveloper.tiktokly.about
+package com.zandeveloper.tiktokly.ui.about
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

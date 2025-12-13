@@ -1,4 +1,4 @@
-package com.zandeveloper.tiktokly.network
+package com.zandeveloper.tiktokly.data.network
 
 import android.content.Context
 import android.util.Log
@@ -40,9 +40,16 @@ class DataFetch(private var context: Context) {
                     val jsonObj = jsonElement.asJsonObject
 
                     val platform = jsonObj["platform"]?.asString ?: "Unknown"
-                    val result = jsonObj["result"]
-
-                    val resultMap: Map<String, Any?> = when {
+                    val result = jsonObj.get("result")
+         
+         if (result == null || result.isJsonNull) {
+            Log.e("DataFetch", "RESULT NULL / INVALID")
+          return@withContext mapOf(
+        "platform" to platform,
+        "result" to emptyMap<String, Any?>()
+        )
+   } else {
+           val resultMap: Map<String, Any?> = when {
                         result.isJsonObject -> {
                             // TIKTOK/YT
                             result.asJsonObject.entrySet()
@@ -51,9 +58,15 @@ class DataFetch(private var context: Context) {
 
                         result.isJsonArray -> {
                             // INSTAGRAM → ambil index 0
-                            val firstObj = result.asJsonArray.get(0).asJsonObject
-                            firstObj.entrySet()
-                                .associate { it.key to parseJson(it.value) }
+                            val array = result.asJsonArray
+           if (array.size() == 0) {
+             Log.e("DataFetch", "RESULT ARRAY EMPTY")
+        emptyMap()
+        } else {
+          val firstObj = array[0].asJsonObject
+    firstObj.entrySet()
+        .associate { it.key to parseJson(it.value) }
+          }
                         }
 
                         else -> emptyMap()
@@ -63,14 +76,18 @@ class DataFetch(private var context: Context) {
                         "platform" to platform,
                         "result" to resultMap
                     )
-                }
+              }
+              
+          }
 
             } catch (e: Exception) {
                 e.printStackTrace()
                 null
             }
         }
-    }
+   
+   }
+   
 
 
     private fun parseJson(elem: JsonElement): Any? {
