@@ -10,52 +10,62 @@ import com.google.android.gms.ads.LoadAdError
 
 class AdsApp(private val context: Context) {
 
-    private var mInterstitialAd: InterstitialAd? = null
+    private var interstitialAd: InterstitialAd? = null
+    private var isLoading = false
 
-    fun loadInterstitialAd() {
-        val adRequest = AdRequest.Builder().build()
+    fun preload() {
+        if (isLoading || interstitialAd != null) return
+
+        isLoading = true
+        val request = AdRequest.Builder().build()
 
         InterstitialAd.load(
             context,
             "ca-app-pub-8266726360742140/3215784649", // real id
-            adRequest,
+            request,
             object : InterstitialAdLoadCallback() {
-                override fun onAdFailedToLoad(adError: LoadAdError) {
-                    mInterstitialAd = null
+                override fun onAdLoaded(ad: InterstitialAd) {
+                    interstitialAd = ad
+                    isLoading = false
                 }
 
-                override fun onAdLoaded(interstitialAd: InterstitialAd) {
-                    mInterstitialAd = interstitialAd
+                override fun onAdFailedToLoad(error: LoadAdError) {
+                    interstitialAd = null
+                    isLoading = false
                 }
             }
         )
     }
 
-    fun showInterstitial(activity: Activity, onDismiss: () -> Unit) {
-        val ad = mInterstitialAd
-        if (ad != null) {
-            ad.fullScreenContentCallback = object : FullScreenContentCallback() {
-                override fun onAdDismissedFullScreenContent() {
-                    mInterstitialAd = null
-                    loadInterstitialAd()
-                    onDismiss()
-                }
+    fun showOrContinue(activity: Activity, onContinue: () -> Unit) {
+        val ad = interstitialAd
 
-                override fun onAdFailedToShowFullScreenContent(adError: com.google.android.gms.ads.AdError) {
-                    mInterstitialAd = null
-                    loadInterstitialAd()
-                    onDismiss()
-                }
+        if (ad == null) {
+            // gak ada iklan → GAS
+            preload()
+            onContinue()
+            return
+        }
 
-                override fun onAdShowedFullScreenContent() {
-                    mInterstitialAd = null
-                }
+        ad.fullScreenContentCallback = object : FullScreenContentCallback() {
+
+            override fun onAdDismissedFullScreenContent() {
+                interstitialAd = null
+                preload()
+                onContinue()
             }
 
-            ad.show(activity)
-        } else {
-            onDismiss()
-            loadInterstitialAd()
+            override fun onAdFailedToShowFullScreenContent(adError: com.google.android.gms.ads.AdError) {
+                interstitialAd = null
+                preload()
+                onContinue()
+            }
+
+            override fun onAdShowedFullScreenContent() {
+                interstitialAd = null
+            }
         }
+
+        ad.show(activity)
     }
 }

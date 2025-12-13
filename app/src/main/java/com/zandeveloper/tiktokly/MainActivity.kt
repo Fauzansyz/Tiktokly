@@ -65,6 +65,15 @@ class MainActivity : AppCompatActivity() {
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         
+        dm = downloadManager(this)
+        
+        ads = AdsApp(this)
+        alert = Alerts(this@MainActivity)
+        ads.loadInterstitialAd()
+        
+        df = DataFetch(this)
+        
+        ads.preload()
         
         // == update service ==
         
@@ -85,15 +94,6 @@ class MainActivity : AppCompatActivity() {
             }
             prefs.edit().putBoolean("firstRun", false).apply()
         }
-        
-        dm = downloadManager(this)
-        
-        ads = AdsApp(this)
-        alert = Alerts(this@MainActivity)
-        ads.loadInterstitialAd()
-        
-        df = DataFetch(this)
-        
         
         binding.topAppBar.setOnMenuItemClickListener { item ->
     when (item.itemId) {
@@ -170,7 +170,7 @@ var trace = FirebasePerformance.getInstance().newTrace("Fetch_data")
         binding.titleVideo.text = title.toString()
         binding.textInput.text = null
         
-          ads.showInterstitial(this@MainActivity) {
+          ads.showOrContinue(this@MainActivity) {
         
    if (platform == "TikTok") {
     val videoList = result?.get("video") as? List<*>
