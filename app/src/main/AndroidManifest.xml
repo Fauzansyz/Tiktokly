@@ -19,7 +19,7 @@
         android:supportsRtl="true" 
         android:theme="@style/AppTheme">
        <activity 
-        android:name=".about.AboutActivity"
+        android:name=".ui.about.AboutActivity"
            android:exported="true"
         />
         <activity 

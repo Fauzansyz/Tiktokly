@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.zandeveloper.tiktokly.databinding.ActivityMainBinding
 import android.content.Intent
-import com.zandeveloper.tiktokly.about.AboutActivity
+import com.zandeveloper.tiktokly.ui.about.AboutActivity
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,7 +18,7 @@ import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import com.zandeveloper.tiktokly.utils.downloadManager
 import android.content.Context
-import com.zandeveloper.tiktokly.network.DataFetch
+import com.zandeveloper.tiktokly.data.network.DataFetch
 import java.io.IOException
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -41,7 +41,7 @@ import com.zandeveloper.tiktokly.utils.alerts.Alerts
 
 import com.zandeveloper.tiktokly.utils.userHelp.UserHelpApp
 
-import com.zandeveloper.tiktokly.network.updateService.UpdateServiceApp
+import com.zandeveloper.tiktokly.data.network.updateService.UpdateServiceApp
 
 import android.view.animation.DecelerateInterpolator
 
