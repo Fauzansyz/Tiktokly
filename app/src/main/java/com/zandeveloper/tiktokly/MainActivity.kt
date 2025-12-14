@@ -40,6 +40,7 @@ import com.google.firebase.perf.FirebasePerformance
 import com.google.firebase.perf.metrics.Trace
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.zandeveloper.tiktokly.utils.alerts.Alerts
+import com.zandeveloper.tiktokly.utils.stringValidator.StringValidator
 
 import com.zandeveloper.tiktokly.utils.userHelp.UserHelpApp
 
@@ -59,6 +60,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var df: DataFetch
     private lateinit var dm: downloadManager
     private lateinit var alert: Alerts
+    private lateinit var stringValidate: StringValidator
     
     private lateinit var ads: AdsApp
     
@@ -73,6 +75,7 @@ class MainActivity : AppCompatActivity() {
         alert = Alerts(this@MainActivity)
         
         df = DataFetch(this)
+        stringValidate = StringValidator()
         
         ads.preload()
         
@@ -106,32 +109,6 @@ class MainActivity : AppCompatActivity() {
 
         else -> false
     }
-}
-
-fun isValidUrl(url: String?): Boolean {
-    if (url.isNullOrBlank()) return false
-    return url.startsWith("http://") || url.startsWith("https://")
-}
-
-
-fun showVideoFormatDialog(
-    context: Context,
-    availableFormats: List<String>,
-    onFormatSelected: (String) -> Unit
-) {
-    val formatsArray = availableFormats.toTypedArray()
-    
-    MaterialAlertDialogBuilder(context)
-        .setTitle("Pilih format video")
-        .setSingleChoiceItems(formatsArray, -1) { dialog, which ->
-            // Pilihan langsung diambil
-            onFormatSelected(formatsArray[which])
-            dialog.dismiss()
-        }
-        .setNegativeButton("Batal") { dialog, _ ->
-            dialog.dismiss()
-        }
-        .show()
 }
 
 
