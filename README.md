@@ -27,7 +27,7 @@
 ## Features
 
 - **Video downloader**: Fast and high quality.
-- **Support all media social**: Supoorted media social, example: Tiktok, Instagram, YouTube.
+- **Support all media social**: Supoorted media social, example: Tiktok, Instagram, YouTube (deprecated).
 - **Simple and minimalist**: Simple and minimalist appearance and easy to use.
 - **Responsive Design**: Adapts to any screen size.
 - **Language**: Available in Bahasa Indonesia.
