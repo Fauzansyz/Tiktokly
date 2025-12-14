@@ -69,7 +69,6 @@ class MainActivity : AppCompatActivity() {
         
         ads = AdsApp(this)
         alert = Alerts(this@MainActivity)
-        ads.loadInterstitialAd()
         
         df = DataFetch(this)
         
@@ -191,6 +190,7 @@ dm.download(
     onCompleted = { filePath ->
         runOnUiThread {
          alert.success()
+         clearUI()
          binding.textInput.text?.clear()
         }
     },
@@ -198,6 +198,7 @@ dm.download(
     onError = {
         runOnUiThread {
           alert.failed()
+          clearUI()
           binding.textInput.text?.clear()
         }
     })
@@ -209,7 +210,7 @@ dm.download(
         
         if(platform.toString() == "YouTube") {
                 
-      alert.warn("Pegunduhan tidak bisa dilanjutkan!!", "Ada sedikit masalah untuk pengunduhan video Youtube, tunggu update selanjutnya")
+      alert.warn("Pegunduhan tidak bisa dilanjutkan!!", "Ada sedikit masalah untuk pengunduhan video Youtube,silahkan tunggu update selanjutnya")
     
      }
      
@@ -230,6 +231,7 @@ dm.download(
     onCompleted = { filePath ->
         runOnUiThread {
          alert.success()
+         clearUI()
          binding.textInput.text?.clear()
         }
     },
@@ -237,6 +239,7 @@ dm.download(
     onError = {
         runOnUiThread {
           alert.failed()
+          clearUI()
           binding.textInput.text?.clear()
         }
     })
@@ -253,13 +256,34 @@ dm.download(
                 binding.contentContainer.visibility = View.VISIBLE
 
         Glide.with(this@MainActivity)
-            .load(thumbnail.toString())
-            .centerCrop()
-            .transform(RoundedCorners(20))
-            .into(binding.itemThumbnail)
-               }
+    .load(thumbnail)
+    .thumbnail(0.25f) // load versi kecil dulu (kerasa banget di HP kentang)
+    .override(600, 600) // batasi ukuran biar gak rakus RAM
+    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+    .transform(
+        CenterCrop(),
+        RoundedCorners(20)
+    )
+    .into(binding.itemThumbnail)
+    
+            }
          }
 }
+
+private fun clearUI() {
+    // clear text
+    binding.contentContainer.visibility = View.GONE
+    binding.titleVideo.text = ""
+    binding.debugText.text = ""
+
+    // clear image (Glide)
+    Glide.with(this).clear(binding.itemThumbnail)
+    binding.itemThumbnail.setImageDrawable(null)
+
+    // reset progress kalau ada
+    // binding.progressBar.progress = 0
+}
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
