@@ -22,8 +22,8 @@ class Alerts(private var activity: Activity) {
   fun requiredInput() {
         MotionToast.createColorToast(
             activity,
-          getString(R.string.failed_alert_title),
-         getString(R.string.input_required_msg),
+          activity.getString(R.string.failed_alert_title),
+          activity.getString(R.string.input_required_msg),
             MotionToastStyle.ERROR,
             MotionToast.GRAVITY_BOTTOM,
             MotionToast.LONG_DURATION,
@@ -36,8 +36,8 @@ class Alerts(private var activity: Activity) {
   
 MotionToast.createColorToast(
                 activity,
-                getString(R.string.success_video_downloading),
-                getString(R.string.success_download_msg),
+                activity.getString(R.string.success_video_downloading),
+                activity.getString(R.string.success_download_msg),
                 MotionToastStyle.SUCCESS,
                 MotionToast.GRAVITY_BOTTOM,
                 MotionToast.LONG_DURATION,
@@ -49,8 +49,8 @@ MotionToast.createColorToast(
 fun failed() {
         MotionToast.createColorToast(
                 activity,
-                getString(R.string.failed_alert_title),
-                getString(R.string.failed_download_msg),
+                activity.getString(R.string.failed_alert_title),
+                activity.getString(R.string.failed_download_msg),
                 MotionToastStyle.ERROR,
                 MotionToast.GRAVITY_BOTTOM,
                 MotionToast.LONG_DURATION,
