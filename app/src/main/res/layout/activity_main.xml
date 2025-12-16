@@ -16,11 +16,12 @@
             android:id="@+id/topAppBar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:fontFamily="@font/poppins_semibold"
             android:background="?attr/colorSurface"
             app:title="Tiktokly"
             app:titleCentered="true"
             app:menu="@menu/top_app_bar_menu"
-            app:titleTextColor="?attr/colorOnPrimaryContainer" />
+            app:titleTextColor="?attr/colorOnBackground" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <!-- SEMUA KONTEN DALAM NESTED SCROLL -->
