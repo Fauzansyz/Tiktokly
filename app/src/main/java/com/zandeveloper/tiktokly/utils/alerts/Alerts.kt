@@ -22,8 +22,8 @@ class Alerts(private var activity: Activity) {
   fun requiredInput() {
         MotionToast.createColorToast(
             activity,
-            "Gagal mengunduh!!",
-            "Silahkan masukan Url video yang valid",
+          getString(R.string.failed_alert_title),
+         getString(R.string.input_required_msg),
             MotionToastStyle.ERROR,
             MotionToast.GRAVITY_BOTTOM,
             MotionToast.LONG_DURATION,
