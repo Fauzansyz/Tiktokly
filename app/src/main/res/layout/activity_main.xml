@@ -18,7 +18,7 @@
             android:layout_height="?attr/actionBarSize"
             android:fontFamily="@font/poppins_semibold"
             android:background="?attr/colorSurface"
-            app:title="Tiktokly"
+            app:title="@string/app_name"
             app:titleCentered="true"
             app:menu="@menu/top_app_bar_menu"
             app:titleTextColor="?attr/colorOnBackground" />
@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="16dp"
-                android:text="Tempel URL video di sini"
+                android:text=""
                 android:textSize="20sp"
                 android:fontFamily="@font/poppins_semibold"
                 android:textColor="?attr/colorOnSurface" />

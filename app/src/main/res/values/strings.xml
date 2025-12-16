@@ -3,6 +3,7 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Unduhan</string>
     <string name="title_notifications">About</string>
+    <string name="placeholder_input">Tempel URL video di sini</string>
     <string name="app_name">Tiktokly</string>
     <string name="context">context</string>
 </resources>
