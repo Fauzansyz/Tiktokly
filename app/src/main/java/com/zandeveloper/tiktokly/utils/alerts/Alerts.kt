@@ -36,8 +36,8 @@ class Alerts(private var activity: Activity) {
   
 MotionToast.createColorToast(
                 activity,
-                "Berhasil mengunduh!!",
-                "Video berhasil di unduh",
+                getString(R.string.success_video_downloading),
+                getString(R.string.success_download_msg),
                 MotionToastStyle.SUCCESS,
                 MotionToast.GRAVITY_BOTTOM,
                 MotionToast.LONG_DURATION,
@@ -49,8 +49,8 @@ MotionToast.createColorToast(
 fun failed() {
         MotionToast.createColorToast(
                 activity,
-                "Gagal mengunduh!!",
-                "Silahkan coba lagi beberapa saat",
+                getString(R.string.failed_alert_title),
+                getString(R.string.failed_download_msg),
                 MotionToastStyle.ERROR,
                 MotionToast.GRAVITY_BOTTOM,
                 MotionToast.LONG_DURATION,

@@ -3,8 +3,16 @@
     <string name="title_home">Home</string>
     <string name="title_notifications">About</string>
     <string name="placeholder_input">Tempel URL video di sini</string>
+    
     <string name="failed_alert_title">Gagal mengunduh!!</string>
     <string name="input_required_msg">Silahkan masukan URL video yang valid</string>
+
+    <string name="success_video_downloading">Berhasil mengunduh!!</string>
+    <string name="success_download_msg">Video berhasil di unduh</string>
+
+<string name="failed_download_msg">Silahkan coba lagi beberapa saat</string>
+    
+    
     <string name="text_button">Unduh</string>
     <string name="app_name">Tiktokly</string>
     <string name="context">context</string>

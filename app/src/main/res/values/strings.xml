@@ -5,6 +5,12 @@
     <string name="placeholder_input">Paste video URL here</string>
     <string name="failed_alert_title">Download failed!!</string>
     <string name="input_required_msg">Please enter a valid video URL</string>
+    
+    <string name="success_video_downloading">Downloaded successfully!!</string>
+    <string name="success_download_msg">Video downloaded successfully</string>
+
+<string name="failed_download_msg">Please try again in a moment</string>
+    
     <string name="text_button">Donwload</string>
     <string name="app_name">Tiktokly</string>
     <string name="context">context</string>
