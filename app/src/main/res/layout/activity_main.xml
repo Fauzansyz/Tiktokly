@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="16dp"
-                android:text=""
+                android:text="@string/placeholder_input"
                 android:textSize="20sp"
                 android:fontFamily="@font/poppins_semibold"
                 android:textColor="?attr/colorOnSurface" />
