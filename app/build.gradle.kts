@@ -17,7 +17,7 @@ android {
         applicationId = "com.zandeveloper.tiktokly"
         minSdk = 23
         targetSdk = 35
-        versionCode = 2
+        versionCode = 3
         versionName = "1.6.5"
 
         vectorDrawables {
