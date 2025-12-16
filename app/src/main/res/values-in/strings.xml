@@ -12,6 +12,13 @@
 
 <string name="failed_download_msg">Silahkan coba lagi beberapa saat</string>
     
+<string name="tutorial_title_first">Masukkan URL</string>
+
+<string name="tutorial_msg_first">Masukkan link video yang ingin diunduh</string>
+
+<string name="tutorial_title_second">Unduh Sekarang!</string>
+
+<string name="tutorial_msg_second">Klik tombol Unduh untuk mulai mengunduh video</string>
     
     <string name="text_button">Unduh</string>
     <string name="app_name">Tiktokly</string>

@@ -31,7 +31,8 @@ class UserHelpApp private constructor(
                     radius = 20f
                 )
             )
-            .setOverlay(createOverlay("Masukkan URL", "Masukkan link video yang ingin diunduh"))
+            .setOverlay(createOverlay(activity.getString(R.string.tutorial_title_first), 
+             activity.getString(R.string.tutorial_msg_first)))
             .setOnTargetListener(object : OnTargetListener {
                 override fun onStarted() {}
                 override fun onEnded() {}
@@ -47,7 +48,8 @@ class UserHelpApp private constructor(
                     radius = 20f
                 )
             )
-            .setOverlay(createOverlay("Download Sekarang!", "Klik tombol download untuk mulai"))
+            .setOverlay(createOverlay(activity.getString(R.string.tutorial_title_second),
+             activity.getString(R.string.tutorial_msg_second)))
             .setOnTargetListener(object : OnTargetListener {
                 override fun onStarted() {}
                 override fun onEnded() {

@@ -10,6 +10,14 @@
     <string name="success_download_msg">Video downloaded successfully</string>
 
 <string name="failed_download_msg">Please try again in a moment</string>
+
+<string name="tutorial_title_first">Enter URL</string>
+
+<string name="tutorial_msg_first">Enter the link of the video you want to download</string>
+
+<string name="tutorial_title_second">Download Now!</string>
+
+<string name="tutorial_msg_second">Click the download button to start</string>
     
     <string name="text_button">Donwload</string>
     <string name="app_name">Tiktokly</string>
