@@ -134,55 +134,119 @@ var trace = FirebasePerformance.getInstance().newTrace("Fetch_data")
 
         if (data == null) {
             uihandler.hideShimmer(binding.shimmerRoot, binding.contentContainer)
-            
-           uihandler.clearText(binding.titleVideo, binding.textInput)
 
             alert.failed()
             return@launch
-        } else {
-          handleDownload(data)
         }
+
+        val result = data["result"] as? Map<*, *>
+        val platform = data?.get("platform")
+        val title = result?.get("title") ?: "-"
+        val urlResult = result?.get("url") ?: "NaN"
+        val thumbnail = result?.get("thumbnail") ?: "-"
+
+        binding.titleVideo.text = title.toString()
+        binding.textInput.text = null
+        
+          ads.showOrContinue(this@MainActivity) {
+        
+   if (platform == "TikTok") {
+    val videoList = result?.get("video") as? List<*>
+    val mp4 = videoList?.firstOrNull()?.toString() ?: "NaN"
+
+    val filename = "tiktokly_${System.currentTimeMillis()}.mp4"
+
+dm.download(
+            mp4.toString(), 
+            filename, 
+            
+            onProgress = { p ->
+        runOnUiThread {
+           // binding.progressText.text = "Progress: $p%"
+        }
+    },
+
+    onCompleted = { filePath ->
+        runOnUiThread {
+         alert.success()
+         clearUI()
+         binding.textInput.text?.clear()
+        }
+    },
+
+    onError = {
+        runOnUiThread {
+          alert.failed()
+          clearUI()
+          binding.textInput.text?.clear()
+        }
+    })
 }
+        
+        // ============== 
+        
+        // Youtube feature in maintance mode
+        
+        if(platform.toString() == "YouTube") {
+                
+      alert.warn("Pegunduhan tidak bisa dilanjutkan!!", "Ada sedikit masalah untuk pengunduhan video Youtube,silahkan tunggu update selanjutnya")
     
-    }
-    
-    }
-    
-    private fun handleDownload(data: Map<String, Any?>) {
-        val platform = data["platform"].toString()
-        val result = data["result"] as? Map<*, *> ?: return
-
-        val url = when(platform) {
-            "TikTok" -> (result["video"] as? List<*>)?.firstOrNull()?.toString()
-            "Instagram" -> result["url"]?.toString()
-            else -> null
-        } ?: return
-
-        val filename = "${platform}_${System.currentTimeMillis()}.mp4"
-
-        ads.showOrContinue(this) {
-            dm.download(
-                url, filename,
-                onProgress = { /* update progress */ },
-                onCompleted = {
-                    alert.success()
-                    uihandler.clearThumbnail(binding.itemThumbnail)
-                    uihandler.clearText(binding.titleVideo, binding.textInput)
-                },
-                onError = {
-                    alert.failed()
-                    uihandler.clearThumbnail(binding.itemThumbnail)
-                    uihandler.clearText(binding.titleVideo, binding.textInput)
-                }
-            )
+     }
+     
+     if(platform.toString() == "Instagram") {
+     val videoUrl = result?.get("url") ?:"NaN"
+     val filename = "insta_${System.currentTimeMillis()}.mp4"
+        
+     dm.download(
+            videoUrl.toString(), 
+            filename, 
+            
+            onProgress = { p ->
+        runOnUiThread {
+           // binding.progressText.text = "Progress: $p%"
         }
+    },
 
-        // Update thumbnail
-        val thumbnail = result["thumbnail"]?.toString()
-        if(thumbnail != null) {
-            uihandler.showThumbnail(binding.itemThumbnail, thumbnail)
+    onCompleted = { filePath ->
+        runOnUiThread {
+         alert.success()
+         clearUI()
+         binding.textInput.text?.clear()
         }
+    },
+
+    onError = {
+        runOnUiThread {
+          alert.failed()
+          clearUI()
+          binding.textInput.text?.clear()
+        }
+    })
+     }
+ 
+            
+                uihandler.hideShimmer(binding.shimmerRoot, binding.contentContainer)
+        }
+        
+        uihandler.hideShimmer(binding.shimmerRoot, binding.contentContainer)
+        
+        Glide.with(this@MainActivity)
+    .load(thumbnail)
+    .thumbnail(0.25f) // load versi kecil dulu (kerasa banget di HP kentang)
+    .override(600, 600) // batasi ukuran biar gak rakus RAM
+    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+    .transform(
+        CenterCrop(),
+        RoundedCorners(20)
+    )
+    .into(binding.itemThumbnail)
+    
+            }
+    
+       }
+    
     }
+    
     
     override fun onDestroy() {
         super.onDestroy()
