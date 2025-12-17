@@ -135,7 +135,7 @@ var trace = FirebasePerformance.getInstance().newTrace("Fetch_data")
         if (data == null) {
             uihandler.hideShimmer(binding.shimmerRoot, binding.contentContainer)
             
-           uiHandler.clearText(binding.titleVideo, binding.textInput)
+           uihandler.clearText(binding.titleVideo, binding.textInput)
 
             alert.failed()
             return@launch
@@ -143,7 +143,7 @@ var trace = FirebasePerformance.getInstance().newTrace("Fetch_data")
           handleDownload(data)
         }
 }
-private fun handleDownload(data: Map<String, Any?>) {
+ fun handleDownload(data: Map<String, Any?>) {
         val platform = data["platform"].toString()
         val result = data["result"] as? Map<*, *> ?: return
 
@@ -161,13 +161,13 @@ private fun handleDownload(data: Map<String, Any?>) {
                 onProgress = { /* update progress */ },
                 onCompleted = {
                     alert.success()
-                    uiHandler.clearThumbnail(binding.itemThumbnail)
-                    uiHandler.clearText(binding.titleVideo, binding.textInput)
+                    uihandler.clearThumbnail(binding.itemThumbnail)
+                    uihandler.clearText(binding.titleVideo, binding.textInput)
                 },
                 onError = {
                     alert.failed()
-                    uiHandler.clearThumbnail(binding.itemThumbnail)
-                    uiHandler.clearText(binding.titleVideo, binding.textInput)
+                    uihandler.clearThumbnail(binding.itemThumbnail)
+                    uihandler.clearText(binding.titleVideo, binding.textInput)
                 }
             )
         }
@@ -175,7 +175,7 @@ private fun handleDownload(data: Map<String, Any?>) {
         // Update thumbnail
         val thumbnail = result["thumbnail"]?.toString()
         if(thumbnail != null) {
-            uiHandler.showThumbnail(binding.itemThumbnail, thumbnail)
+            uihandler.showThumbnail(binding.itemThumbnail, thumbnail)
         }
     }
     
