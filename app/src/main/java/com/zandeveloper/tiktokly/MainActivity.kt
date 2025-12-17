@@ -49,6 +49,7 @@ import com.zandeveloper.tiktokly.data.network.updateService.UpdateServiceApp
 import android.view.animation.DecelerateInterpolator
 
 import com.google.gson.reflect.TypeToken
+import com.zandeveloper.tiktokly.utils.uiHandler.UiHandler
 
 
 class MainActivity : AppCompatActivity() {
@@ -61,6 +62,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var dm: downloadManager
     private lateinit var alert: Alerts
     private lateinit var stringValidate: StringValidator
+    private lateinit var uihandler: UiHandler
     
     private lateinit var ads: AdsApp
     
@@ -76,6 +78,8 @@ class MainActivity : AppCompatActivity() {
         
         df = DataFetch(this)
         stringValidate = StringValidator()
+        
+        uihandler = UiHandler()
         
         ads.preload()
         
@@ -122,147 +126,61 @@ var trace = FirebasePerformance.getInstance().newTrace("Fetch_data")
         return@setOnClickListener
     }
 
-    binding.shimmerRoot.startShimmer()
-    binding.shimmerRoot.visibility = View.VISIBLE
-    binding.contentContainer.visibility = View.GONE
+    uihandler.showShimmer(binding.shimmerRoot, binding.contentContainer)
     
     lifecycleScope.launch {
         val apiUrl = "https://dl-server-core.vercel.app/download"
         val data = df.fetchDataVideo(apiUrl, inputUrl)
 
         if (data == null) {
-            binding.shimmerRoot.stopShimmer()
-            binding.shimmerRoot.visibility = View.GONE
-            binding.contentContainer.visibility = View.VISIBLE
+            uihandler.hideShimmer(binding.shimmerRoot, binding.contentContainer)
+            
+           uiHandler.clearText(binding.titleVideo, binding.textInput)
 
             alert.failed()
             return@launch
+        } else {
+          handleDownload(data)
         }
-
-        val result = data["result"] as? Map<*, *>
-        val platform = data?.get("platform")
-        val title = result?.get("title") ?: "-"
-        val urlResult = result?.get("url") ?: "NaN"
-        val thumbnail = result?.get("thumbnail") ?: "-"
-
-        binding.titleVideo.text = title.toString()
-        binding.textInput.text = null
-        
-          ads.showOrContinue(this@MainActivity) {
-        
-   if (platform == "TikTok") {
-    val videoList = result?.get("video") as? List<*>
-    val mp4 = videoList?.firstOrNull()?.toString() ?: "NaN"
-
-    val filename = "tiktokly_${System.currentTimeMillis()}.mp4"
-
-dm.download(
-            mp4.toString(), 
-            filename, 
-            
-            onProgress = { p ->
-        runOnUiThread {
-           // binding.progressText.text = "Progress: $p%"
-        }
-    },
-
-    onCompleted = { filePath ->
-        runOnUiThread {
-         alert.success()
-         clearUI()
-         binding.textInput.text?.clear()
-        }
-    },
-
-    onError = {
-        runOnUiThread {
-          alert.failed()
-          clearUI()
-          binding.textInput.text?.clear()
-        }
-    })
 }
-        
-        // ============== 
-        
-        // Youtube feature in maintance mode
-        
-        if(platform.toString() == "YouTube") {
-                
-      alert.warn("Pegunduhan tidak bisa dilanjutkan!!", "Ada sedikit masalah untuk pengunduhan video Youtube,silahkan tunggu update selanjutnya")
+private fun handleDownload(data: Map<String, Any?>) {
+        val platform = data["platform"].toString()
+        val result = data["result"] as? Map<*, *> ?: return
+
+        val url = when(platform) {
+            "TikTok" -> (result["video"] as? List<*>)?.firstOrNull()?.toString()
+            "Instagram" -> result["url"]?.toString()
+            else -> null
+        } ?: return
+
+        val filename = "${platform}_${System.currentTimeMillis()}.mp4"
+
+        ads.showOrContinue(this) {
+            dm.download(
+                url, filename,
+                onProgress = { /* update progress */ },
+                onCompleted = {
+                    alert.success()
+                    uiHandler.clearThumbnail(binding.itemThumbnail)
+                    uiHandler.clearText(binding.titleVideo, binding.textInput)
+                },
+                onError = {
+                    alert.failed()
+                    uiHandler.clearThumbnail(binding.itemThumbnail)
+                    uiHandler.clearText(binding.titleVideo, binding.textInput)
+                }
+            )
+        }
+
+        // Update thumbnail
+        val thumbnail = result["thumbnail"]?.toString()
+        if(thumbnail != null) {
+            uiHandler.showThumbnail(binding.itemThumbnail, thumbnail)
+        }
+    }
     
-     }
-     
-     if(platform.toString() == "Instagram") {
-     val videoUrl = result?.get("url") ?:"NaN"
-     val filename = "insta_${System.currentTimeMillis()}.mp4"
-        
-     dm.download(
-            videoUrl.toString(), 
-            filename, 
-            
-            onProgress = { p ->
-        runOnUiThread {
-           // binding.progressText.text = "Progress: $p%"
-        }
-    },
-
-    onCompleted = { filePath ->
-        runOnUiThread {
-         alert.success()
-         clearUI()
-         binding.textInput.text?.clear()
-        }
-    },
-
-    onError = {
-        runOnUiThread {
-          alert.failed()
-          clearUI()
-          binding.textInput.text?.clear()
-        }
-    })
-     }
- 
-            
-                binding.shimmerRoot.stopShimmer()
-                binding.shimmerRoot.visibility = View.GONE
-                binding.contentContainer.visibility = View.VISIBLE
-        }
-        
-        binding.shimmerRoot.stopShimmer()
-                binding.shimmerRoot.visibility = View.GONE
-                binding.contentContainer.visibility = View.VISIBLE
-
-        Glide.with(this@MainActivity)
-    .load(thumbnail)
-    .thumbnail(0.25f) // load versi kecil dulu (kerasa banget di HP kentang)
-    .override(600, 600) // batasi ukuran biar gak rakus RAM
-    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-    .transform(
-        CenterCrop(),
-        RoundedCorners(20)
-    )
-    .into(binding.itemThumbnail)
+    }
     
-            }
-         }
-}
-
-private fun clearUI() {
-    // clear text
-    binding.contentContainer.visibility = View.GONE
-    binding.titleVideo.text = ""
-    binding.debugText.text = ""
-
-    // clear image (Glide)
-    Glide.with(this).clear(binding.itemThumbnail)
-    binding.itemThumbnail.setImageDrawable(null)
-
-    // reset progress kalau ada
-    // binding.progressBar.progress = 0
-}
-
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
