@@ -169,16 +169,16 @@ dm.download(
     onCompleted = { filePath ->
         runOnUiThread {
          alert.success()
-         clearUI()
-         binding.textInput.text?.clear()
+         uihandler.clearText(binding.textInput, binding.titleVideo)
+         uihandler.clearThumbnail(binding.itemThumbnail)
         }
     },
 
     onError = {
         runOnUiThread {
           alert.failed()
-          clearUI()
-          binding.textInput.text?.clear()
+          uihandler.clearText(binding.textInput, binding.titleVideo)
+          uihandler.clearThumbnail(binding.itemThumbnail)
         }
     })
 }
@@ -210,16 +210,15 @@ dm.download(
     onCompleted = { filePath ->
         runOnUiThread {
          alert.success()
-         clearUI()
-         binding.textInput.text?.clear()
+         uihandler.clearText(binding.textInput, binding.titleVideo)
+         uihandler.clearThumbnail(binding.itemThumbnail)
         }
     },
 
     onError = {
         runOnUiThread {
           alert.failed()
-          clearUI()
-          binding.textInput.text?.clear()
+          uihandler.clearText(binding.textInput, binding.titleVideo)
         }
     })
      }
@@ -230,17 +229,8 @@ dm.download(
         
         uihandler.hideShimmer(binding.shimmerRoot, binding.contentContainer)
         
-        Glide.with(this@MainActivity)
-    .load(thumbnail)
-    .thumbnail(0.25f) // load versi kecil dulu (kerasa banget di HP kentang)
-    .override(600, 600) // batasi ukuran biar gak rakus RAM
-    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-    .transform(
-        CenterCrop(),
-        RoundedCorners(20)
-    )
-    .into(binding.itemThumbnail)
-    
+        uihandler.showThumbnail(binding.itemThumbnail,thumbnail.toString())
+   
             }
     
        }

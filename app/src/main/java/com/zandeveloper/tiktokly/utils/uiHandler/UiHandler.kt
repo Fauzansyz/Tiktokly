@@ -10,13 +10,16 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 class UiHandler {
 
     fun showThumbnail(imageView: ImageView, url: String) {
+    
         Glide.with(imageView.context)
-            .load(url)
-            .thumbnail(0.25f)
-            .override(600, 600)
-            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-            .transform(CenterCrop(), RoundedCorners(20))
-            .into(imageView)
+          .load(url)
+          .thumbnail(0.25f) // load versi kecil dulu (kerasa banget di HP kentang)
+          .override(600, 600) // batasi ukuran biar gak rakus RAM
+          .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+          .transform(
+        CenterCrop(),
+        RoundedCorners(20))
+        .into(imageView)
     }
 
     fun clearThumbnail(imageView: ImageView) {
