@@ -143,7 +143,12 @@ var trace = FirebasePerformance.getInstance().newTrace("Fetch_data")
           handleDownload(data)
         }
 }
- fun handleDownload(data: Map<String, Any?>) {
+    
+    }
+    
+    }
+    
+    private fun handleDownload(data: Map<String, Any?>) {
         val platform = data["platform"].toString()
         val result = data["result"] as? Map<*, *> ?: return
 
@@ -177,10 +182,6 @@ var trace = FirebasePerformance.getInstance().newTrace("Fetch_data")
         if(thumbnail != null) {
             uihandler.showThumbnail(binding.itemThumbnail, thumbnail)
         }
-    }
-    
-    }
-    
     }
     
     override fun onDestroy() {
