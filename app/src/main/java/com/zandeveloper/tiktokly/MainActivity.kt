@@ -181,6 +181,8 @@ private fun handleDownload(data: Map<String, Any?>) {
     
     }
     
+    }
+    
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
