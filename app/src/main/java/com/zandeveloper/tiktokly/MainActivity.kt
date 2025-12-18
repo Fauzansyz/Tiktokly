@@ -97,8 +97,8 @@ class MainActivity : AppCompatActivity() {
              .setBinding(binding)
              .build()
     
-            binding.root.post {
-        help.startHelp()
+       binding.root.post {
+          help.startHelp()
             }
             prefs.edit().putBoolean("firstRun", false).apply()
         }
@@ -120,7 +120,6 @@ var trace = FirebasePerformance.getInstance().newTrace("Fetch_data")
 
         binding.buttonDownload.setOnClickListener {
     val inputUrl = binding.textInput.text.toString().trim()
-    val formats = listOf("mp4", "mp3")
     if (inputUrl.isEmpty()) {
         alert.requiredInput()
         return@setOnClickListener
