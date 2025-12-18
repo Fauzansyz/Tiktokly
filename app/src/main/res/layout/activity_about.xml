@@ -48,7 +48,7 @@
              android:textColor="@color/onText"
              android:layout_marginTop="13dp"
              android:id="@+id/developerInfo"
-             android:text="Dikembangkan oleh Zandeveloper" />
+             android:text="By Zandeveloper" />
 
     </LinearLayout>
 
