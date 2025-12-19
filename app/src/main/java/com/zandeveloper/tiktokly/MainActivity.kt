@@ -116,8 +116,6 @@ class MainActivity : AppCompatActivity() {
 }
 
 
-var trace = FirebasePerformance.getInstance().newTrace("Fetch_data")
-
         binding.buttonDownload.setOnClickListener {
     val inputUrl = binding.textInput.text.toString().trim()
     if (inputUrl.isEmpty()) {
