@@ -152,10 +152,10 @@ var trace = FirebasePerformance.getInstance().newTrace("Fetch_data")
    if (platform == "TikTok") {
     val videoList = result?.get("video") as? List<*>
     val mp4 = videoList?.firstOrNull()?.toString() ?: "NaN"
-
+    Toast.makeText(this@MainActivity, mp4, Toast.LENGTH_SHORT).show()
     val filename = "tiktokly_${System.currentTimeMillis()}.mp4"
-
-dm.download(
+    
+         dm.download(
             mp4.toString(), 
             filename, 
             
@@ -177,9 +177,10 @@ dm.download(
         runOnUiThread {
           alert.failed()
           uihandler.clearText(binding.textInput, binding.titleVideo)
-          uihandler.clearThumbnail(binding.itemThumbnail)
         }
     })
+
+
 }
         
         // ============== 
