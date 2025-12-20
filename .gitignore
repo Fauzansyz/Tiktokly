@@ -84,6 +84,8 @@ lint/tmp/
 
 # androidide
 .androidide
+.acside
+.kls
 
 #env 
 key.properties
