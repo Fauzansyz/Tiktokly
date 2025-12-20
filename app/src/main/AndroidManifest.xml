@@ -22,6 +22,11 @@
         android:name=".ui.about.AboutActivity"
            android:exported="true"
         />
+        
+        <activity
+           android:name=".ui.setting.SettingActivity"
+            android:exported="true"/>
+            
         <activity 
             android:name="MainActivity"
             android:windowSoftInputMode="adjustResize|stateHidden" 

@@ -8,6 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import com.zandeveloper.tiktokly.databinding.ActivityMainBinding
 import android.content.Intent
 import com.zandeveloper.tiktokly.ui.about.AboutActivity
+import com.zandeveloper.tiktokly.ui.setting.SettingActivity
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -104,7 +105,7 @@ class MainActivity : AppCompatActivity() {
         binding.topAppBar.setOnMenuItemClickListener { item ->
     when (item.itemId) {
         R.id.action_about -> {
-        val intent = Intent(this,AboutActivity::class.java)
+        val intent = Intent(this,SettingActivity::class.java)
          startActivity(intent)
             true
         }
