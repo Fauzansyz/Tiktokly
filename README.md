@@ -1,3 +1,5 @@
+> The project is still under development, if you find any problem please open an issue
+
 <img width=80 src="app/src/main/res/mipmap-xxxhdpi/ic_launcher.png">
 
 <h2 align="left"><b>Tiktoly</b></h2>
