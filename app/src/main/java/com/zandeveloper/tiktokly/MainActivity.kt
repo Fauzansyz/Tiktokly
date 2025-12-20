@@ -47,10 +47,8 @@ import com.zandeveloper.tiktokly.utils.userHelp.UserHelpApp
 import com.zandeveloper.tiktokly.data.network.updateService.UpdateServiceApp
 
 import android.view.animation.DecelerateInterpolator
-
 import com.google.gson.reflect.TypeToken
 import com.zandeveloper.tiktokly.utils.uiHandler.UiHandler
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -159,7 +157,7 @@ class MainActivity : AppCompatActivity() {
             
             onProgress = { p ->
         runOnUiThread {
-           // binding.progressText.text = "Progress: $p%"
+           // On progress ( on going )
         }
     },
 
@@ -201,7 +199,7 @@ class MainActivity : AppCompatActivity() {
             
             onProgress = { p ->
         runOnUiThread {
-           // binding.progressText.text = "Progress: $p%"
+           // On progress ( on going )
         }
     },
 
