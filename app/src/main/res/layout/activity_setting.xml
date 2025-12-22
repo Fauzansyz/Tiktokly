@@ -16,6 +16,7 @@
              android:layout_height="?attr/actionBarSize"
              android:layout_width="match_parent"
              android:background="?attr/colorSurface"
+             android:fontFamily="@font/poppins_semibold"
              app:title="Pengaturan"
              app:titleTextColor="?attr/colorOnBackground"
              app:navigationIcon="@drawable/arrow_back_24px"
