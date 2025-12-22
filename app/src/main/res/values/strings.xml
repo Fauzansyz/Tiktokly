@@ -20,6 +20,7 @@
 <string name="tutorial_msg_second">Click the download button to start</string>
     
     <string name="text_button">Donwload</string>
+    <string name="setting_title_page">Setting</string>
     <string name="app_name">Tiktokly</string>
     <string name="context">context</string>
 </resources>

@@ -21,6 +21,7 @@
 <string name="tutorial_msg_second">Klik tombol Unduh untuk mulai mengunduh video</string>
     
     <string name="text_button">Unduh</string>
+    <string name="setting_title_page">Pengaturan</string>
     <string name="app_name">Tiktokly</string>
     <string name="context">context</string>
 </resources>

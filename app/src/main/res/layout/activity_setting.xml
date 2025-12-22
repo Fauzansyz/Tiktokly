@@ -17,7 +17,7 @@
              android:layout_width="match_parent"
              android:background="?attr/colorSurface"
              android:fontFamily="@font/poppins_semibold"
-             app:title="Pengaturan"
+             app:title="@string/setting_title_page"
              app:titleTextColor="?attr/colorOnBackground"
              app:navigationIcon="@drawable/arrow_back_24px"
              android:id="@+id/topAppBar">
@@ -71,7 +71,6 @@
             <com.google.android.material.button.MaterialButton
                  android:layout_height="wrap_content"
                  android:layout_width="match_parent"
-                 app:icon="@drawable/ic_settings_24px"
                  app:cornerRadius="20dp"
                  android:layout_marginTop="20dp"
                  android:id="@+id/buttonSaveDirectory"
