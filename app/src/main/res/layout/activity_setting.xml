@@ -1,90 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/root_layout">
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     android:layout_height="match_parent"
+     android:layout_width="match_parent"
+     android:background="?attr/colorSurface"
+     android:id="@+id/root_layout">
 
-    <!-- TOOLBAR -->
     <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="true">
-
- <com.google.android.material.appbar.MaterialToolbar
-    android:id="@+id/topAppBar"
-    android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize"
-    android:fontFamily="@font/poppins_semibold"
-    android:background="?attr/colorSurface"
-    app:titleTextColor="?attr/colorOnBackground"
-    app:navigationIcon="@drawable/arrow_back_24px" />
-
-     <TextView
-         android:layout_width="wrap_content"
          android:layout_height="wrap_content"
-         android:layout_gravity="center_horizontal"
-         android:layout_marginBottom="16dp"
-         android:text="Pengaturan"
-         android:textSize="20sp"
-         android:fontFamily="@font/poppins_semibold"
-         android:textColor="?attr/colorOnSurface" />
+         android:layout_width="match_parent"
+         android:fitsSystemWindows="true">
 
-    
+        <com.google.android.material.appbar.MaterialToolbar
+             android:layout_height="?attr/actionBarSize"
+             android:layout_width="match_parent"
+             android:background="?attr/colorSurface"
+             app:title="Pengaturan"
+             app:titleTextColor="?attr/colorOnBackground"
+             app:navigationIcon="@drawable/arrow_back_24px"
+             android:id="@+id/topAppBar">
+
+        </com.google.android.material.appbar.MaterialToolbar>
+
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!-- SEMUA KONTEN DALAM NESTED SCROLL -->
     <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:background="?attr/colorSurface"
-        android:padding="20dp">
+         android:layout_height="match_parent"
+         android:layout_width="match_parent"
+         app:layout_behavior="@string/appbar_scrolling_view_behavior"
+         android:padding="20dp"
+         android:clipToPadding="false">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:animateLayoutChanges="true"  
-            android:orientation="vertical">
-       
-            <!-- Custom Directory -->
+             android:layout_height="wrap_content"
+             android:layout_width="match_parent"
+             android:animateLayoutChanges="true"
+             android:orientation="vertical">
+
             <TextView
-                android:id="@+id/tvCustomDirLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Custom Download Directory"
-                android:textSize="16sp"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/helvetica_regular"
-                android:textColor="?attr/colorOnSurface" />
+                 android:layout_height="wrap_content"
+                 android:layout_width="match_parent"
+                 android:layout_marginBottom="8dp"
+                 android:textSize="16sp"
+                 android:fontFamily="@font/poppins_semibold"
+                 android:textColor="?attr/colorOnSurface"
+                 android:text="Custom Download Directory" />
 
-            <LinearLayout
-                android:id="@+id/layoutCustomDir"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="12dp"
-                android:background="?attr/selectableItemBackground"
-                android:gravity="center_vertical"
-                android:layout_marginTop="8dp">
+            <com.google.android.material.textfield.TextInputLayout
+                 android:layout_height="wrap_content"
+                 android:layout_width="match_parent"
+                 app:boxCornerRadiusTopEnd="16dp"
+                 android:hint="Directory path"
+                 app:boxCornerRadiusBottomStart="16dp"
+                 app:boxCornerRadiusBottomEnd="16dp"
+                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                 app:boxCornerRadiusTopStart="16dp"
+                 android:id="@+id/inputDirectoryContainer">
 
-                <TextView
-                    android:id="@+id/tvDirectoryPath"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Default Directory"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:layout_weight="1"
-                    android:textColor="?attr/colorOnSurface"/>
+                <com.google.android.material.textfield.TextInputEditText
+                     android:layout_height="wrap_content"
+                     android:layout_width="match_parent"
+                     android:textSize="14sp"
+                     android:inputType="text"
+                     android:id="@+id/textInputDirectory" />
 
-                <ImageView
-                    android:id="@+id/ivSelectDir"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@android:drawable/ic_menu_edit"/>
-            </LinearLayout>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                 android:layout_height="wrap_content"
+                 android:layout_width="match_parent"
+                 app:icon="@drawable/ic_settings_24px"
+                 app:cornerRadius="20dp"
+                 android:layout_marginTop="20dp"
+                 android:id="@+id/buttonSaveDirectory"
+                 android:text="Save"
+                 app:iconGravity="textStart" />
 
         </LinearLayout>
 
