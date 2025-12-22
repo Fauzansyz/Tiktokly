@@ -12,15 +12,26 @@
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/topAppBar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:fontFamily="@font/poppins_semibold"
-            android:background="?attr/colorSurface"
-            app:title="Settings"
-            app:titleCentered="true"
-            app:titleTextColor="?attr/colorOnBackground" />
+ <com.google.android.material.appbar.MaterialToolbar
+    android:id="@+id/topAppBar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:fontFamily="@font/poppins_semibold"
+    android:background="?attr/colorSurface"
+    app:titleTextColor="?attr/colorOnBackground"
+    app:navigationIcon="@drawable/arrow_back_24px" />
+
+     <TextView
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_gravity="center_horizontal"
+         android:layout_marginBottom="16dp"
+         android:text="Pengaturan"
+         android:textSize="20sp"
+         android:fontFamily="@font/poppins_semibold"
+         android:textColor="?attr/colorOnSurface" />
+
+    
     </com.google.android.material.appbar.AppBarLayout>
 
     <!-- SEMUA KONTEN DALAM NESTED SCROLL -->
@@ -36,18 +47,7 @@
             android:layout_height="wrap_content"
             android:animateLayoutChanges="true"  
             android:orientation="vertical">
-
-            <!-- Judul -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="16dp"
-                android:text="Pengaturan"
-                android:textSize="20sp"
-                android:fontFamily="@font/poppins_semibold"
-                android:textColor="?attr/colorOnSurface" />
-
+       
             <!-- Custom Directory -->
             <TextView
                 android:id="@+id/tvCustomDirLabel"

@@ -14,6 +14,12 @@ private val binding get() = _binding!!
        
         _binding = ActivitySettingBinding.inflate(layoutInflater)
         
+        setSupportActionBar(binding.topAppBar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true) // tombol back aktif
+        binding.topAppBar.setNavigationOnClickListener {
+            finish() // kembali ke activity sebelumnya
+        }
+        
         setContentView(binding.root)
     }
 }
