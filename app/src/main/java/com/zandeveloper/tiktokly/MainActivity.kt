@@ -52,7 +52,6 @@ import com.google.gson.reflect.TypeToken
 import com.zandeveloper.tiktokly.utils.uiHandler.UiHandler
 
 class MainActivity : AppCompatActivity() {
-
     private var _binding: ActivityMainBinding? = null
     
     private val binding get() = _binding!!
@@ -104,7 +103,7 @@ class MainActivity : AppCompatActivity() {
         
         binding.topAppBar.setOnMenuItemClickListener { item ->
     when (item.itemId) {
-        R.id.action_about -> {
+        R.id.action_setting -> {
         val intent = Intent(this,SettingActivity::class.java)
          startActivity(intent)
             true

@@ -18,9 +18,8 @@
             android:layout_height="?attr/actionBarSize"
             android:fontFamily="@font/poppins_semibold"
             android:background="?attr/colorSurface"
-            app:title="Setting"
+            app:title="Settings"
             app:titleCentered="true"
-            app:menu="@menu/top_app_bar_menu"
             app:titleTextColor="?attr/colorOnBackground" />
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -38,8 +37,56 @@
             android:animateLayoutChanges="true"  
             android:orientation="vertical">
 
-        
-</LinearLayout>
+            <!-- Judul -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="16dp"
+                android:text="Pengaturan"
+                android:textSize="20sp"
+                android:fontFamily="@font/poppins_semibold"
+                android:textColor="?attr/colorOnSurface" />
+
+            <!-- Custom Directory -->
+            <TextView
+                android:id="@+id/tvCustomDirLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Custom Download Directory"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/helvetica_regular"
+                android:textColor="?attr/colorOnSurface" />
+
+            <LinearLayout
+                android:id="@+id/layoutCustomDir"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="12dp"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:layout_marginTop="8dp">
+
+                <TextView
+                    android:id="@+id/tvDirectoryPath"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Default Directory"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:layout_weight="1"
+                    android:textColor="?attr/colorOnSurface"/>
+
+                <ImageView
+                    android:id="@+id/ivSelectDir"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@android:drawable/ic_menu_edit"/>
+            </LinearLayout>
+
+        </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
 
