@@ -20,7 +20,7 @@
             android:background="?attr/colorSurface"
             app:title="@string/app_name"
             app:titleCentered="true"
-            app:menu="@menu/top_app_bar_menu"
+            app:menu="@menu/top_appbar_main_menu"
             app:titleTextColor="?attr/colorOnBackground" />
     </com.google.android.material.appbar.AppBarLayout>
 
