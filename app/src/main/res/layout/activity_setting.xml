@@ -19,6 +19,7 @@
              android:fontFamily="@font/poppins_semibold"
              app:title="@string/setting_title_page"
              app:titleTextColor="?attr/colorOnBackground"
+             app:menu="@menu/top_app_bar_menu"
              app:navigationIcon="@drawable/arrow_back_24px"
              android:id="@+id/topAppBar">
 
