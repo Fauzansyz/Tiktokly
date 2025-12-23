@@ -47,7 +47,7 @@
          android:textSize="18sp"
          android:fontFamily="@font/poppins_semibold"
          android:textColor="?attr/colorOnSurface"
-         android:layout_marginTop="24dp"
+         android:layout_marginTop="0dp"
          android:layout_marginBottom="8dp"/>
 
 <TextView
@@ -95,7 +95,10 @@
             app:icon="@drawable/ic_folder_24px"
             app:iconPadding="8dp"
             app:cornerRadius="14dp"
-            style="@style/Widget.Material3.Button.TonalButton"/>
+            app:iconTint="@color/skeleton_bg"
+            android:textColor="@color/colorOnBackground"
+            app:backgroundTint="@color/colorPrimary"
+            style="@style/Widget.Tiktokly.TonalButton"/>
 
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

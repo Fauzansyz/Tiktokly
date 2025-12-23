@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
 import com.zandeveloper.tiktokly.R
 import com.zandeveloper.tiktokly.ui.about.AboutActivity
-import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContracts
 import android.net.Uri
 import com.zandeveloper.tiktokly.databinding.ActivitySettingBinding

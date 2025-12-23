@@ -77,6 +77,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 app:iconGravity="textStart"
+                app:backgroundTint="@color/colorPrimary"
+                android:textColor="@color/colorOnBackground"
+                app:iconTint="@color/skeleton_bg"
+                style="@style/Widget.Tiktokly.TonalButton"
                 android:text="@string/text_button"
                 app:icon="@drawable/ic_download_24"
                 app:cornerRadius="20dp"/>
