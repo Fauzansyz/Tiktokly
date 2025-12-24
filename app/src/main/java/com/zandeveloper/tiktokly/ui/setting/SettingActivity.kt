@@ -24,7 +24,7 @@ private val folderPicker =
                         Intent.FLAG_GRANT_WRITE_URI_PERMISSION
             )
 
-            DirectoryManager.saveDirectory(this, it)
+            DirectoryManager.saveCustomDir(this, it)
             binding.textCurrentDirectory.text =
                 DirectoryManager.getDirectoryLabel(this)
         }

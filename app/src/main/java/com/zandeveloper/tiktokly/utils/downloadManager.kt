@@ -1,86 +1,79 @@
 package com.zandeveloper.tiktokly.utils
 
+import android.content.ContentResolver
 import android.content.Context
 import android.net.Uri
-import androidx.documentfile.provider.DocumentFile
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import java.io.IOException
-import android.net.Uri
+import android.provider.DocumentsContract
+import kotlinx.coroutines.*
+import java.io.BufferedInputStream
+import java.net.HttpURLConnection
+import java.net.URL
 
-class DownloadManagerApp(private val context: Context) {
-
-    private val dm by lazy {
-        context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-    }
+class downloadManager(
+    private val context: Context,
+    private val scope: CoroutineScope
+) {
 
     fun download(
         url: String,
-        folderUri: Uri,
+        folderUri: Uri?,
         fileName: String,
         onProgress: (Int) -> Unit,
         onCompleted: (Uri) -> Unit,
-        onError: () -> Unit
+        onError: (Throwable) -> Unit
     ) {
-        val request = DownloadManager.Request(Uri.parse(url))
-            .setTitle(fileName)
-            .setNotificationVisibility(
-                DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED
-            )
-            .setDestinationUri(
-                Uri.withAppendedPath(folderUri, fileName)
-            )
-            .setAllowedOverMetered(true)
-            .setAllowedOverRoaming(true)
+        scope.launch(Dispatchers.IO) {
+            try {
+            val resolvedFolderUri = folderUri
+    ?: throw IllegalStateException("Folder URI belum dipilih")
+                // 1️⃣ buat file di SAF
+                val fileUri = DocumentsContract.createDocument(
+                    context.contentResolver,
+                    resolvedFolderUri,
+                    "video/mp4", // ganti sesuai tipe
+                    fileName
+                ) ?: throw Exception("Gagal create file")
 
-        val downloadId = dm.enqueue(request)
+                // 2️⃣ buka koneksi
+                val connection = URL(url).openConnection() as HttpURLConnection
+                connection.connect()
 
-        CoroutineScope(Dispatchers.IO).launch {
-            var downloading = true
-            while (downloading) {
-                val cursor = dm.query(
-                    DownloadManager.Query().setFilterById(downloadId)
-                )
+                val totalSize = connection.contentLength
 
-                if (cursor.moveToFirst()) {
-                    when (
-                        cursor.getInt(
-                            cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_STATUS)
-                        )
-                    ) {
-                        DownloadManager.STATUS_FAILED -> {
-                            onError()
-                            downloading = false
+                val input = BufferedInputStream(connection.inputStream)
+                val output = context.contentResolver.openOutputStream(fileUri)
+                    ?: throw Exception("OutputStream null")
+
+                val buffer = ByteArray(8 * 1024)
+                var downloaded = 0
+                var read: Int
+
+                // 3️⃣ streaming + progress
+                while (input.read(buffer).also { read = it } != -1) {
+                    output.write(buffer, 0, read)
+                    downloaded += read
+
+                    if (totalSize > 0) {
+                        val progress = (downloaded * 100) / totalSize
+                        withContext(Dispatchers.Main) {
+                            onProgress(progress)
                         }
-
-                        DownloadManager.STATUS_SUCCESSFUL -> {
-                            val uri = Uri.parse(
-                                cursor.getString(
-                                    cursor.getColumnIndexOrThrow(
-                                        DownloadManager.COLUMN_LOCAL_URI
-                                    )
-                                )
-                            )
-                            onCompleted(uri)
-                            downloading = false
-                        }
-                    }
-
-                    val total =
-                        cursor.getLong(cursor.getColumnIndexOrThrow(
-                            DownloadManager.COLUMN_TOTAL_SIZE_BYTES))
-                    val downloaded =
-                        cursor.getLong(cursor.getColumnIndexOrThrow(
-                            DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR))
-
-                    if (total > 0) {
-                        onProgress(((downloaded * 100) / total).toInt())
                     }
                 }
-                cursor.close()
-                delay(300)
+
+                output.flush()
+                output.close()
+                input.close()
+                connection.disconnect()
+
+                withContext(Dispatchers.Main) {
+                    onCompleted(fileUri)
+                }
+
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    onError(e)
+                }
             }
         }
     }

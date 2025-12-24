@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
+import android.net.Uri
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import com.zandeveloper.tiktokly.utils.downloadManager
@@ -64,13 +65,18 @@ class MainActivity : AppCompatActivity() {
     private lateinit var uihandler: UiHandler
     
     private lateinit var ads: AdsApp
+    private lateinit var savedUri: Uri
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         
-        dm = downloadManager(this)
+    dm = downloadManager(
+        context = this,
+        scope = lifecycleScope
+    )
+        savedUri = DirectoryManager.resolveDownloadDir(this)
         
         ads = AdsApp(this)
         alert = Alerts(this@MainActivity)
@@ -81,6 +87,11 @@ class MainActivity : AppCompatActivity() {
         uihandler = UiHandler()
         
         ads.preload()
+        
+        if(savedUri == null){
+         alert.warn("Pegunduhan tidak bisa dilanjutkan!!", "Silahkan atur lokasi penyimpanan download")
+         return
+        }
         
         // == update service ==
         
@@ -154,7 +165,7 @@ class MainActivity : AppCompatActivity() {
     
          dm.download(
             url = mp4.toString(), 
-            folderUri = DirectoryManager.getDirectoryUri(this),
+            folderUri = savedUri,
             fileName = filename, 
             
             onProgress = { p ->
@@ -197,7 +208,7 @@ class MainActivity : AppCompatActivity() {
         
      dm.download(
             url = videoUrl.toString(), 
-            folderUri = DirectoryManager.getDirectoryUri(this),
+            folderUri = savedUri,
             fileName = filename, 
             
             onProgress = { p ->
