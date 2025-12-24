@@ -39,8 +39,22 @@ fun getDefaultDir(): Uri {
     return Uri.fromFile(file)
 }
 
+fun getDownloadFolder(context: Context): Uri {
+    val prefs = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
+    val uriString = prefs.getString("download_dir", null)
+
+    return if (uriString != null) {
+        Uri.parse(uriString)
+    } else {
+        // fallback → Downloads
+        Uri.parse(
+            "content://com.android.externalstorage.documents/tree/primary:Download"
+        )
+    }
+}
+
 fun resolveDownloadDir(context: Context): Uri {
-    return getCustomDir(context) ?: getDefaultDir()
+    return getCustomDir(context) ?: getDownloadFolder(context)
 }
 
     fun getDirectoryLabel(context: Context): String {

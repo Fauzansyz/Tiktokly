@@ -72,10 +72,7 @@ class MainActivity : AppCompatActivity() {
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         
-    dm = downloadManager(
-        context = this,
-        scope = lifecycleScope
-    )
+    dm = downloadManager(this)
         savedUri = DirectoryManager.resolveDownloadDir(this)
         
         ads = AdsApp(this)
@@ -160,8 +157,8 @@ class MainActivity : AppCompatActivity() {
    if (platform == "TikTok") {
     val videoList = result?.get("video") as? List<*>
     val mp4 = videoList?.firstOrNull()?.toString() ?: "NaN"
-    Toast.makeText(this@MainActivity, mp4, Toast.LENGTH_SHORT).show()
-    val filename = "tiktokly_${System.currentTimeMillis()}.mp4"
+    lifecycleScope.launch {
+      val filename = "tiktokly_${System.currentTimeMillis()}.mp4"
     
          dm.download(
             url = mp4.toString(), 
@@ -188,7 +185,7 @@ class MainActivity : AppCompatActivity() {
           uihandler.clearText(binding.textInput, binding.titleVideo)
         }
     })
-
+    }
 
 }
         
@@ -204,6 +201,8 @@ class MainActivity : AppCompatActivity() {
      
      if(platform.toString() == "Instagram") {
      val videoUrl = result?.get("url") ?:"NaN"
+     
+     lifecycleScope.launch {
      val filename = "insta_${System.currentTimeMillis()}.mp4"
         
      dm.download(
@@ -231,7 +230,8 @@ class MainActivity : AppCompatActivity() {
           uihandler.clearText(binding.textInput, binding.titleVideo)
         }
     })
-     }
+  }
+}
  
             
                 uihandler.hideShimmer(binding.shimmerRoot, binding.contentContainer)

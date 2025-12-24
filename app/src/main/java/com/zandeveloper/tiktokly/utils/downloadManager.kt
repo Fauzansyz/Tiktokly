@@ -1,80 +1,78 @@
 package com.zandeveloper.tiktokly.utils
 
-import android.content.ContentResolver
 import android.content.Context
 import android.net.Uri
 import android.provider.DocumentsContract
-import kotlinx.coroutines.*
-import java.io.BufferedInputStream
-import java.net.HttpURLConnection
-import java.net.URL
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.withContext
+import okhttp3.OkHttpClient
+import kotlinx.coroutines.launch
+import okhttp3.Request
 
-class downloadManager(
-    private val context: Context,
-    private val scope: CoroutineScope
-) {
+class downloadManager(private val context: Context) {
 
-    fun download(
+  fun download(
         url: String,
-        folderUri: Uri?,
+        folderUri: Uri,
         fileName: String,
+        mimeType: String = "video/mp4",
         onProgress: (Int) -> Unit,
         onCompleted: (Uri) -> Unit,
-        onError: (Throwable) -> Unit
+        onError: (Exception) -> Unit
     ) {
-        scope.launch(Dispatchers.IO) {
-            try {
-            val resolvedFolderUri = folderUri
+    
+    CoroutineScope(Dispatchers.IO).launch {
+
+        try {
+        
+        val resolvedFolderUri = folderUri
     ?: throw IllegalStateException("Folder URI belum dipilih")
-                // 1️⃣ buat file di SAF
-                val fileUri = DocumentsContract.createDocument(
-                    context.contentResolver,
-                    resolvedFolderUri,
-                    "video/mp4", // ganti sesuai tipe
-                    fileName
-                ) ?: throw Exception("Gagal create file")
+            // 1️⃣ buat file di SAF
+            val fileUri = DocumentsContract.createDocument(
+                context.contentResolver,
+                resolvedFolderUri,
+                mimeType,
+                fileName
+            ) ?: throw Exception("Gagal membuat file")
 
-                // 2️⃣ buka koneksi
-                val connection = URL(url).openConnection() as HttpURLConnection
-                connection.connect()
+            val request = Request.Builder().url(url).build()
+            val response = OkHttpClient().newCall(request).execute()
 
-                val totalSize = connection.contentLength
+            if (!response.isSuccessful) {
+                throw Exception("Download gagal")
+            }
 
-                val input = BufferedInputStream(connection.inputStream)
-                val output = context.contentResolver.openOutputStream(fileUri)
-                    ?: throw Exception("OutputStream null")
+            val body = response.body ?: throw Exception("Body kosong")
+            val total = body.contentLength()
 
-                val buffer = ByteArray(8 * 1024)
-                var downloaded = 0
-                var read: Int
+            val input = body.byteStream()
+            val output = context.contentResolver.openOutputStream(fileUri)
+                ?: throw Exception("OutputStream null")
 
-                // 3️⃣ streaming + progress
-                while (input.read(buffer).also { read = it } != -1) {
-                    output.write(buffer, 0, read)
-                    downloaded += read
+            val buffer = ByteArray(8 * 1024)
+            var downloaded = 0L
+            var read: Int
 
-                    if (totalSize > 0) {
-                        val progress = (downloaded * 100) / totalSize
-                        withContext(Dispatchers.Main) {
-                            onProgress(progress)
-                        }
-                    }
-                }
+            while (input.read(buffer).also { read = it } != -1) {
+                output.write(buffer, 0, read)
+                downloaded += read
 
-                output.flush()
-                output.close()
-                input.close()
-                connection.disconnect()
-
-                withContext(Dispatchers.Main) {
-                    onCompleted(fileUri)
-                }
-
-            } catch (e: Exception) {
-                withContext(Dispatchers.Main) {
-                    onError(e)
+                if (total > 0) {
+                    val progress = ((downloaded * 100) / total).toInt()
+                    onProgress(progress)
                 }
             }
+
+            output.flush()
+            output.close()
+            input.close()
+
+            onCompleted(fileUri)
+
+        } catch (e: Exception) {
+            onError(e)
         }
+      }
     }
 }
