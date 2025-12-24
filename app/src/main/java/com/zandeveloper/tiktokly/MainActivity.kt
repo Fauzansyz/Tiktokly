@@ -70,7 +70,17 @@ class MainActivity : AppCompatActivity() {
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         
-        val savedDir = DirectoryManager.getDirectoryUri(this)
+        val savedDir = prefs.getString("download_dir", null)?.let {
+    Uri.parse(it)
+}
+
+if (savedDir == null) {
+    alert.warn(
+        "Folder belum dipilih",
+        "Silakan pilih folder download di menu Setting"
+    )
+    return@launch
+}
         
         dm = downloadManager(this)
         
@@ -155,9 +165,9 @@ class MainActivity : AppCompatActivity() {
     val filename = "tiktokly_${System.currentTimeMillis()}.mp4"
     
          dm.download(
-            mp4.toString(), 
-            savedDir,
-            filename, 
+            url = mp4.toString(), 
+            folderUri = savedDir,
+            fileName = filename, 
             
             onProgress = { p ->
         runOnUiThread {
@@ -198,9 +208,9 @@ class MainActivity : AppCompatActivity() {
      val filename = "insta_${System.currentTimeMillis()}.mp4"
         
      dm.download(
-            videoUrl.toString(), 
-            savedDir,
-            filename, 
+            url = videoUrl.toString(), 
+            folderUri = savedDir,
+            fileName = filename, 
             
             onProgress = { p ->
         runOnUiThread {
