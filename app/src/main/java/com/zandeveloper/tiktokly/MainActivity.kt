@@ -70,18 +70,6 @@ class MainActivity : AppCompatActivity() {
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         
-        val savedDir = prefs.getString("download_dir", null)?.let {
-    Uri.parse(it)
-}
-
-if (savedDir == null) {
-    alert.warn(
-        "Folder belum dipilih",
-        "Silakan pilih folder download di menu Setting"
-    )
-    return@launch
-}
-        
         dm = downloadManager(this)
         
         ads = AdsApp(this)
@@ -166,7 +154,7 @@ if (savedDir == null) {
     
          dm.download(
             url = mp4.toString(), 
-            folderUri = savedDir,
+            folderUri = DirectoryManager.getDirectoryUri(this),
             fileName = filename, 
             
             onProgress = { p ->
@@ -209,7 +197,7 @@ if (savedDir == null) {
         
      dm.download(
             url = videoUrl.toString(), 
-            folderUri = savedDir,
+            folderUri = DirectoryManager.getDirectoryUri(this),
             fileName = filename, 
             
             onProgress = { p ->
