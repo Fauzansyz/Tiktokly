@@ -1,81 +1,75 @@
 package com.zandeveloper.tiktokly.utils
 
-import android.app.DownloadManager
 import android.content.Context
-import android.database.Cursor
 import android.net.Uri
-import android.os.Environment
-import kotlinx.coroutines.*
-import kotlin.coroutines.resume
+import androidx.documentfile.provider.DocumentFile
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import java.io.IOException
 
 class downloadManager(private val context: Context) {
 
-    private val dm by lazy {
-        context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-    }
-
-    fun download(
+    suspend fun download(
         url: String,
+        folderUri: Uri,
         fileName: String,
-        onProgress: (progress: Int) -> Unit,
-        onCompleted: (filePath: String) -> Unit,
+        onProgress: (Int) -> Unit,
+        onCompleted: (String) -> Unit,
         onError: () -> Unit
-    ) {
-        val request = DownloadManager.Request(Uri.parse(url))
-            .setTitle(fileName)
-            .setNotificationVisibility(
-                DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED
-            )
-            .setDestinationInExternalPublicDir(
-                Environment.DIRECTORY_DOWNLOADS,
+    ) = withContext(Dispatchers.IO) {
+
+        try {
+            val client = OkHttpClient()
+            val request = Request.Builder().url(url).build()
+            val response = client.newCall(request).execute()
+
+            if (!response.isSuccessful) throw IOException("Download failed")
+
+            val body = response.body ?: throw IOException("Empty body")
+            val total = body.contentLength()
+
+            val folder = DocumentFile.fromTreeUri(context, folderUri)
+                ?: throw IOException("Invalid folder")
+
+            val file = folder.createFile(
+                "video/mp4",
                 fileName
-            )
-            .setAllowedOverMetered(true)
-            .setAllowedOverRoaming(true)
+            ) ?: throw IOException("Failed create file")
 
-        val downloadId = dm.enqueue(request)
+            val outputStream =
+                context.contentResolver.openOutputStream(file.uri)
+                    ?: throw IOException("OutputStream null")
 
-        // PROGRESS LOOP
-        GlobalScope.launch(Dispatchers.IO) {
-            var downloading = true
-            while (downloading) {
+            body.byteStream().use { input ->
+                outputStream.use { output ->
+                    val buffer = ByteArray(8 * 1024)
+                    var bytesRead: Int
+                    var downloaded = 0L
 
-                val query = DownloadManager.Query().setFilterById(downloadId)
-                val cursor: Cursor = dm.query(query)
+                    while (input.read(buffer).also { bytesRead = it } != -1) {
+                        output.write(buffer, 0, bytesRead)
+                        downloaded += bytesRead
 
-                if (cursor.moveToFirst()) {
-                    val status =
-                        cursor.getInt(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_STATUS))
-                    val total =
-                        cursor.getLong(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_TOTAL_SIZE_BYTES))
-                    val downloaded =
-                        cursor.getLong(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR))
-
-                    if (status == DownloadManager.STATUS_FAILED) {
-                        onError()
-                        downloading = false
-                        cursor.close()
-                        break
+                        if (total > 0) {
+                            val progress = ((downloaded * 100) / total).toInt()
+                            withContext(Dispatchers.Main) {
+                                onProgress(progress)
+                            }
+                        }
                     }
-
-                    if (status == DownloadManager.STATUS_SUCCESSFUL) {
-                        val fileUri = cursor.getString(
-                            cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_LOCAL_URI)
-                        )
-                        onCompleted(fileUri)
-                        downloading = false
-                        cursor.close()
-                        break
-                    }
-
-                    if (total > 0) {
-                        val progress = ((downloaded * 100L) / total).toInt()
-                        onProgress(progress)
-                    }
-
                 }
-                cursor.close()
-                delay(300) // check progress tiap 0.3s
+            }
+
+            withContext(Dispatchers.Main) {
+                onCompleted(file.uri.toString())
+            }
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            withContext(Dispatchers.Main) {
+                onError()
             }
         }
     }

@@ -50,6 +50,7 @@ import com.zandeveloper.tiktokly.data.network.updateService.UpdateServiceApp
 import android.view.animation.DecelerateInterpolator
 import com.google.gson.reflect.TypeToken
 import com.zandeveloper.tiktokly.utils.uiHandler.UiHandler
+import com.zandeveloper.tiktokly.utils.storageManager.DirectoryManager
 
 class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
@@ -68,6 +69,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        
+        val savedDir = DirectoryManager.getDirectoryUri(this)
         
         dm = downloadManager(this)
         
@@ -153,6 +156,7 @@ class MainActivity : AppCompatActivity() {
     
          dm.download(
             mp4.toString(), 
+            savedDir,
             filename, 
             
             onProgress = { p ->
@@ -195,6 +199,7 @@ class MainActivity : AppCompatActivity() {
         
      dm.download(
             videoUrl.toString(), 
+            savedDir,
             filename, 
             
             onProgress = { p ->
