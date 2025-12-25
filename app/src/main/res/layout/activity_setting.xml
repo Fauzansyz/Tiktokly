@@ -43,7 +43,7 @@
     <TextView
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
-         android:text="Download Location"
+         android:text="@string/setting_directory_title"
          android:textSize="18sp"
          android:fontFamily="@font/poppins_semibold"
          android:textColor="@color/colorOnBackground"
@@ -53,7 +53,7 @@
 <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="Atur folder tempat file hasil download disimpan"
+    android:text="@string/setting_directory_subtitle"
     android:textSize="13sp"
     android:textColor="@color/hint"
     android:layout_marginBottom="12dp"/>

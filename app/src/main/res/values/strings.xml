@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources> 
     <string name="title_home">Home</string>
     <string name="title_notifications">About</string>
     <string name="placeholder_input">Paste video URL here</string>
@@ -18,6 +18,10 @@
 <string name="tutorial_title_second">Download Now!</string>
 
 <string name="tutorial_msg_second">Click the download button to start</string>
+
+    <string name="setting_directory_subtitle">Atur folder tempat file hasil download disimpan</string>
+    <string name="setting_directory_title">Download Location</string>
+
     
     <string name="text_button">Donwload</string>
     <string name="setting_title_page">Setting</string>
