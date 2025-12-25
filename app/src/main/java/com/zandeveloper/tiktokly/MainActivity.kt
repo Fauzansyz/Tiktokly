@@ -18,7 +18,7 @@ import okhttp3.OkHttpClient
 import android.net.Uri
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
-import com.zandeveloper.tiktokly.utils.downloadManager
+import com.zandeveloper.tiktokly.utils.storageManager.SafDownloader
 import android.content.Context
 import com.zandeveloper.tiktokly.data.network.DataFetch
 import java.io.IOException
@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
     private val binding get() = _binding!!
 
     private lateinit var df: DataFetch
-    private lateinit var dm: downloadManager
+    private lateinit var dm: SafDownloader
     private lateinit var alert: Alerts
     private lateinit var stringValidate: StringValidator
     private lateinit var uihandler: UiHandler
@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         
-    dm = downloadManager(this)
+        dm = SafDownloader(this)
         savedUri = DirectoryManager.resolveDownloadDir(this)
         
         ads = AdsApp(this)
