@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#1EB4B0</color> <!-- Soft cyan -->
-    <color name="colorSecondary">#D14B62</color> <!-- Soft pink -->
+     <color name="colorPrimary">#FFFFFF</color> <!-- Soft cyan -->
+    <color name="colorSecondary">#1EB4B0</color> <!-- Soft pink -->
     <color name="colorBackground">#0D0D0D</color> <!-- Soft black -->
     <color name="colorSurface">#1A1A1A</color> <!-- Dark card -->
-    <color name="blueNation">#7AA1E4</color>
+    <color name="soft_red">#D14B62</color>
     <color name="black_80">#B3000000</color>
-    <color name="colorOnPrimary">#000000</color>
-    <color name="colorOnBackground">#FFFFFF</color>
+    <color name="skeleton_bg">#E0E0E0</color>
+    <color name="onText">#777777</color>
+    <color name="hint">#888888</color>
+    <color name="blueNation">#7AA1E4</color>
+    <color name="blackPrimary">#E0E0E0</color>
+    <color name="colorOnPrimary">#FFFFFF</color>
+    <color name="colorOnBackground">#000000</color>
 </resources>

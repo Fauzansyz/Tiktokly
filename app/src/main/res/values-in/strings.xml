@@ -19,6 +19,11 @@
 <string name="tutorial_title_second">Unduh Sekarang!</string>
 
 <string name="tutorial_msg_second">Klik tombol Unduh untuk mulai mengunduh video</string>
+
+    <string name="setting_directory_subtitle">Atur folder tempat file hasil download disimpan</string>
+    <string name="setting_directory_title">Lokasi Unduhan</string>
+
+    
     
     <string name="text_button">Unduh</string>
     <string name="setting_title_page">Pengaturan</string>

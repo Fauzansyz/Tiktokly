@@ -19,7 +19,7 @@
 
 <string name="tutorial_msg_second">Click the download button to start</string>
 
-    <string name="setting_directory_subtitle">Atur folder tempat file hasil download disimpan</string>
+    <string name="setting_directory_subtitle">Set the folder where the downloaded files are saved</string>
     <string name="setting_directory_title">Download Location</string>
 
     
