@@ -229,7 +229,7 @@ private var dialogBinding: DialogDownloadProgressBinding? = null
         fileName = filename,
 
         onProgress = { progress ->
-            dialogBinding?.progressBar?.progress = progress
+            dialogBinding?.progressBar?.setProgressCompat(progress, true)
             dialogBinding?.progressText?.text = "$progress%"
         },
 
