@@ -40,7 +40,6 @@ import androidx.core.content.res.ResourcesCompat
 import www.sanju.motiontoast.MotionToastStyle
 import com.google.firebase.perf.FirebasePerformance
 import com.google.firebase.perf.metrics.Trace
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.zandeveloper.tiktokly.utils.alerts.Alerts
 import com.zandeveloper.tiktokly.utils.stringValidator.StringValidator
 
@@ -52,6 +51,8 @@ import android.view.animation.DecelerateInterpolator
 import com.google.gson.reflect.TypeToken
 import com.zandeveloper.tiktokly.utils.uiHandler.UiHandler
 import com.zandeveloper.tiktokly.utils.storageManager.DirectoryManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.zandeveloper.tiktokly.databinding.DialogDownloadProgressBinding
 
 class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
@@ -66,6 +67,9 @@ class MainActivity : AppCompatActivity() {
     
     private lateinit var ads: AdsApp
     private lateinit var savedUri: Uri
+    
+    private var downloadDialog: androidx.appcompat.app.AlertDialog? = null
+private var dialogBinding: DialogDownloadProgressBinding? = null
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -158,33 +162,11 @@ class MainActivity : AppCompatActivity() {
     val videoList = result?.get("video") as? List<*>
     val mp4 = videoList?.firstOrNull()?.toString() ?: "NaN"
     lifecycleScope.launch {
+        
       val filename = "tiktokly_${System.currentTimeMillis()}.mp4"
+      
+      startDownloadWithDialog(mp4.toString(), filename)
     
-         dm.download(
-            url = mp4.toString(), 
-            folderUri = savedUri,
-            fileName = filename, 
-            
-            onProgress = { p ->
-        runOnUiThread {
-           // On progress ( on going )
-        }
-    },
-
-    onCompleted = { filePath ->
-        runOnUiThread {
-         alert.success()
-         uihandler.clearText(binding.textInput, binding.titleVideo)
-         uihandler.clearThumbnail(binding.itemThumbnail)
-        }
-    },
-
-    onError = {
-        runOnUiThread {
-          alert.failed()
-          uihandler.clearText(binding.textInput, binding.titleVideo)
-        }
-    })
     }
 
 }
@@ -203,33 +185,11 @@ class MainActivity : AppCompatActivity() {
      val videoUrl = result?.get("url") ?:"NaN"
      
      lifecycleScope.launch {
-     val filename = "insta_${System.currentTimeMillis()}.mp4"
         
-     dm.download(
-            url = videoUrl.toString(), 
-            folderUri = savedUri,
-            fileName = filename, 
-            
-            onProgress = { p ->
-        runOnUiThread {
-           // On progress ( on going )
-        }
-    },
-
-    onCompleted = { filePath ->
-        runOnUiThread {
-         alert.success()
-         uihandler.clearText(binding.textInput, binding.titleVideo)
-         uihandler.clearThumbnail(binding.itemThumbnail)
-        }
-    },
-
-    onError = {
-        runOnUiThread {
-          alert.failed()
-          uihandler.clearText(binding.textInput, binding.titleVideo)
-        }
-    })
+     val filename = "insta_${System.currentTimeMillis()}.mp4"
+     
+     startDownloadWithDialog(videoUrl.toString(), filename)
+        
   }
 }
  
@@ -247,6 +207,46 @@ class MainActivity : AppCompatActivity() {
        
    }
     
+    private fun startDownloadWithDialog(
+    url: String,
+    filename: String
+) {
+    dialogBinding = DialogDownloadProgressBinding.inflate(layoutInflater)
+
+    downloadDialog = MaterialAlertDialogBuilder(this)
+        .setTitle("Downloading")
+        .setView(dialogBinding!!.root)
+        .setCancelable(false)
+        .setNegativeButton("Cancel") { d, _ ->
+            dm.cancel()
+            d.dismiss()
+        }
+        .show()
+
+    dm.download(
+        url = url,
+        folderUri = savedUri,
+        fileName = filename,
+
+        onProgress = { progress ->
+            dialogBinding?.progressBar?.progress = progress
+            dialogBinding?.progressText?.text = "$progress%"
+        },
+
+        onCompleted = {
+            downloadDialog?.dismiss()
+            alert.success()
+            uihandler.clearText(binding.textInput, binding.titleVideo)
+            uihandler.clearThumbnail(binding.itemThumbnail)
+        },
+
+        onError = {
+            downloadDialog?.dismiss()
+            alert.failed()
+            uihandler.clearText(binding.textInput, binding.titleVideo)
+        }
+    )
+}
     
     
     override fun onDestroy() {
