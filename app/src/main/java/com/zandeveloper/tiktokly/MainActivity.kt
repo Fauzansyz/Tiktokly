@@ -88,11 +88,6 @@ private var dialogBinding: DialogDownloadProgressBinding? = null
         
         ads.preload()
         
-        if(savedUri == null){
-         alert.warn("Pegunduhan tidak bisa dilanjutkan!!", "Silahkan atur lokasi penyimpanan download")
-         return
-        }
-        
         // == update service ==
         
         val updateServices = UpdateServiceApp(this)
@@ -211,6 +206,12 @@ private var dialogBinding: DialogDownloadProgressBinding? = null
     filename: String
 ) {
     savedUri = DirectoryManager.resolveDownloadDir(this)
+    
+    if(savedUri == null){
+         alert.warn("Pegunduhan tidak bisa dilanjutkan!!", "Silahkan atur lokasi penyimpanan download")
+         return
+        }
+        
     dialogBinding = DialogDownloadProgressBinding.inflate(layoutInflater)
 
     downloadDialog = MaterialAlertDialogBuilder(this)
