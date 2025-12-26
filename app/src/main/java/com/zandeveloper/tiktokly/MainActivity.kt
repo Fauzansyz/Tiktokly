@@ -164,15 +164,13 @@ private var dialogBinding: DialogDownloadProgressBinding? = null
     }
 
 }
-        
         // ============== 
-        
         // Youtube feature in maintance mode
         
         if(platform.toString() == "YouTube") {
                 
       alert.warn("Pegunduhan tidak bisa dilanjutkan!!", "Ada sedikit masalah untuk pengunduhan video Youtube,silahkan tunggu update selanjutnya")
-    
+    return
      }
      
      if(platform.toString() == "Instagram") {
