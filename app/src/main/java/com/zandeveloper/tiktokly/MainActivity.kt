@@ -77,7 +77,6 @@ private var dialogBinding: DialogDownloadProgressBinding? = null
         setContentView(binding.root)
         
         dm = SafDownloader(this)
-        savedUri = DirectoryManager.resolveDownloadDir(this)
         
         ads = AdsApp(this)
         alert = Alerts(this@MainActivity)
@@ -211,6 +210,7 @@ private var dialogBinding: DialogDownloadProgressBinding? = null
     url: String,
     filename: String
 ) {
+    savedUri = DirectoryManager.resolveDownloadDir(this)
     dialogBinding = DialogDownloadProgressBinding.inflate(layoutInflater)
 
     downloadDialog = MaterialAlertDialogBuilder(this)
