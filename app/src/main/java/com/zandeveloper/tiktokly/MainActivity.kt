@@ -240,7 +240,7 @@ private var dialogBinding: DialogDownloadProgressBinding? = null
 
         onError = {
             downloadDialog?.dismiss()
-            Alerts.makeText(this@MainActivity, getString(R.string.failed_alert_title), getString(R.string.failed_download_msg),Alerts.SUCCESS).show()
+            Alerts.makeText(this@MainActivity, getString(R.string.failed_alert_title), getString(R.string.failed_download_msg),Alerts.ERROR).show()
             uihandler.clearText(binding.textInput, binding.titleVideo)
         }
     )
