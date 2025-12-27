@@ -6,56 +6,60 @@ import www.sanju.motiontoast.MotionToastStyle
 import android.content.Context
 import android.app.Activity
 
-class Alerts(private var activity: Activity) {
-   fun warn(Title: String, subText: String) {
-   MotionToast.createColorToast(
-            activity,
-            Title,
-            subText,
-            MotionToastStyle.WARNING,
-            MotionToast.GRAVITY_BOTTOM,
-            MotionToast.LONG_DURATION,
-            ResourcesCompat.getFont(activity, R.font.helvetica_regular)
-        )
-   }
+class Alerts private constructor(
+    private val activity: Activity,
+    private val title: String,
+    private val message: String,
+    private val type: Int
+) {
 
-  fun requiredInput() {
-        MotionToast.createColorToast(
-            activity,
-          activity.getString(R.string.failed_alert_title),
-          activity.getString(R.string.input_required_msg),
-            MotionToastStyle.ERROR,
-            MotionToast.GRAVITY_BOTTOM,
-            MotionToast.LONG_DURATION,
-            ResourcesCompat.getFont(activity, R.font.helvetica_regular)
-        )
-}
+    companion object {
+        const val SUCCESS = 1
+        const val ERROR = 2
+        const val WARN = 3
 
+        fun makeText(activity: Activity, title: String, message: String, type: Int): Alert {
+            return Alert(activity, title, message, type)
+        }
+    }
 
-  fun success(){
-  
-MotionToast.createColorToast(
+    fun show() {
+        // Contoh implementasi, bisa diganti Toast, Dialog, Snackbar, dsb
+        when (type) {
+            SUCCESS -> {
+              MotionToast.createColorToast(
                 activity,
-                activity.getString(R.string.success_video_downloading),
-                activity.getString(R.string.success_download_msg),
+                title,
+                message,
                 MotionToastStyle.SUCCESS,
                 MotionToast.GRAVITY_BOTTOM,
                 MotionToast.LONG_DURATION,
                 ResourcesCompat.getFont(activity, R.font.helvetica_regular)
             )
+            }
             
-}
-
-fun failed() {
-        MotionToast.createColorToast(
+            ERROR -> {
+              MotionToast.createColorToast(
                 activity,
-                activity.getString(R.string.failed_alert_title),
-                activity.getString(R.string.failed_download_msg),
+                title,
+                message,
                 MotionToastStyle.ERROR,
                 MotionToast.GRAVITY_BOTTOM,
                 MotionToast.LONG_DURATION,
                 ResourcesCompat.getFont(activity, R.font.helvetica_regular)
-            )
+             )
+            }
+            WARN -> {
+              MotionToast.createColorToast(
+            activity,
+            title,
+            message,
+            MotionToastStyle.WARNING,
+            MotionToast.GRAVITY_BOTTOM,
+            MotionToast.LONG_DURATION,
+            ResourcesCompat.getFont(activity, R.font.helvetica_regular)
+        )
+            }
+        }
     }
-
 }

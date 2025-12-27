@@ -61,7 +61,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var df: DataFetch
     private lateinit var dm: SafDownloader
-    private lateinit var alert: Alerts
     private lateinit var stringValidate: StringValidator
     private lateinit var uihandler: UiHandler
     
@@ -79,7 +78,6 @@ private var dialogBinding: DialogDownloadProgressBinding? = null
         dm = SafDownloader(this)
         
         ads = AdsApp(this)
-        alert = Alerts(this@MainActivity)
         
         df = DataFetch(this)
         stringValidate = StringValidator()
@@ -159,7 +157,7 @@ private var dialogBinding: DialogDownloadProgressBinding? = null
         
       val filename = "tiktokly_${System.currentTimeMillis()}.mp4"
       
-      startDownloadWithDialog(mp4.toString(), filename)
+      startDownload(mp4.toString(), filename)
     
     }
 
@@ -180,13 +178,13 @@ private var dialogBinding: DialogDownloadProgressBinding? = null
         
      val filename = "insta_${System.currentTimeMillis()}.mp4"
      
-     startDownloadWithDialog(videoUrl.toString(), filename)
+     startDownload(videoUrl.toString(), filename)
         
   }
 }
  
             
-                uihandler.hideShimmer(binding.shimmerRoot, binding.contentContainer)
+        uihandler.hideShimmer(binding.shimmerRoot, binding.contentContainer)
         }
         
         uihandler.hideShimmer(binding.shimmerRoot, binding.contentContainer)
@@ -199,7 +197,7 @@ private var dialogBinding: DialogDownloadProgressBinding? = null
        
    }
     
-    private fun startDownloadWithDialog(
+    private fun startDownload(
     url: String,
     filename: String
 ) {
@@ -234,14 +232,15 @@ private var dialogBinding: DialogDownloadProgressBinding? = null
 
         onCompleted = {
             downloadDialog?.dismiss()
-            alert.success()
+            Alerts.makeText(this@MainActivity, getString(R.string.success_video_downloading), getString(R.string.success_download_msg),Alerts.SUCCESS).show()
+            
             uihandler.clearText(binding.textInput, binding.titleVideo)
             uihandler.clearThumbnail(binding.itemThumbnail)
         },
 
         onError = {
             downloadDialog?.dismiss()
-            alert.failed()
+            Alerts.makeText(this@MainActivity, getString(R.string.failed_alert_title), getString(R.string.failed_download_msg),Alerts.SUCCESS).show()
             uihandler.clearText(binding.textInput, binding.titleVideo)
         }
     )
