@@ -169,7 +169,6 @@ private var dialogBinding: DialogDownloadProgressBinding? = null
                 
       Alerts.makeText(this@MainActivity,"Pegunduhan tidak bisa dilanjutkan!!", "Ada sedikit masalah untuk pengunduhan video Youtube,silahkan tunggu update selanjutnya", Alerts.ERROR).show()
       
-        return@launch
      }
      
      if(platform.toString() == "Instagram") {
