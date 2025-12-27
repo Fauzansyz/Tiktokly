@@ -1,15 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources> 
+
+<!-- GENERAL -->
+
+    <string name="app_name">Tiktokly</string>
+    <string name="context">context</string>
+
+<!-- NAME OF PAGE -->
+
     <string name="title_home">Home</string>
+    <string name="text_button">Donwload</string>
+    <string name="setting_title_page">Setting</string>
     <string name="title_notifications">About</string>
+
+<!-- PLACEHOLDER STRING -->
+    
     <string name="placeholder_input">Paste video URL here</string>
-    <string name="failed_alert_title">Download failed!!</string>
-    <string name="input_required_msg">Please enter a valid video URL</string>
+
+
+<!-- SUCCESS ALERTS -->
     
     <string name="success_video_downloading">Downloaded successfully!!</string>
     <string name="success_download_msg">Video downloaded successfully</string>
 
-<string name="failed_download_msg">Please try again in a moment</string>
+<!-- FAILED ALERTS -->
+
+    <string name="failed_alert_title">Download failed!!</string>
+    <string name="input_required_msg">Please enter a valid video URL</string>
+    <string name="failed_download_msg">Please try again in a moment</string>
+
+
+<!-- USER TOTORIAL -->
+
 
 <string name="tutorial_title_first">Enter URL</string>
 
@@ -19,12 +41,9 @@
 
 <string name="tutorial_msg_second">Click the download button to start</string>
 
+
+<!-- SETTING ( CUSTOM DIRECTORY ) -->
+
     <string name="setting_directory_subtitle">Set the folder where the downloaded files are saved</string>
     <string name="setting_directory_title">Download Location</string>
-
-    
-    <string name="text_button">Donwload</string>
-    <string name="setting_title_page">Setting</string>
-    <string name="app_name">Tiktokly</string>
-    <string name="context">context</string>
 </resources>
