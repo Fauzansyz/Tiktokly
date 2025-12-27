@@ -122,7 +122,7 @@ private var dialogBinding: DialogDownloadProgressBinding? = null
         binding.buttonDownload.setOnClickListener {
     val inputUrl = binding.textInput.text.toString().trim()
     if (inputUrl.isEmpty()) {
-        alert.requiredInput()
+        Alerts.makeText(this@MainActivity, getString(R.string.failed_alert_title), getString(R.string.input_required_msg), Alerts.ERROR).show()
         return@setOnClickListener
     }
 
@@ -135,7 +135,7 @@ private var dialogBinding: DialogDownloadProgressBinding? = null
         if (data == null) {
             uihandler.hideShimmer(binding.shimmerRoot, binding.contentContainer)
 
-            alert.failed()
+            Alerts.makeText(this@MainActivity, getString(R.string.failed_alert_title), getString(R.string.failed_download_msg),Alerts.SUCCESS).show()
             return@launch
         }
 
@@ -167,8 +167,9 @@ private var dialogBinding: DialogDownloadProgressBinding? = null
         
         if(platform.toString() == "YouTube") {
                 
-      alert.warn("Pegunduhan tidak bisa dilanjutkan!!", "Ada sedikit masalah untuk pengunduhan video Youtube,silahkan tunggu update selanjutnya")
-    return
+      Alerts.makeText(this@MainActivity,"Pegunduhan tidak bisa dilanjutkan!!", "Ada sedikit masalah untuk pengunduhan video Youtube,silahkan tunggu update selanjutnya", Alerts.ERROR).show()
+      
+        return@launch
      }
      
      if(platform.toString() == "Instagram") {
@@ -204,7 +205,7 @@ private var dialogBinding: DialogDownloadProgressBinding? = null
     savedUri = DirectoryManager.resolveDownloadDir(this)
     
     if(savedUri == null){
-         alert.warn("Pegunduhan tidak bisa dilanjutkan!!", "Silahkan atur lokasi penyimpanan download")
+         Alerts.makeText(this@MainActivity, "Pegunduhan tidak bisa dilanjutkan!!", "Silahkan atur lokasi penyimpanan download", Alerts.WARN)
          return
         }
         

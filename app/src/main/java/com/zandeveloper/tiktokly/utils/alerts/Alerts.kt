@@ -18,8 +18,8 @@ class Alerts private constructor(
         const val ERROR = 2
         const val WARN = 3
 
-        fun makeText(activity: Activity, title: String, message: String, type: Int): Alert {
-            return Alert(activity, title, message, type)
+        fun makeText(activity: Activity, title: String, message: String, type: Int): Alerts {
+            return Alerts(activity, title, message, type)
         }
     }
 
