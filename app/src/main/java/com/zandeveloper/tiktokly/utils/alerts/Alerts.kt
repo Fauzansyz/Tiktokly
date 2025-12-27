@@ -24,7 +24,6 @@ class Alerts private constructor(
     }
 
     fun show() {
-        // Contoh implementasi, bisa diganti Toast, Dialog, Snackbar, dsb
         when (type) {
             SUCCESS -> {
               MotionToast.createColorToast(
