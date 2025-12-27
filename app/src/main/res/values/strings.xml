@@ -14,7 +14,8 @@
 
 <!-- PLACEHOLDER STRING -->
     
-    <string name="placeholder_input">Paste video URL here</string>
+    <string name="download_placeholder_text">Paste video URL here</string>
+    <string name="input_text_placeholder">Url video</string>
     <string name="text_button">Donwload</string>
 
 
@@ -31,7 +32,6 @@
 
 
 <!-- USER TUTORIAL -->
-
 
 <string name="tutorial_title_first">Enter URL</string>
 

@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="16dp"
-                android:text="@string/placeholder_input"
+                android:text="@string/download_placeholder_text"
                 android:textSize="20sp"
                 android:fontFamily="@font/poppins_semibold"
                 android:textColor="?attr/colorPrimary" />
@@ -54,7 +54,7 @@
                android:id="@+id/inputTextContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Url video"
+                android:hint="@string/input_text_placeholder"
                 app:hintTextColor="@color/skeleton_bg"
                 app:boxCornerRadiusBottomEnd="18dp"  
                 app:boxCornerRadiusTopEnd="18dp"

@@ -15,7 +15,8 @@
         
 <!-- PLACEHOLDER STRING -->
         
-    <string name="placeholder_input">Tempel URL video di sini</string>
+    <string name="download_placeholder_text">Tempel URL video di sini</string>
+    <string name="input_text_placeholder">Url video</string>
     <string name="text_button">Unduh</string>
 
 <!-- FAILED ALERTS -->
