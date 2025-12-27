@@ -9,13 +9,13 @@
 <!-- NAME OF PAGE -->
 
     <string name="title_home">Home</string>
-    <string name="text_button">Donwload</string>
     <string name="setting_title_page">Setting</string>
     <string name="title_notifications">About</string>
 
 <!-- PLACEHOLDER STRING -->
     
     <string name="placeholder_input">Paste video URL here</string>
+    <string name="text_button">Donwload</string>
 
 
 <!-- SUCCESS ALERTS -->
@@ -30,7 +30,7 @@
     <string name="failed_download_msg">Please try again in a moment</string>
 
 
-<!-- USER TOTORIAL -->
+<!-- USER TUTORIAL -->
 
 
 <string name="tutorial_title_first">Enter URL</string>

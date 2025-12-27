@@ -1,32 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+<!-- GENERAL -->
+
+    <string name="app_name">Tiktokly</string>
+    <string name="context">context</string>
+
+
+<!-- NAME OF PAGE -->
+
     <string name="title_home">Home</string>
     <string name="title_notifications">About</string>
+    <string name="setting_title_page">Pengaturan</string>
+        
+<!-- PLACEHOLDER STRING -->
+        
     <string name="placeholder_input">Tempel URL video di sini</string>
+    <string name="text_button">Unduh</string>
+
+<!-- FAILED ALERTS -->
     
     <string name="failed_alert_title">Gagal mengunduh!!</string>
+    <string name="failed_download_msg">Silahkan coba lagi beberapa saat</string>
     <string name="input_required_msg">Silahkan masukan URL video yang valid</string>
+
+
+<!-- SUCCESS ALERTS -->
 
     <string name="success_video_downloading">Berhasil mengunduh!!</string>
     <string name="success_download_msg">Video berhasil di unduh</string>
 
-<string name="failed_download_msg">Silahkan coba lagi beberapa saat</string>
-    
-<string name="tutorial_title_first">Masukkan URL</string>
 
-<string name="tutorial_msg_first">Masukkan link video yang ingin diunduh</string>
+<!-- USER TUTORIAL -->
 
-<string name="tutorial_title_second">Unduh Sekarang!</string>
+    <string name="tutorial_title_first">Masukkan URL</string>
 
-<string name="tutorial_msg_second">Klik tombol Unduh untuk mulai mengunduh video</string>
+    <string name="tutorial_msg_first">Masukkan link video yang ingin diunduh</string>
+
+    <string name="tutorial_title_second">Unduh Sekarang!</string>
+
+    <string name="tutorial_msg_second">Klik tombol Unduh untuk mulai mengunduh video</string>
+
+<!-- SETTING ( CUSTOM DIRECTORY ) -->
 
     <string name="setting_directory_subtitle">Atur folder tempat file hasil download disimpan</string>
     <string name="setting_directory_title">Lokasi Unduhan</string>
 
     
-    
-    <string name="text_button">Unduh</string>
-    <string name="setting_title_page">Pengaturan</string>
-    <string name="app_name">Tiktokly</string>
-    <string name="context">context</string>
 </resources>
