@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
      xmlns:android="http://schemas.android.com/apk/res/android"
      xmlns:app="http://schemas.android.com/apk/res-auto"
      android:layout_height="match_parent"
@@ -103,21 +103,8 @@
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>
 
-   <LinearLayout 
-    android:layout_height="wrap_content"
-    android:layout_width="match_parent"
-    app:layout_constraintBottom_toBottomOf="parent"
-    android:gravity="center">
-
- <TextView 
-     android:layout_height="wrap_content"
-     android:layout_width="wrap_content"
-     android:text="About menu"/>
-
-     </LinearLayout>
-
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
