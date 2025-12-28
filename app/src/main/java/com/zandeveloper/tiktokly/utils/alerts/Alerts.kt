@@ -26,7 +26,7 @@ class Alerts private constructor(
     fun show() {
         when (type) {
             SUCCESS -> {
-              MotionToast.createColorToast(
+              MotionToast.darkColorToast(
                 activity,
                 title,
                 message,
@@ -38,7 +38,7 @@ class Alerts private constructor(
             }
             
             ERROR -> {
-              MotionToast.createColorToast(
+              MotionToast.darkColorToast(
                 activity,
                 title,
                 message,
@@ -49,7 +49,7 @@ class Alerts private constructor(
              )
             }
             WARN -> {
-              MotionToast.createColorToast(
+              MotionToast.darkColorToast(
             activity,
             title,
             message,
