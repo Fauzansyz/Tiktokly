@@ -135,7 +135,7 @@ private var dialogBinding: DialogDownloadProgressBinding? = null
         if (data == null) {
             uihandler.hideShimmer(binding.shimmerRoot, binding.contentContainer)
 
-            Alerts.makeText(this@MainActivity, getString(R.string.failed_alert_title), getString(R.string.failed_download_msg),Alerts.SUCCESS).show()
+            Alerts.makeText(this@MainActivity, getString(R.string.failed_alert_title), getString(R.string.failed_download_msg),Alerts.ERROR).show()
             return@launch
         }
 
