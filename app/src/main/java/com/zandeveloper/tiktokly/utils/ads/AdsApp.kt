@@ -21,8 +21,8 @@ class AdsApp(private val context: Context) {
 
         InterstitialAd.load(
             context,
-            "ca-app-pub-8266726360742140/3215784649", // real id
-            request,
+            "ca-app-pub-8266726360742140/3215784649",
+           request,
             object : InterstitialAdLoadCallback() {
                 override fun onAdLoaded(ad: InterstitialAd) {
                     interstitialAd = ad
@@ -41,7 +41,6 @@ class AdsApp(private val context: Context) {
         val ad = interstitialAd
 
         if (ad == null) {
-            // gak ada iklan → GAS
             preload()
             onContinue()
             return
