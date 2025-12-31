@@ -138,7 +138,7 @@ private var dialogBinding: DialogDownloadProgressBinding? = null
             Alerts.makeText(this@MainActivity, getString(R.string.failed_alert_title), getString(R.string.failed_download_msg),Alerts.ERROR).show()
             return@launch
         }
-
+        
         val result = data["result"] as? Map<*, *>
         val platform = data?.get("platform")
         val title = result?.get("title") ?: "-"
