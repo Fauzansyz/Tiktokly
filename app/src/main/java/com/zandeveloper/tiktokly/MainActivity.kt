@@ -86,11 +86,6 @@ private var dialogBinding: DialogDownloadProgressBinding? = null
         
         ads.preload()
         
-        // == update service ==
-        
-        val updateServices = UpdateServiceApp(this)
-        updateServices.checkUpdate()
-        
         val prefs = getSharedPreferences("tutorial", MODE_PRIVATE)
         val firstRun = prefs.getBoolean("firstRun", true)
 
