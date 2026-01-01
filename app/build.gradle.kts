@@ -82,6 +82,7 @@ dependencies {
     implementation("com.google.code.gson:gson:2.11.0")
     implementation("com.github.Spikeysanju:MotionToast:1.4")
     implementation("com.google.firebase:firebase-perf")
+    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.14")
     implementation(platform("com.google.firebase:firebase-bom:34.6.0"))
     implementation("com.google.android.gms:play-services-ads:22.6.0")
 
