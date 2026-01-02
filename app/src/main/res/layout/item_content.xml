@@ -13,6 +13,8 @@
         android:text="Judul Video"
         android:layout_weight="1"
         android:textSize="15sp"
+        android:maxLines="2"
+        android:ellipsize="end"
         android:textAlignment="center"
         android:textColor="@android:color/white" />
 
