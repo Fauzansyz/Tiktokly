@@ -16,10 +16,10 @@
              android:layout_height="?attr/actionBarSize"
              android:layout_width="match_parent"
              android:background="?attr/colorSurface"
-             android:fontFamily="@font/poppins_semibold"
              app:title="@string/setting_title_page"
-             app:titleTextColor="?attr/colorPrimary"
              app:menu="@menu/top_app_bar_menu"
+             android:fontFamily="@font/poppins_semibold"
+             app:titleTextColor="?attr/colorPrimary"
              app:navigationIcon="@drawable/arrow_back_24px"
              android:id="@+id/topAppBar">
 
@@ -38,70 +38,70 @@
              android:layout_height="wrap_content"
              android:layout_width="match_parent"
              android:animateLayoutChanges="true"
+             android:padding="15dp"
              android:orientation="vertical">
 
-    <TextView
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:text="@string/setting_directory_title"
-         android:textSize="18sp"
-         android:fontFamily="@font/poppins_semibold"
-         android:textColor="?attr/colorPrimary"
-         android:layout_marginTop="0dp"
-         android:layout_marginBottom="8dp"/>
+            <TextView
+                 android:layout_height="wrap_content"
+                 android:layout_width="wrap_content"
+                 android:layout_marginBottom="8dp"
+                 android:textSize="18sp"
+                 android:fontFamily="@font/poppins_semibold"
+                 android:textColor="?attr/colorPrimary"
+                 android:layout_marginTop="0dp"
+                 android:text="@string/setting_directory_title" />
 
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="@string/setting_directory_subtitle"
-    android:textSize="13sp"
-    android:textColor="@color/hint"
-    android:layout_marginBottom="12dp"/>
+            <TextView
+                 android:layout_height="wrap_content"
+                 android:layout_width="wrap_content"
+                 android:layout_marginBottom="12dp"
+                 android:textSize="13sp"
+                 android:textColor="@color/hint"
+                 android:text="@string/setting_directory_subtitle" />
 
-<com.google.android.material.card.MaterialCardView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:cardCornerRadius="18dp"
-    app:cardElevation="0dp"
-    app:strokeWidth="1dp"
-    app:strokeColor="?attr/colorOutline"
-    android:backgroundTint="?attr/colorSurface">
+            <com.google.android.material.card.MaterialCardView
+                 android:layout_height="wrap_content"
+                 android:layout_width="match_parent"
+                 app:strokeColor="?attr/colorOutline"
+                 app:cardElevation="0dp"
+                 app:strokeWidth="1dp"
+                 android:backgroundTint="?attr/colorSurface"
+                 app:cardCornerRadius="18dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+                <LinearLayout
+                     android:layout_height="wrap_content"
+                     android:layout_width="match_parent"
+                     android:padding="16dp"
+                     android:orientation="vertical">
 
-        <!-- CURRENT PATH -->
-        <TextView
-            android:id="@+id/textCurrentDirectory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="/storage/emulated/0/Download"
-            android:textSize="14sp"
-            android:maxLines="1"
-            android:ellipsize="middle"
-            android:textColor="@color/hint"
-            android:fontFamily="@font/poppins_semibold"/>
+                    <TextView
+                         android:layout_height="wrap_content"
+                         android:layout_width="match_parent"
+                         android:ellipsize="middle"
+                         android:textSize="14sp"
+                         android:fontFamily="@font/poppins_semibold"
+                         android:textColor="@color/hint"
+                         android:maxLines="1"
+                         android:id="@+id/textCurrentDirectory"
+                         android:text="/storage/emulated/0/Download" />
 
-        <!-- BUTTON -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonChangeDirectory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Change Folder"
-            android:layout_marginTop="12dp"
-            app:icon="@drawable/ic_folder_24px"
-            app:iconPadding="8dp"
-            app:cornerRadius="14dp"
-            app:iconTint="@color/skeleton_bg"
-            android:textColor="?attr/colorPrimary"
-            app:backgroundTint="?attr/colorSecondary"
-            style="@style/Widget.Tiktokly.TonalButton"/>
+                    <com.google.android.material.button.MaterialButton
+                         android:layout_height="wrap_content"
+                         android:layout_width="wrap_content"
+                         app:icon="@drawable/ic_folder_24px"
+                         app:backgroundTint="?attr/colorSecondary"
+                         app:cornerRadius="14dp"
+                         app:iconTint="@color/skeleton_bg"
+                         android:textColor="?attr/colorPrimary"
+                         app:iconPadding="8dp"
+                         style="@style/Widget.Tiktokly.TonalButton"
+                         android:layout_marginTop="12dp"
+                         android:id="@+id/buttonChangeDirectory"
+                         android:text="Change Folder" />
 
-    </LinearLayout>
-</com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
 
