@@ -46,7 +46,6 @@ fun getDownloadFolder(context: Context): Uri {
     return if (uriString != null) {
         Uri.parse(uriString)
     } else {
-        // fallback → Downloads
         Uri.parse(
             "content://com.android.externalstorage.documents/tree/primary:Download"
         )

@@ -46,13 +46,13 @@ import com.zandeveloper.tiktokly.utils.stringValidator.StringValidator
 import com.zandeveloper.tiktokly.utils.userHelp.UserHelpApp
 
 import com.zandeveloper.tiktokly.data.network.updateService.UpdateServiceApp
-
 import android.view.animation.DecelerateInterpolator
 import com.google.gson.reflect.TypeToken
 import com.zandeveloper.tiktokly.utils.uiHandler.UiHandler
 import com.zandeveloper.tiktokly.utils.storageManager.DirectoryManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.zandeveloper.tiktokly.databinding.DialogDownloadProgressBinding
+import androidx.appcompat.app.AlertDialog
 
 class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var ads: AdsApp
     private lateinit var savedUri: Uri
     
-    private var downloadDialog: androidx.appcompat.app.AlertDialog? = null
+    private var downloadDialog: AlertDialog? = null
 private var dialogBinding: DialogDownloadProgressBinding? = null
     
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -157,9 +157,6 @@ private var dialogBinding: DialogDownloadProgressBinding? = null
     }
 
 }
-        // ============== 
-        // Youtube feature in maintance mode
-        
         if(platform.toString() == "YouTube") {
                 
       Alerts.makeText(this@MainActivity,"Pegunduhan tidak bisa dilanjutkan!!", "Ada sedikit masalah untuk pengunduhan video Youtube,silahkan tunggu update selanjutnya", Alerts.ERROR).show()

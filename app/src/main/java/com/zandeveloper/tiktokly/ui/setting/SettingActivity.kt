@@ -17,7 +17,6 @@ private val binding get() = _binding!!
 private val folderPicker =
     registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->
         uri?.let {
-            // kasih izin permanen
             contentResolver.takePersistableUriPermission(
                 it,
                 Intent.FLAG_GRANT_READ_URI_PERMISSION or
@@ -58,7 +57,7 @@ private val folderPicker =
 
         
         binding.topAppBar.setNavigationOnClickListener {
-            finish() // kembali ke activity sebelumnya
+            finish()
         }
         
         setContentView(binding.root)

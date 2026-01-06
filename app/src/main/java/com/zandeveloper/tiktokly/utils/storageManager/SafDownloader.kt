@@ -24,17 +24,14 @@ class SafDownloader(
         scope.launch {
 
             try {
-                // 1️⃣ Folder SAF
                 val folder = DocumentFile.fromTreeUri(context, folderUri)
                     ?: throw IllegalStateException("Folder SAF tidak valid")
 
-                // 2️⃣ Buat file tujuan
                 val file = folder.createFile(
                     "application/octet-stream",
                     fileName
                 ) ?: throw IOException("Gagal membuat file")
 
-                // 3️⃣ Request download
                 val client = OkHttpClient()
                 val request = Request.Builder().url(url).build()
                 val response = client.newCall(request).execute()
@@ -46,7 +43,6 @@ class SafDownloader(
                 val body = response.body ?: throw IOException("Response body null")
                 val total = body.contentLength()
 
-                // 4️⃣ Stream ke SAF
                 val input = body.byteStream()
                 val output = context.contentResolver.openOutputStream(file.uri)
                     ?: throw IOException("Gagal membuka output stream")

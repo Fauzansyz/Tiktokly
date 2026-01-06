@@ -1,155 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/root_layout">
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     android:layout_height="match_parent"
+     android:layout_width="match_parent"
+     android:id="@+id/root_layout">
 
-    <!-- TOOLBAR -->
     <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="true">
+         android:layout_height="wrap_content"
+         android:layout_width="match_parent"
+         android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/topAppBar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:fontFamily="@font/poppins_semibold"
-            android:background="?attr/colorSurface"
-            app:title="@string/app_name"
-            app:titleCentered="true"
-            app:menu="@menu/top_appbar_main_menu"
-            app:titleTextColor="?attr/colorPrimary" />
+             android:layout_height="?attr/actionBarSize"
+             android:layout_width="match_parent"
+             android:background="?attr/colorSurface"
+             app:title="@string/app_name"
+             app:menu="@menu/top_appbar_main_menu"
+             android:fontFamily="@font/poppins_semibold"
+             app:titleCentered="true"
+             app:titleTextColor="?attr/colorPrimary"
+             android:id="@+id/topAppBar">
+
+        </com.google.android.material.appbar.MaterialToolbar>
+
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!-- SEMUA KONTEN DALAM NESTED SCROLL -->
     <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:background="?attr/colorSurface"
-        android:padding="20dp">
+         android:layout_height="match_parent"
+         android:layout_width="match_parent"
+         app:layout_behavior="@string/appbar_scrolling_view_behavior"
+         android:background="?attr/colorSurface"
+         android:padding="20dp">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:animateLayoutChanges="true"  
-            android:orientation="vertical">
+             android:layout_height="wrap_content"
+             android:layout_width="match_parent"
+             android:animateLayoutChanges="true"
+             android:padding="15dp"
+             android:orientation="vertical">
 
-            <!-- Judul -->
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="16dp"
-                android:text="@string/download_placeholder_text"
-                android:textSize="20sp"
-                android:fontFamily="@font/poppins_semibold"
-                android:textColor="?attr/colorPrimary" />
+                 android:layout_height="wrap_content"
+                 android:layout_width="wrap_content"
+                 android:layout_marginBottom="16dp"
+                 android:textSize="20sp"
+                 android:fontFamily="@font/poppins_semibold"
+                 android:textColor="?attr/colorPrimary"
+                 android:layout_gravity="center_horizontal"
+                 android:text="@string/download_placeholder_text" />
 
-            <!-- Input -->
             <com.google.android.material.textfield.TextInputLayout
-               android:id="@+id/inputTextContainer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/input_text_placeholder"
-                app:hintTextColor="@color/skeleton_bg"
-                app:boxCornerRadiusBottomEnd="18dp"  
-                app:boxCornerRadiusTopEnd="18dp"
-                app:boxCornerRadiusTopStart="18dp"
-                app:boxCornerRadiusBottomStart="18dp"
-                app:startIconDrawable="@drawable/ic_link_24"
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
+                 android:layout_height="wrap_content"
+                 android:layout_width="match_parent"
+                 app:boxCornerRadiusTopEnd="18dp"
+                 android:hint="@string/input_text_placeholder"
+                 app:boxCornerRadiusBottomStart="18dp"
+                 app:hintTextColor="@color/skeleton_bg"
+                 app:boxCornerRadiusBottomEnd="18dp"
+                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                 app:startIconDrawable="@drawable/ic_link_24"
+                 app:boxCornerRadiusTopStart="18dp"
+                 android:id="@+id/inputTextContainer">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textInput"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="?attr/colorPrimary"
-                    android:inputType="textUri"
-                    android:textSize="16sp"/>
+                     android:layout_height="wrap_content"
+                     android:layout_width="match_parent"
+                     android:textSize="16sp"
+                     android:textColor="?attr/colorPrimary"
+                     android:inputType="textUri"
+                     android:id="@+id/textInput" />
+
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Button -->
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/buttonDownload"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                app:iconGravity="textStart"
-                app:backgroundTint="?attr/colorSecondary"
-                android:textColor="?attr/colorPrimary"
-                app:iconTint="@color/skeleton_bg"
-                style="@style/Widget.Tiktokly.TonalButton"
-                android:text="@string/text_button"
-                app:icon="@drawable/ic_download_24"
-                app:cornerRadius="20dp"/>
+                 android:layout_height="wrap_content"
+                 android:layout_width="match_parent"
+                 app:icon="@drawable/ic_download_24"
+                 app:backgroundTint="?attr/colorSecondary"
+                 app:cornerRadius="20dp"
+                 app:iconTint="@color/skeleton_bg"
+                 android:textColor="?attr/colorPrimary"
+                 style="@style/Widget.Tiktokly.TonalButton"
+                 android:layout_marginTop="20dp"
+                 android:id="@+id/buttonDownload"
+                 app:iconGravity="textStart"
+                 android:text="@string/text_button" />
 
-<com.facebook.shimmer.ShimmerFrameLayout
-    android:id="@+id/shimmerRoot"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="20dp"
-    app:shimmer_auto_start="true"
-    android:visibility="gone"
-    app:shimmer_duration="1000">
+            <com.facebook.shimmer.ShimmerFrameLayout
+                 android:layout_height="wrap_content"
+                 android:layout_width="match_parent"
+                 android:visibility="gone"
+                 android:layout_marginTop="20dp"
+                 app:shimmer_auto_start="true"
+                 app:shimmer_duration="1000"
+                 android:id="@+id/shimmerRoot">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+                <LinearLayout
+                     android:layout_height="wrap_content"
+                     android:layout_width="match_parent"
+                     android:orientation="vertical">
 
-        <!-- Skeleton Title -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="24dp"
-            android:layout_marginTop="30dp"
-            android:background="@color/skeleton_bg"/>
+                    <View
+                         android:layout_height="24dp"
+                         android:layout_width="match_parent"
+                         android:background="@color/skeleton_bg"
+                         android:layout_marginTop="30dp" />
 
-        <!-- Skeleton Thumbnail -->
-        <View
-            android:layout_width="255dp"
-            android:layout_height="255dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:background="@color/skeleton_bg"/>
-    </LinearLayout>
-</com.facebook.shimmer.ShimmerFrameLayout>
+                    <View
+                         android:layout_height="255dp"
+                         android:layout_width="255dp"
+                         android:background="@color/skeleton_bg"
+                         android:layout_marginTop="20dp"
+                         android:layout_gravity="center_horizontal" />
 
-<!-- Konten asli -->
-<LinearLayout
-    android:id="@+id/contentContainer"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:visibility="gone">
+                </LinearLayout>
 
-    <TextView
-        android:id="@+id/titleVideo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:textAlignment="center"
-        android:textSize="15sp"
-        android:fontFamily="@font/poppins_semibold"
-        android:textColor="?attr/colorOnSurface" />
+            </com.facebook.shimmer.ShimmerFrameLayout>
 
-    <ImageView
-        android:id="@+id/itemThumbnail"
-        android:layout_width="255dp"
-        android:layout_height="255dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:scaleType="centerCrop" />
+            <LinearLayout
+                 android:layout_height="wrap_content"
+                 android:layout_width="match_parent"
+                 android:visibility="gone"
+                 android:orientation="vertical"
+                 android:id="@+id/contentContainer">
 
-<TextView
-     android:layout_height="wrap_content"
-     android:layout_width="wrap_content"
-     android:id="@+id/debugText"/>
-        
-</LinearLayout>
+                <TextView
+                     android:layout_height="wrap_content"
+                     android:layout_width="match_parent"
+                     android:textAlignment="center"
+                     android:textSize="15sp"
+                     android:fontFamily="@font/poppins_semibold"
+                     android:textColor="?attr/colorOnSurface"
+                     android:layout_marginTop="30dp"
+                     android:id="@+id/titleVideo" />
+
+                <ImageView
+                     android:layout_height="255dp"
+                     android:layout_width="255dp"
+                     android:scaleType="centerCrop"
+                     android:layout_marginTop="20dp"
+                     android:id="@+id/itemThumbnail"
+                     android:layout_gravity="center_horizontal" />
+
+                <TextView
+                     android:layout_height="wrap_content"
+                     android:layout_width="wrap_content"
+                     android:id="@+id/debugText" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

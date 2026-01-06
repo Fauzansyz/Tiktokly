@@ -1,27 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:padding="5dp">
+<LinearLayout
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_height="wrap_content"
+     android:layout_width="match_parent"
+     android:gravity="center"
+     android:padding="5dp"
+     android:orientation="vertical">
 
-  <TextView
-        android:id="@+id/itemTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Judul Video"
-        android:layout_weight="1"
-        android:textSize="15sp"
-        android:maxLines="2"
-        android:ellipsize="end"
-        android:textAlignment="center"
-        android:textColor="@android:color/white" />
+    <TextView
+         android:layout_height="wrap_content"
+         android:layout_width="wrap_content"
+         android:textAlignment="center"
+         android:ellipsize="end"
+         android:padding="15dp"
+         android:textSize="24sp"
+         android:fontFamily="@font/helvetica_regular"
+         android:textColor="@android:color/white"
+         android:maxLines="1"
+         android:layout_weight="1"
+         android:id="@+id/itemTitle"
+         android:text="Judul Video" />
 
     <ImageView
-        android:id="@+id/itemThumbnail"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:scaleType="centerCrop"
-        android:layout_marginTop="20dp"/>
+         android:layout_height="200dp"
+         android:layout_width="200dp"
+         android:scaleType="centerCrop"
+         android:layout_marginTop="20dp"
+         android:id="@+id/itemThumbnail" />
+
 </LinearLayout>

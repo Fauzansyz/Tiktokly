@@ -13,8 +13,8 @@ class UiHandler {
     
         Glide.with(imageView.context)
           .load(url)
-          .thumbnail(0.25f) // load versi kecil dulu (kerasa banget di HP kentang)
-          .override(600, 600) // batasi ukuran biar gak rakus RAM
+          .thumbnail(0.25f) 
+          .override(600, 600)
           .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
           .transform(
         CenterCrop(),
