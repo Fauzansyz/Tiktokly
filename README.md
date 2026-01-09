@@ -37,7 +37,7 @@
 
 | Feature        | Screenshot   |
 | -------------- | ------------ |
-| Download View   | ![phone 2](assets/242shots_so.png)|
+|    Home        | ![phone 2](assets/242shots_so.png)|
 
 ## License
 
