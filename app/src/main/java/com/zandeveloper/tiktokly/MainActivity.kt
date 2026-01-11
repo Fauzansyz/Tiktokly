@@ -159,7 +159,7 @@ private var dialogBinding: DialogDownloadProgressBinding? = null
 }
         if(platform.toString() == "YouTube") {
                 
-      Alerts.makeText(this@MainActivity,"Pegunduhan tidak bisa dilanjutkan!!", "Ada sedikit masalah untuk pengunduhan video Youtube,silahkan tunggu update selanjutnya", Alerts.ERROR).show()
+      Alerts.makeText(this@MainActivity,getString(R.string.alertDownloader), getString(R.string.alertDownloaderMessage), Alerts.ERROR).show()
       uihandler.clearText(binding.textInput, binding.titleVideo)
       uihandler.clearThumbnail(binding.itemThumbnail)
       

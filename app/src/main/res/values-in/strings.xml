@@ -48,4 +48,8 @@
     <string name="setting_directory_title">Lokasi Unduhan</string>
 
     
+<!-- WARNING FOR YOUTUBE DOWNLOAD -->
+    <string name="alertDownloader">Pegunduhan tidak bisa dilanjutkan!!</string>
+    <string name="alertDownloaderMessage">Ada sedikit masalah untuk pengunduhan video Youtube,silahkan tunggu update selanjutnya</string>
+    
 </resources>
