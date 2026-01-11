@@ -88,7 +88,7 @@ private var dialogBinding: DialogDownloadProgressBinding? = null
         ads.preload()
 
         val animSlide = AnimationUtils.loadAnimation(this, R.anim.slide_up_fade)
-        animSlide.startOffset = 1200
+        animSlide.startOffset = 1500
 binding.buttonDownload.startAnimation(animSlide)
         
         val prefs = getSharedPreferences("tutorial", MODE_PRIVATE)
