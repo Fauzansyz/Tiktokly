@@ -53,6 +53,7 @@ import com.zandeveloper.tiktokly.utils.storageManager.DirectoryManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.zandeveloper.tiktokly.databinding.DialogDownloadProgressBinding
 import androidx.appcompat.app.AlertDialog
+import android.view.animation.AnimationUtils
 
 class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
@@ -85,6 +86,10 @@ private var dialogBinding: DialogDownloadProgressBinding? = null
         uihandler = UiHandler()
         
         ads.preload()
+
+        val animSlide = AnimationUtils.loadAnimation(this, R.anim.slide_up_fade)
+        animSlide.startOffset = 1200
+binding.buttonDownload.startAnimation(animSlide)
         
         val prefs = getSharedPreferences("tutorial", MODE_PRIVATE)
         val firstRun = prefs.getBoolean("firstRun", true)
