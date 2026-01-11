@@ -3,8 +3,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">  
   <!-- Base application theme. -->  
   <style name="Base.AppTheme" parent="Theme.Material3.DayNight.NoActionBar">  
-  <item name="colorPrimary">@color/violet</item>  
-        <item name="colorSecondary">@color/colorSecondary</item>  
+  <item name="colorPrimary">@color/colorPrimary</item>  
+        <item name="colorSecondary">@color/violet</item>  
         <item name="android:colorBackground">@color/colorBackground</item>  
         <item name="colorSurface">@color/colorSurface</item>  
         
