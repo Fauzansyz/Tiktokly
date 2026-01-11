@@ -4,6 +4,7 @@
     <color name="colorSecondary">#55B1AF</color> <!-- Soft pink -->
     <color name="colorBackground">#0D0D0D</color> <!-- Soft black -->
     <color name="colorSurface">#1A1A1A</color> <!-- Dark card -->
+        <color name="violet">#6e1ce8</color>
     <color name="soft_red">#D14B62</color>
     <color name="black_80">#B3000000</color>
     <color name="skeleton_bg">#E0E0E0</color>
