@@ -165,6 +165,7 @@ binding.buttonDownload.startAnimation(animSlide)
        val begin = StartDownload(this@MainActivity,dm,uiHandler = uihandler)
       
       begin.startDownload(mp4.toString(), filename)
+      uihandler.clearThumbnail(binding.itemThumbnail)
     
     }
 
@@ -184,7 +185,10 @@ binding.buttonDownload.startAnimation(animSlide)
         
      val filename = "insta_${System.currentTimeMillis()}.mp4"
      
-     startDownload(videoUrl.toString(), filename)
+     val begin = StartDownload(this@MainActivity,dm,uiHandler = uihandler)
+      
+      begin.startDownload(videoUrl.toString(), filename)
+      uihandler.clearThumbnail(binding.itemThumbnail)
         
   }
 }

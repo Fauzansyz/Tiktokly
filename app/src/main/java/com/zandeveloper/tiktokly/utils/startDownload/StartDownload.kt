@@ -5,11 +5,9 @@ import android.net.Uri
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.zandeveloper.tiktokly.databinding.DialogDownloadProgressBinding
-import com.zandeveloper.tiktokly.utils.DirectoryManager
-import com.zandeveloper.tiktokly.utils.alerts.Alerts
-import com.zandeveloper.tiktokly.utils.storageManager.SafDownloader
 import com.zandeveloper.tiktokly.utils.storageManager.DirectoryManager
-import com.zandeveloper.tiktokly.utils.downloadManager
+import com.zandeveloper.tiktokly.utils.storageManager.SafDownloader
+import com.zandeveloper.tiktokly.utils.alerts.Alerts
 import com.zandeveloper.tiktokly.R
 import android.app.Activity
 import com.zandeveloper.tiktokly.utils.uiHandler.UiHandler
@@ -28,7 +26,7 @@ class StartDownload(
         filename: String
     ) {
 
-        val savedUri = DirectoryManager.resolveDownloadDir(context)
+        val savedUri = DirectoryManager.resolveDownloadDir(activity)
 
         if (savedUri == null) {
             Alerts.makeText(
@@ -41,10 +39,10 @@ class StartDownload(
         }
 
         dialogBinding = DialogDownloadProgressBinding.inflate(
-            android.view.LayoutInflater.from(context)
+            android.view.LayoutInflater.from(activity)
         )
 
-        downloadDialog = MaterialAlertDialogBuilder(context)
+        downloadDialog = MaterialAlertDialogBuilder(activity)
             .setTitle("Downloading")
             .setView(dialogBinding!!.root)
             .setCancelable(false)
@@ -73,7 +71,7 @@ class StartDownload(
                     Alerts.SUCCESS
                 ).show()
 
-                uiHandler.clearAll()
+                uiHandler.clearText()
             },
 
             onError = {
