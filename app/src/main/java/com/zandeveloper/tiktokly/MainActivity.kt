@@ -54,6 +54,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.zandeveloper.tiktokly.databinding.DialogDownloadProgressBinding
 import androidx.appcompat.app.AlertDialog
 import android.view.animation.AnimationUtils
+import com.zandeveloper.tiktokly.utils.startDownload.StartDownload
 
 class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
@@ -83,7 +84,11 @@ private var dialogBinding: DialogDownloadProgressBinding? = null
         df = DataFetch(this)
         stringValidate = StringValidator()
         
-        uihandler = UiHandler()
+        uihandler = UiHandler(
+           binding.textInput,
+           binding.titleVideo,
+           binding.itemThumbnail
+    )
         
         ads.preload()
 
@@ -156,8 +161,10 @@ binding.buttonDownload.startAnimation(animSlide)
     lifecycleScope.launch {
         
       val filename = "tiktokly_${System.currentTimeMillis()}.mp4"
+       
+       val begin = StartDownload(this@MainActivity,dm,uiHandler = uihandler)
       
-      startDownload(mp4.toString(), filename)
+      begin.startDownload(mp4.toString(), filename)
     
     }
 
@@ -195,55 +202,6 @@ binding.buttonDownload.startAnimation(animSlide)
        }
        
    }
-    
-    private fun startDownload(
-    url: String,
-    filename: String
-) {
-    savedUri = DirectoryManager.resolveDownloadDir(this)
-    
-    if(savedUri == null){
-         Alerts.makeText(this@MainActivity, "Pegunduhan tidak bisa dilanjutkan!!", "Silahkan atur lokasi penyimpanan download", Alerts.WARN)
-         return
-        }
-        
-    dialogBinding = DialogDownloadProgressBinding.inflate(layoutInflater)
-
-    downloadDialog = MaterialAlertDialogBuilder(this)
-        .setTitle("Downloading")
-        .setView(dialogBinding!!.root)
-        .setCancelable(false)
-        .setNegativeButton("Cancel") { d, _ ->
-            dm.cancel()
-            d.dismiss()
-        }
-        .show()
-
-    dm.download(
-        url = url,
-        folderUri = savedUri,
-        fileName = filename,
-
-        onProgress = { progress ->
-            dialogBinding?.progressBar?.setProgressCompat(progress, true)
-            dialogBinding?.progressText?.text = "$progress%"
-        },
-
-        onCompleted = {
-            downloadDialog?.dismiss()
-            Alerts.makeText(this@MainActivity, getString(R.string.success_video_downloading), getString(R.string.success_download_msg),Alerts.SUCCESS).show()
-            
-            uihandler.clearText(binding.textInput, binding.titleVideo)
-            uihandler.clearThumbnail(binding.itemThumbnail)
-        },
-
-        onError = {
-            downloadDialog?.dismiss()
-            Alerts.makeText(this@MainActivity, getString(R.string.failed_alert_title), getString(R.string.failed_download_msg),Alerts.ERROR).show()
-            uihandler.clearText(binding.textInput, binding.titleVideo)
-        }
-    )
-}
     
     
     override fun onDestroy() {

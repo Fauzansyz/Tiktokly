@@ -1,13 +1,18 @@
 package com.zandeveloper.tiktokly.utils.uiHandler
 
 import android.widget.ImageView
+import android.widget.TextView
 import android.view.View
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 
-class UiHandler {
+class UiHandler(
+private val input: TextView,
+    private val title: TextView,
+    private val thumbnail: ImageView
+    ) {
 
     fun showThumbnail(imageView: ImageView, url: String) {
     
