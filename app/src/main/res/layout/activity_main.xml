@@ -37,7 +37,7 @@
              android:layout_height="wrap_content"
              android:layout_width="match_parent"
              android:animateLayoutChanges="true"
-             android:padding="15dp"
+             android:padding="10dp"
              android:orientation="vertical">
 
             <TextView
@@ -73,19 +73,46 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.button.MaterialButton
+            <LinearLayout
                  android:layout_height="wrap_content"
                  android:layout_width="match_parent"
-                 app:icon="@drawable/ic_download_24"
-                 app:backgroundTint="?attr/colorSecondary"
-                 app:cornerRadius="20dp"
-                 app:iconTint="@color/skeleton_bg"
-                 android:textColor="?attr/colorPrimary"
-                 style="@style/Widget.Tiktokly.TonalButton"
-                 android:layout_marginTop="20dp"
-                 android:id="@+id/buttonDownload"
-                 app:iconGravity="textStart"
-                 android:text="@string/text_button" />
+                 android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                     android:layout_height="wrap_content"
+                     android:layout_width="0dp"
+                     app:backgroundTint="?attr/colorSecondary"
+                     app:iconTint="@color/skeleton_bg"
+                     android:textColor="?attr/colorPrimary"
+                     android:layout_marginTop="20dp"
+                     app:icon="@drawable/ic_paste"
+                     app:cornerRadius="20dp"
+                     style="@style/Widget.Tiktokly.TonalButton"
+                     android:layout_weight="1"
+                     android:id="@+id/buttonPaste"
+                     app:iconGravity="textStart"
+                     android:text="Paste" />
+
+                <Space
+                     android:layout_height="wrap_content"
+                     android:layout_width="12dp" />
+
+                <com.google.android.material.button.MaterialButton
+                     android:layout_height="wrap_content"
+                     android:layout_width="0dp"
+                     app:backgroundTint="?attr/colorSecondary"
+                     app:iconTint="@color/skeleton_bg"
+                     android:textColor="?attr/colorPrimary"
+                     android:layout_marginTop="20dp"
+                     app:icon="@drawable/ic_download_24"
+                     app:cornerRadius="20dp"
+                     style="@style/Widget.Tiktokly.TonalButton"
+                     android:layout_weight="1"
+                     android:id="@+id/buttonDownload"
+                     app:iconGravity="textStart"
+                     android:text="@string/text_button" />
+
+            </LinearLayout>
 
             <com.facebook.shimmer.ShimmerFrameLayout
                  android:layout_height="wrap_content"
