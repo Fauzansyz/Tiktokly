@@ -92,9 +92,15 @@ private var dialogBinding: DialogDownloadProgressBinding? = null
         
         ads.preload()
 
-        val animSlide = AnimationUtils.loadAnimation(this, R.anim.slide_up_fade)
-        animSlide.startOffset = 1500
-binding.buttonDownload.startAnimation(animSlide)
+        val downloadButtonAnimSlide = downloadButtonAnimSlide.loadAnimation(this, R.anim.slide_up_fade)
+        downloadButtonAnimSlide.startOffset = 1500
+binding.buttonDownload.startAnimation(downloadButtonAnimSlide)
+
+val pasteButtonAnimSlide = pasteButtonAnimSlide.loadAnimation(this, R.anim.slide_up_fade)
+pasteButtonAnimSlide.startOffset = 1700
+binding.buttonPaste.startAnimation(pasteButtonAnimSlide)
+
+       
         
         val prefs = getSharedPreferences("tutorial", MODE_PRIVATE)
         val firstRun = prefs.getBoolean("firstRun", true)
