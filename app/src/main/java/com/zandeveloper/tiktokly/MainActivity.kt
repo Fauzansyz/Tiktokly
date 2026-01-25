@@ -55,6 +55,7 @@ import com.zandeveloper.tiktokly.databinding.DialogDownloadProgressBinding
 import androidx.appcompat.app.AlertDialog
 import android.view.animation.AnimationUtils
 import com.zandeveloper.tiktokly.utils.startDownload.StartDownload
+import android.content.ClipboardManager
 
 class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
@@ -129,6 +130,17 @@ binding.buttonPaste.startAnimation(pasteButtonAnim)
 
         else -> false
     }
+}
+
+binding.buttonPaste.setOnClickListener {
+  val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+  var text = ""
+  
+  val item = clipboard?.primaryClip?.getItemAt(0)
+  text = item?.text.toString()
+  
+  Alerts.makeText(this@MainActivity,"Info",text, Alerts.WARN).show()
+  
 }
 
 
