@@ -56,6 +56,9 @@ import androidx.appcompat.app.AlertDialog
 import android.view.animation.AnimationUtils
 import com.zandeveloper.tiktokly.utils.startDownload.StartDownload
 import android.content.ClipboardManager
+import android.util.Patterns
+import java.util.ArrayList
+import java.util.regex.Matcher
 
 class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
@@ -139,13 +142,18 @@ binding.buttonPaste.setOnClickListener {
   val item = clipboard?.primaryClip?.getItemAt(0)
   text = item?.text.toString()
   
-  Alerts.makeText(this@MainActivity,"Info",text, Alerts.WARN).show()
+  binding.textInput.text = text
   
 }
 
 
         binding.buttonDownload.setOnClickListener {
     val inputUrl = binding.textInput.text.toString().trim()
+    var urls = extractUrlsFromString(inputUrl)
+    urls.forEach { url ->
+      Alerts.makeText(this@MainActivity, "Urls", url, Alerts.WARN).show()
+    }
+    
     if (inputUrl.isEmpty()) {
         Alerts.makeText(this@MainActivity, getString(R.string.failed_alert_title), getString(R.string.input_required_msg), Alerts.ERROR).show()
         return@setOnClickListener
@@ -226,6 +234,20 @@ binding.buttonPaste.setOnClickListener {
        }
        
    }
+   
+   private fun extractUrlsFromString(inputString: String): List<String> {
+    val foundUrls = ArrayList<String>()
+    // Get the system's built-in web URL pattern matcher
+    val webMatcher: Matcher = Patterns.WEB_URL.matcher(inputString)
+
+    // Loop through all matches found by the matcher
+    while (webMatcher.find()) {
+        // webMatcher.group() returns the found URL
+        foundUrls.add(webMatcher.group())
+    }
+    
+    return foundUrls
+}
     
     
     override fun onDestroy() {
