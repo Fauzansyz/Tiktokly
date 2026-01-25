@@ -142,7 +142,7 @@ binding.buttonPaste.setOnClickListener {
   val item = clipboard?.primaryClip?.getItemAt(0)
   text = item?.text.toString()
   
-  binding.textInput.text = text
+  binding.textInput.setText(text)
   
 }
 
