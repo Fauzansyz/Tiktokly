@@ -26,17 +26,7 @@ class StartDownload(
         filename: String
     ) {
 
-        val savedUri = DirectoryManager.resolveDownloadDir(activity)
-
-        if (savedUri == null) {
-            Alerts.makeText(
-                activity,
-                "Pegunduhan tidak bisa dilanjutkan!!",
-                "Silahkan atur lokasi penyimpanan download",
-                Alerts.WARN
-            ).show()
-            return
-        }
+        val savedUri = DirectoryManager.getFinalDir(activity)
 
         dialogBinding = DialogDownloadProgressBinding.inflate(
             android.view.LayoutInflater.from(activity)

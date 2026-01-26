@@ -11,53 +11,41 @@ object DirectoryManager {
     private const val PREF_NAME = "storage_pref"
     private const val KEY_CUSTOM_DIR = "custom_dir_uri"
 
-fun saveCustomDir(context: Context, uri: Uri) {
-    context.contentResolver.takePersistableUriPermission(
-        uri,
-        Intent.FLAG_GRANT_READ_URI_PERMISSION or
-        Intent.FLAG_GRANT_WRITE_URI_PERMISSION
-    )
+    // Default Download folder (SAF)
+    private val DEFAULT_DOWNLOAD_URI: Uri =
+        Uri.parse("content://com.android.externalstorage.documents/tree/primary:Download")
 
-    context.getSharedPreferences("settings", Context.MODE_PRIVATE)
-        .edit()
-        .putString(KEY_CUSTOM_DIR, uri.toString())
-        .apply()
-}
+    // Simpan custom directory dari user
+    fun saveCustomDir(context: Context, uri: Uri) {
+        context.contentResolver.takePersistableUriPermission(
+            uri,
+            Intent.FLAG_GRANT_READ_URI_PERMISSION or
+                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+        )
+
+        context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+            .edit()
+            .putString(KEY_CUSTOM_DIR, uri.toString())
+            .apply()
+    }
 
     fun getCustomDir(context: Context): Uri? {
-    val uriStr = context
-        .getSharedPreferences("settings", Context.MODE_PRIVATE)
-        .getString(KEY_CUSTOM_DIR, null)
+        val uriStr = context
+            .getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+            .getString(KEY_CUSTOM_DIR, null)
 
-    return uriStr?.let { Uri.parse(it) }
-}
-
-fun getDefaultDir(): Uri {
-    val file = Environment
-        .getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-
-    return Uri.fromFile(file)
-}
-
-fun getDownloadFolder(context: Context): Uri {
-    val prefs = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
-    val uriString = prefs.getString("download_dir", null)
-
-    return if (uriString != null) {
-        Uri.parse(uriString)
-    } else {
-        Uri.parse(
-            "content://com.android.externalstorage.documents/tree/primary:Download"
-        )
+        return uriStr?.let { Uri.parse(it) }
     }
-}
 
-fun resolveDownloadDir(context: Context): Uri {
-    return getCustomDir(context) ?: getDownloadFolder(context)
-}
+    // Final directory (custom kalau ada, kalau tidak pakai Download)
+    fun getFinalDir(context: Context): Uri {
+        return getCustomDir(context) ?: DEFAULT_DOWNLOAD_URI
+    }
 
+    // Label folder untuk UI
     fun getDirectoryLabel(context: Context): String {
-        val uri = getCustomDir(context) ?: return "Default (Download/)"
+        val uri = getCustomDir(context) ?: return "Default (Download)"
+
         val doc = DocumentFile.fromTreeUri(context, uri)
         return doc?.name ?: "Custom Folder"
     }
