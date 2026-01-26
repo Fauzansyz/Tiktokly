@@ -21,57 +21,56 @@ class UserHelpApp private constructor(
     private lateinit var spotlight: Spotlight
     private lateinit var targets: List<Target>
 
-    fun startHelp() {
-
-        val target1 = Target.Builder()
-            .setAnchor(binding.inputTextContainer)
-            .setShape(
-                RoundedRectangle(
-                    binding.inputTextContainer.width + 40f,
-                    binding.inputTextContainer.height + 40f,
-                    20f
-                )
-            )
-            .setOverlay(createOverlay(
-                activity.getString(R.string.tutorial_title_first),
-                activity.getString(R.string.tutorial_msg_first)
-            ))
-            .build()
-
-        val target2 = Target.Builder()
-            .setAnchor(binding.buttonDownload)
-            .setShape(
-                RoundedRectangle(
-                    binding.buttonDownload.width + 40f,
-                    binding.buttonDownload.height + 40f,
-                    20f
-                )
-            )
-            .setOverlay(createOverlay(
-                activity.getString(R.string.tutorial_title_second),
-                activity.getString(R.string.tutorial_msg_second)
-            ))
-            .setOnTargetListener(object : OnTargetListener {
-                override fun onStarted() {}
-                override fun onEnded() {
-                    spotlight.finish()
-                    onFinish() // 🔥 kirim sinyal ke Activity
-                }
-            })
-            .build()
-
-        targets = listOf(target1, target2)
-
-        spotlight = Spotlight.Builder(activity)
-            .setTargets(targets)
-            .setBackgroundColorRes(R.color.black_80)
-            .setDuration(300L)
-            .setAnimation(DecelerateInterpolator(2f))
-            .build()
-
-        spotlight.start()
-    }
-
+    fun startHelp() {  
+  
+        val target1 = Target.Builder()  
+            .setAnchor(binding.inputTextContainer)  
+            .setShape(  
+                RoundedRectangle(  
+                    width = binding.inputTextContainer.width + 40f,  
+                    height = binding.inputTextContainer.height + 40f,  
+                    radius = 20f  
+                )  
+            )  
+            .setOverlay(createOverlay(activity.getString(R.string.tutorial_title_first),   
+             activity.getString(R.string.tutorial_msg_first)))  
+            .setOnTargetListener(object : OnTargetListener {  
+                override fun onStarted() {}  
+                override fun onEnded() {}  
+            })  
+            .build()  
+  
+        val target2 = Target.Builder()  
+            .setAnchor(binding.buttonDownload)  
+            .setShape(  
+                RoundedRectangle(  
+                    width = binding.buttonDownload.width + 40f,  
+                    height = binding.buttonDownload.height + 40f,  
+                    radius = 20f  
+                )  
+            )  
+            .setOverlay(createOverlay(activity.getString(R.string.tutorial_title_second),  
+             activity.getString(R.string.tutorial_msg_second)))  
+            .setOnTargetListener(object : OnTargetListener {  
+                override fun onStarted() {}  
+                override fun onEnded() {  
+                    spotlight.finish()  
+                }  
+            })  
+            .build()  
+  
+        targets = listOf(target1, target2)  
+  
+        spotlight = Spotlight.Builder(activity)  
+            .setTargets(targets)  
+            .setBackgroundColorRes(R.color.black_80)  
+            .setDuration(300L)  
+            .setAnimation(DecelerateInterpolator(2f))  
+            .build()  
+  
+        spotlight.start()  
+    }  
+    
     private fun createOverlay(title: String, sub: String): View {
         val overlayBinding = SpotlightOverlayBinding.inflate(
             LayoutInflater.from(activity)
