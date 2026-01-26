@@ -151,7 +151,7 @@ binding.buttonPaste.setOnClickListener {
     val inputUrl = binding.textInput.text.toString().trim()
     var urls = extractUrlsFromString(inputUrl)
     
-      if (url.isEmpty()) {
+      if (urls == "") {
         Alerts.makeText(this@MainActivity, getString(R.string.failed_alert_title), getString(R.string.input_required_msg), Alerts.ERROR).show()
         return@setOnClickListener
      }
@@ -159,7 +159,7 @@ binding.buttonPaste.setOnClickListener {
     
     lifecycleScope.launch {
         val apiUrl = "https://dl-server-core.vercel.app/download"
-        val data = df.fetchDataVideo(apiUrl, urls)
+        val data = df.fetchDataVideo(apiUrl, urls.toString())
 
         if (data == null) {
             uihandler.hideShimmer(binding.shimmerRoot, binding.contentContainer)
@@ -231,13 +231,13 @@ binding.buttonPaste.setOnClickListener {
        
    }
    
-   private fun extractUrlsFromString(inputString: String): List<String> {
+   private fun extractUrlsFromString(inputString: String): String {
     val matcher = Patterns.WEB_URL.matcher(inputString)
 
     return if (matcher.find()) {
         matcher.group()
-    } else {
-        null
+    } else { 
+       ""
     }
 }
     
