@@ -150,20 +150,22 @@ binding.buttonPaste.setOnClickListener {
         binding.buttonDownload.setOnClickListener {
     val inputUrl = binding.textInput.text.toString().trim()
     var urls = extractUrlsFromString(inputUrl)
-    urls.forEach { url ->
-      Alerts.makeText(this@MainActivity, "Urls", url, Alerts.WARN).show()
-    }
     
     if (inputUrl.isEmpty()) {
         Alerts.makeText(this@MainActivity, getString(R.string.failed_alert_title), getString(R.string.input_required_msg), Alerts.ERROR).show()
         return@setOnClickListener
     }
-
-    uihandler.showShimmer(binding.shimmerRoot, binding.contentContainer)
+    
+    urls.forEach { url ->
+      if (url.isEmpty()) {
+        Alerts.makeText(this@MainActivity, getString(R.string.failed_alert_title), getString(R.string.input_required_msg), Alerts.ERROR).show()
+        return@setOnClickListener
+     }
+     uihandler.showShimmer(binding.shimmerRoot, binding.contentContainer)
     
     lifecycleScope.launch {
         val apiUrl = "https://dl-server-core.vercel.app/download"
-        val data = df.fetchDataVideo(apiUrl, inputUrl)
+        val data = df.fetchDataVideo(apiUrl, url)
 
         if (data == null) {
             uihandler.hideShimmer(binding.shimmerRoot, binding.contentContainer)
@@ -230,6 +232,8 @@ binding.buttonPaste.setOnClickListener {
         uihandler.showThumbnail(binding.itemThumbnail,thumbnail.toString())
    
             }
+     
+         }
     
        }
        

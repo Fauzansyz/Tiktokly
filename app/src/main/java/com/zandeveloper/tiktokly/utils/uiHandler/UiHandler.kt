@@ -6,10 +6,11 @@ import android.view.View
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.google.android.material.textfield.TextInputEditText
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 
 class UiHandler(
-private val input: TextView,
+private val input: TextInputEditText,
     private val title: TextView,
     private val thumbnail: ImageView
     ) {
@@ -32,13 +33,9 @@ private val input: TextView,
         imageView.setImageDrawable(null)
     }
 
-    fun clearText(vararg views: View) {
-        views.forEach {
-            when(it) {
-                is android.widget.TextView -> it.text = ""
-                is android.widget.EditText -> it.text?.clear()
-            }
-        }
+    fun clearAllText() {
+     input.text?.clear()
+     text.text = ""
     }
 
     fun showShimmer(shimmer: View, content: View) {
