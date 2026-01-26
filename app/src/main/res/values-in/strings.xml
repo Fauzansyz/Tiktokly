@@ -52,4 +52,6 @@
     <string name="alertDownloader">Pegunduhan tidak bisa dilanjutkan!!</string>
     <string name="alertDownloaderMessage">Ada sedikit masalah untuk pengunduhan video Youtube,silahkan tunggu update selanjutnya</string>
     
+    <!-- ALERTS CUSTOM DIR (NULL) -->
+     <string name= "alertNullDir">Silakan pilih direktori penyimpanan Anda.</string>
 </resources>

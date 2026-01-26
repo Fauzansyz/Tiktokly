@@ -59,6 +59,7 @@ import android.content.ClipboardManager
 import android.util.Patterns
 import java.util.ArrayList
 import java.util.regex.Matcher
+import androidx.activity.result.contract.ActivityResultContracts
 
 class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
@@ -69,7 +70,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var dm: SafDownloader
     private lateinit var stringValidate: StringValidator
     private val folderPickerLauncher =
-    registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->
+    registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri: Uri? ->
         if (uri != null) {
             DirectoryManager.saveCustomDir(this, uri)
         }

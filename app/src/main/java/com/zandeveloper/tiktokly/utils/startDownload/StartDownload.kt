@@ -26,7 +26,16 @@ class StartDownload(
         filename: String
     ) {
 
-        val savedUri = DirectoryManager.getFinalDir(activity)
+        val savedUri = DirectoryManager.resolveDownloadDir(activity)
+        
+        if(savedUri == null) {
+          Alerts.makeText(
+                    activity,
+                    activity.getString(R.string.failed_alert_title),
+                    activity.getString(R.string.alertNullDir),
+                    Alerts.SUCCESS
+                    )
+        }
 
         dialogBinding = DialogDownloadProgressBinding.inflate(
             android.view.LayoutInflater.from(activity)

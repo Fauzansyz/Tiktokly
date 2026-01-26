@@ -50,5 +50,8 @@
 <!-- WARNING FOR YOUTUBE DOWNLOAD -->
     <string name="alertDownloader">Download cannot be continued!!</string>
     <string name="alertDownloaderMessage">There is a little problem downloading Youtube videos, please wait for the next update.</string>
+
+<!-- ALERTS CUSTOM DIR (NULL) -->
+     <string name= "alertNullDir">Please select your storage directory</string>
     
 </resources>

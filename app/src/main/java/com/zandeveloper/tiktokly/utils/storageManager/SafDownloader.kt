@@ -15,7 +15,7 @@ class SafDownloader(
 
     fun download(
         url: String,
-        folderUri: Uri,
+        folderUri: Uri?,
         fileName: String,
         onProgress: (Int) -> Unit,
         onCompleted: (Uri) -> Unit,
@@ -24,6 +24,10 @@ class SafDownloader(
         scope.launch {
 
             try {
+            
+            if(folderUri == null) {
+             throw IllegalStateException("Folder SAF tidak valid")
+            } else {
                 val folder = DocumentFile.fromTreeUri(context, folderUri)
                     ?: throw IllegalStateException("Folder SAF tidak valid")
 
@@ -70,6 +74,7 @@ class SafDownloader(
                 withContext(Dispatchers.Main) {
                     onCompleted(file.uri)
                 }
+            }
 
             } catch (e: Throwable) {
                 withContext(Dispatchers.Main) {
