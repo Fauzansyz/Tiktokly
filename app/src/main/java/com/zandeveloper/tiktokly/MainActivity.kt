@@ -68,6 +68,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var df: DataFetch
     private lateinit var dm: SafDownloader
     private lateinit var stringValidate: StringValidator
+    private val folderPickerLauncher =
+    registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->
+        if (uri != null) {
+            DirectoryManager.saveCustomDir(this, uri)
+        }
+    }
     private lateinit var uihandler: UiHandler
     
     private lateinit var ads: AdsApp
@@ -115,6 +121,9 @@ binding.buttonPaste.startAnimation(pasteButtonAnim)
           val help = UserHelpApp.Builder()
              .setActivity(this)
              .setBinding(binding)
+             .setOnFinishListener{
+              openFolderPicker()
+             }
              .build()
     
        binding.root.post {
@@ -239,6 +248,10 @@ binding.buttonPaste.setOnClickListener {
     } else { 
        ""
     }
+}
+
+private fun openFolderPicker() {
+    folderPickerLauncher.launch(null)
 }
     
     

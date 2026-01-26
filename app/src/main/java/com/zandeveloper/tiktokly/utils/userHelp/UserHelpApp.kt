@@ -14,7 +14,8 @@ import com.zandeveloper.tiktokly.databinding.SpotlightOverlayBinding
 
 class UserHelpApp private constructor(
     private val activity: Activity,
-    private val binding: ActivityMainBinding
+    private val binding: ActivityMainBinding,
+    private val onFinish: () -> Unit   // callback
 ) {
 
     private lateinit var spotlight: Spotlight
@@ -26,34 +27,35 @@ class UserHelpApp private constructor(
             .setAnchor(binding.inputTextContainer)
             .setShape(
                 RoundedRectangle(
-                    width = binding.inputTextContainer.width + 40f,
-                    height = binding.inputTextContainer.height + 40f,
-                    radius = 20f
+                    binding.inputTextContainer.width + 40f,
+                    binding.inputTextContainer.height + 40f,
+                    20f
                 )
             )
-            .setOverlay(createOverlay(activity.getString(R.string.tutorial_title_first), 
-             activity.getString(R.string.tutorial_msg_first)))
-            .setOnTargetListener(object : OnTargetListener {
-                override fun onStarted() {}
-                override fun onEnded() {}
-            })
+            .setOverlay(createOverlay(
+                activity.getString(R.string.tutorial_title_first),
+                activity.getString(R.string.tutorial_msg_first)
+            ))
             .build()
 
         val target2 = Target.Builder()
             .setAnchor(binding.buttonDownload)
             .setShape(
                 RoundedRectangle(
-                    width = binding.buttonDownload.width + 40f,
-                    height = binding.buttonDownload.height + 40f,
-                    radius = 20f
+                    binding.buttonDownload.width + 40f,
+                    binding.buttonDownload.height + 40f,
+                    20f
                 )
             )
-            .setOverlay(createOverlay(activity.getString(R.string.tutorial_title_second),
-             activity.getString(R.string.tutorial_msg_second)))
+            .setOverlay(createOverlay(
+                activity.getString(R.string.tutorial_title_second),
+                activity.getString(R.string.tutorial_msg_second)
+            ))
             .setOnTargetListener(object : OnTargetListener {
                 override fun onStarted() {}
                 override fun onEnded() {
                     spotlight.finish()
+                    onFinish() // 🔥 kirim sinyal ke Activity
                 }
             })
             .build()
@@ -88,6 +90,7 @@ class UserHelpApp private constructor(
     class Builder {
         private var activity: Activity? = null
         private var binding: ActivityMainBinding? = null
+        private var onFinish: () -> Unit = {}
 
         fun setActivity(activity: Activity) = apply {
             this.activity = activity
@@ -97,18 +100,14 @@ class UserHelpApp private constructor(
             this.binding = binding
         }
 
-        fun build(): UserHelpApp {
-            val act = activity
-                ?: throw IllegalStateException("Activity belum di-set di UserHelp.Builder")
-
-            val bind = binding
-                ?: throw IllegalStateException("Binding belum di-set di UserHelp.Builder")
-
-            return UserHelpApp(act, bind)
+        fun setOnFinishListener(listener: () -> Unit) = apply {
+            this.onFinish = listener
         }
 
-        fun startHelp() {
-            build().startHelp()
+        fun build(): UserHelpApp {
+            val act = activity ?: error("Activity belum di-set")
+            val bind = binding ?: error("Binding belum di-set")
+            return UserHelpApp(act, bind, onFinish)
         }
     }
 }
