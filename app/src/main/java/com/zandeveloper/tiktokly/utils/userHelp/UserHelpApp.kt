@@ -55,6 +55,7 @@ class UserHelpApp private constructor(
                 override fun onStarted() {}  
                 override fun onEnded() {  
                     spotlight.finish()  
+                    onFinish()
                 }  
             })  
             .build()  
