@@ -151,12 +151,6 @@ binding.buttonPaste.setOnClickListener {
     val inputUrl = binding.textInput.text.toString().trim()
     var urls = extractUrlsFromString(inputUrl)
     
-    if (inputUrl.isEmpty()) {
-        Alerts.makeText(this@MainActivity, getString(R.string.failed_alert_title), getString(R.string.input_required_msg), Alerts.ERROR).show()
-        return@setOnClickListener
-    }
-    
-    urls.forEach { url ->
       if (url.isEmpty()) {
         Alerts.makeText(this@MainActivity, getString(R.string.failed_alert_title), getString(R.string.input_required_msg), Alerts.ERROR).show()
         return@setOnClickListener
@@ -165,7 +159,7 @@ binding.buttonPaste.setOnClickListener {
     
     lifecycleScope.launch {
         val apiUrl = "https://dl-server-core.vercel.app/download"
-        val data = df.fetchDataVideo(apiUrl, url)
+        val data = df.fetchDataVideo(apiUrl, urls)
 
         if (data == null) {
             uihandler.hideShimmer(binding.shimmerRoot, binding.contentContainer)
@@ -232,25 +226,19 @@ binding.buttonPaste.setOnClickListener {
         uihandler.showThumbnail(binding.itemThumbnail,thumbnail.toString())
    
             }
-     
-         }
     
        }
        
    }
    
    private fun extractUrlsFromString(inputString: String): List<String> {
-    val foundUrls = ArrayList<String>()
-    // Get the system's built-in web URL pattern matcher
-    val webMatcher: Matcher = Patterns.WEB_URL.matcher(inputString)
+    val matcher = Patterns.WEB_URL.matcher(inputString)
 
-    // Loop through all matches found by the matcher
-    while (webMatcher.find()) {
-        // webMatcher.group() returns the found URL
-        foundUrls.add(webMatcher.group())
+    return if (matcher.find()) {
+        matcher.group()
+    } else {
+        null
     }
-    
-    return foundUrls
 }
     
     
