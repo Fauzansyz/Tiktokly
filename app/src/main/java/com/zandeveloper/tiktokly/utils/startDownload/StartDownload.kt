@@ -71,7 +71,7 @@ class StartDownload(
                     Alerts.SUCCESS
                 ).show()
 
-                uiHandler.clearText()
+                uiHandler.clearAllText()
             },
 
             onError = {
@@ -83,7 +83,7 @@ class StartDownload(
                     Alerts.ERROR
                 ).show()
 
-                uiHandler.clearText()
+                uiHandler.clearAllText()
             }
         )
     }

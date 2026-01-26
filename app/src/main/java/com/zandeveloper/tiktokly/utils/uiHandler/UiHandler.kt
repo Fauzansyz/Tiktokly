@@ -35,7 +35,7 @@ private val input: TextInputEditText,
 
     fun clearAllText() {
      input.text?.clear()
-     text.text = ""
+     title.text = ""
     }
 
     fun showShimmer(shimmer: View, content: View) {

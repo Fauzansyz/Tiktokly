@@ -203,7 +203,7 @@ binding.buttonPaste.setOnClickListener {
         if(platform.toString() == "YouTube") {
                 
       Alerts.makeText(this@MainActivity,getString(R.string.alertDownloader), getString(R.string.alertDownloaderMessage), Alerts.ERROR).show()
-      uihandler.clearText(binding.textInput, binding.titleVideo)
+      uihandler.clearAllText()
       uihandler.clearThumbnail(binding.itemThumbnail)
       
      }
