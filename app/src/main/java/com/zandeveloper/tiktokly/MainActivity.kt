@@ -56,10 +56,8 @@ import androidx.appcompat.app.AlertDialog
 import android.view.animation.AnimationUtils
 import com.zandeveloper.tiktokly.utils.startDownload.StartDownload
 import android.content.ClipboardManager
-import android.util.Patterns
-import java.util.ArrayList
-import java.util.regex.Matcher
 import androidx.activity.result.contract.ActivityResultContracts
+import com.zandeveloper.tiktokly.utils.urlValidator.UrlValidator
 
 class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
@@ -69,6 +67,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var df: DataFetch
     private lateinit var dm: SafDownloader
     private lateinit var stringValidate: StringValidator
+    private lateinit var stringValidator: StringValidator
     private val folderPickerLauncher =
     registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri: Uri? ->
         if (uri != null) {
@@ -164,7 +163,7 @@ binding.buttonPaste.setOnClickListener {
 
         binding.buttonDownload.setOnClickListener {
     val inputUrl = binding.textInput.text.toString().trim()
-    var urls = extractUrlsFromString(inputUrl)
+    var urls = stringValidate.extractUrlsFromString(inputUrl)
     
       if (urls == "") {
         Alerts.makeText(this@MainActivity, getString(R.string.failed_alert_title), getString(R.string.input_required_msg), Alerts.ERROR).show()
@@ -246,16 +245,6 @@ binding.buttonPaste.setOnClickListener {
        
    }
    
-   private fun extractUrlsFromString(inputString: String): String {
-    val matcher = Patterns.WEB_URL.matcher(inputString)
-
-    return if (matcher.find()) {
-        matcher.group()
-    } else { 
-       ""
-    }
-}
-
 private fun openFolderPicker() {
     folderPickerLauncher.launch(null)
 }
