@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var df: DataFetch
     private lateinit var dm: SafDownloader
-    private lateinit var stringValidate: StringValidator
+    private lateinit var urlValidator: UrlValidator
     private lateinit var stringValidator: StringValidator
     private val folderPickerLauncher =
     registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri: Uri? ->
@@ -92,7 +92,8 @@ private var dialogBinding: DialogDownloadProgressBinding? = null
         ads = AdsApp(this)
         
         df = DataFetch(this)
-        stringValidate = StringValidator()
+        stringValidator = StringValidator()
+        urlValidator = UrlValidator()
         
         uihandler = UiHandler(
            binding.textInput,
@@ -163,7 +164,7 @@ binding.buttonPaste.setOnClickListener {
 
         binding.buttonDownload.setOnClickListener {
     val inputUrl = binding.textInput.text.toString().trim()
-    var urls = stringValidate.extractUrlsFromString(inputUrl)
+    var urls = urlValidator.extractUrlsFromString(inputUrl)
     
       if (urls == "") {
         Alerts.makeText(this@MainActivity, getString(R.string.failed_alert_title), getString(R.string.input_required_msg), Alerts.ERROR).show()
