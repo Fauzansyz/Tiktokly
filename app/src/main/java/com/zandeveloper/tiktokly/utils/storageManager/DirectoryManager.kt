@@ -9,6 +9,7 @@ import androidx.documentfile.provider.DocumentFile
 object DirectoryManager {
 
     private const val PREF_NAME = "settings"
+    const val KEY_TUTORIAL_DONE = "tutorial_done"
     private const val KEY_CUSTOM_DIR = "custom_dir_uri"
 
     fun saveCustomDir(context: Context, uri: Uri) {
@@ -35,6 +36,12 @@ object DirectoryManager {
     fun resolveDownloadDir(context: Context): Uri? {
         return getCustomDir(context)
     }
+    
+    fun isTutorialFinish(context: Context): Boolean {
+    return context.getSharedPreferences("settings", Context.MODE_PRIVATE)
+        .getBoolean(KEY_TUTORIAL_DONE, false)
+}
+
 
     fun getDirectoryLabel(context: Context): String {
         val uri = getCustomDir(context) ?: return "Not set"
