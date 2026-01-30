@@ -123,9 +123,6 @@ binding.buttonPaste.startAnimation(pasteButtonAnim)
           val help = UserHelpApp.Builder()
              .setActivity(this)
              .setBinding(binding)
-             .setOnFinishListener{
-              openFolderPicker()
-             }
              .build()
     
        binding.root.post {
