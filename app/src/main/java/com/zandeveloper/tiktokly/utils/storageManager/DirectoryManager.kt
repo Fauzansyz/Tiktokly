@@ -23,6 +23,12 @@ object DirectoryManager {
             .putString(KEY_CUSTOM_DIR, uri.toString())
             .apply()
     }
+    
+    fun isTutorialFinish(context: Context): Boolean {
+    return context.getSharedPreferences("settings", Context.MODE_PRIVATE)
+        .getBoolean(KEY_TUTORIAL_DONE, false)
+}
+
 
     fun getCustomDir(context: Context): Uri? {
         val uriStr = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
