@@ -117,12 +117,14 @@ binding.buttonPaste.startAnimation(pasteButtonAnim)
         
         val prefs = getSharedPreferences("tutorial", MODE_PRIVATE)
         val firstRun = prefs.getBoolean("firstRun", true)
-        val savedUri = DirectoryManager.getCustomDir(this)
         
         if (firstRun) {
           val help = UserHelpApp.Builder()
              .setActivity(this)
              .setBinding(binding)
+             .setOnFinishListener {
+               executeFolderPick()
+             }
              .build()
     
        binding.root.post {
@@ -131,9 +133,6 @@ binding.buttonPaste.startAnimation(pasteButtonAnim)
             prefs.edit().putBoolean("firstRun", false).apply()
         }
         
-        if(savedUri == null){
-         openFolderPicker()
-        }
         
         binding.topAppBar.setOnMenuItemClickListener { item ->
     when (item.itemId) {
@@ -245,6 +244,15 @@ binding.buttonPaste.setOnClickListener {
    
 private fun openFolderPicker() {
     folderPickerLauncher.launch(null)
+}
+
+private fun executeFolderPick(){
+    val savedUri = DirectoryManager.getCustomDir(this)
+    
+   if(savedUri == null){
+     openFolderPicker()
+    }
+        
 }
     
     
