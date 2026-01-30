@@ -58,6 +58,7 @@ import com.zandeveloper.tiktokly.utils.startDownload.StartDownload
 import android.content.ClipboardManager
 import androidx.activity.result.contract.ActivityResultContracts
 import com.zandeveloper.tiktokly.utils.urlValidator.UrlValidator
+import androidx.core.view.doOnLayout
 
 class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
@@ -71,12 +72,18 @@ class MainActivity : AppCompatActivity() {
     private val folderPickerLauncher =
     registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri: Uri? ->
         if (uri != null) {
+        contentResolver.takePersistableUriPermission(
+                uri,
+                Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+            )
             DirectoryManager.saveCustomDir(this, uri)
+            isPickingFolder = false
         }
     }
     private lateinit var uihandler: UiHandler
     
     private lateinit var ads: AdsApp
+    private var isPickingFolder = false
     private lateinit var savedUri: Uri
     
     private var downloadDialog: AlertDialog? = null
@@ -120,9 +127,8 @@ binding.buttonPaste.startAnimation(pasteButtonAnim)
         val tutorialDone = DirectoryManager.isTutorialFinish(this)
         val folderUri = DirectoryManager.getCustomDir(this)
         
-when {
-    firstRun -> {
-        val help = UserHelpApp.Builder()
+if (firstRun) {
+   val help = UserHelpApp.Builder()
             .setActivity(this)
             .setBinding(binding)
             .setOnFinishListener {
@@ -131,14 +137,11 @@ when {
             }
             .build()
 
-        binding.root.post { help.startHelp() }
-    }
+        binding.root.doOnLayout { help.startHelp() }
 
-    folderUri == null -> {
-        openFolderPicker()
-    }
+} else if (folderUri == null) {
+   openFolderPicker()
 }
-
         
         binding.topAppBar.setOnMenuItemClickListener { item ->
     when (item.itemId) {
@@ -249,6 +252,8 @@ binding.buttonPaste.setOnClickListener {
    }
    
 private fun openFolderPicker() {
+    if (isPickingFolder) return
+    isPickingFolder = true
     folderPickerLauncher.launch(null)
 }
     
