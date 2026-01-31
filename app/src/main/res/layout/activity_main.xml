@@ -54,6 +54,8 @@
                  android:layout_height="wrap_content"
                  android:layout_width="match_parent"
                  app:boxCornerRadiusTopEnd="18dp"
+                 app:hintAnimationEnabled="true"
+                 app:setErrorIconDrawable="@drawable/ic_error"
                  android:hint="@string/input_text_placeholder"
                  app:boxCornerRadiusBottomStart="18dp"
                  app:hintTextColor="@color/skeleton_bg"
