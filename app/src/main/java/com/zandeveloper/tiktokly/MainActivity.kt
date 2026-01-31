@@ -173,8 +173,8 @@ binding.buttonPaste.setOnClickListener {
     var urls = urlValidator.extractUrlsFromString(inputUrl)
     
       if (urls == "") {
-      binding.inputTextContainer.setError("Please fill in a valid URL")
-        Alerts.makeText(this@MainActivity, getString(R.string.failed_alert_title), getString(R.string.input_required_msg), Alerts.ERROR).show()
+      binding.inputTextContainer.setError(getString(R.string.input_required_msg)))
+      binding.inputTextContainer.setErrorIconDrawable(R.drawable.ic_error)
         return@setOnClickListener
      }
      uihandler.showShimmer(binding.shimmerRoot, binding.contentContainer)
