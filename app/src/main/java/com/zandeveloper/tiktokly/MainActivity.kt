@@ -172,6 +172,12 @@ binding.buttonPaste.setOnClickListener {
     val inputUrl = binding.textInput.text.toString().trim()
     var urls = urlValidator.extractUrlsFromString(inputUrl)
     
+    binding.textInput.setOnFocusListener{_, hasFocus ->
+       if(hasFocus){
+       binding.inputTextContainer.errorEnabled(false)
+       }
+    }
+    
       if (urls == "") {
       val messageError = getString(R.string.input_required_msg)
       binding.inputTextContainer.setError(messageError)
