@@ -115,10 +115,11 @@ private var dialogBinding: DialogDownloadProgressBinding? = null
         downloadButtonAnim.startOffset = 1500
 binding.buttonDownload.startAnimation(downloadButtonAnim)
 
-val pasteButtonAnim = AnimationUtils.loadAnimation(this, R.anim.slide_up_fade)
+        val pasteButtonAnim = AnimationUtils.loadAnimation(this, R.anim.slide_up_fade)
 
-pasteButtonAnim.startOffset = 1700
-binding.buttonPaste.startAnimation(pasteButtonAnim)
+        pasteButtonAnim.startOffset = 1700
+        
+        binding.buttonPaste.startAnimation(pasteButtonAnim)
 
        
         
@@ -172,6 +173,8 @@ binding.buttonPaste.setOnClickListener {
     var urls = urlValidator.extractUrlsFromString(inputUrl)
     
       if (urls == "") {
+      binding.inputTextContainer.setError("Please fill in a valid URL")
+      binding.inputTextContainer.setErrorIconDrawable(R.drawable.ic_error)
         Alerts.makeText(this@MainActivity, getString(R.string.failed_alert_title), getString(R.string.input_required_msg), Alerts.ERROR).show()
         return@setOnClickListener
      }
