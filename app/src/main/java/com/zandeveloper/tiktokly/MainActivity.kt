@@ -173,7 +173,9 @@ binding.buttonPaste.setOnClickListener {
     var urls = urlValidator.extractUrlsFromString(inputUrl)
     
       if (urls == "") {
-      binding.inputTextContainer.setError(getString(R.string.input_required_msg)))
+      val messageError = getString(R.string.input_required_msg)
+      binding.inputTextContainer.setError(messageError)
+      
       binding.inputTextContainer.setErrorIconDrawable(R.drawable.ic_error)
         return@setOnClickListener
      }
