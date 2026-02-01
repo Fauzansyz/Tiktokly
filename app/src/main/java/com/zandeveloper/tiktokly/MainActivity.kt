@@ -194,12 +194,16 @@ binding.textInput.doOnTextChanged { text, start, before, count  ->
         val title = result?.get("title") ?: "-"
         val urlResult = result?.get("url") ?: "NaN"
         val thumbnail = result?.get("thumbnail") ?: "-"
-
-        binding.titleVideo.text = title.toString()
         
         if(result != null){
+        uihandler.hideShimmer(binding.shimmerRoot, binding.contentContainer)
         
         binding.buttonDownload.visibility = View.VISIBLE
+         
+        uihandler.hideShimmer(binding.shimmerRoot, binding.contentContainer)
+        
+        uihandler.showThumbnail(binding.itemThumbnail,thumbnail.toString())
+        binding.titleVideo.text = title.toString()
         
         binding.buttonDownload.setOnClickListener {
         
@@ -248,10 +252,6 @@ binding.textInput.doOnTextChanged { text, start, before, count  ->
             
         uihandler.hideShimmer(binding.shimmerRoot, binding.contentContainer)
         }
-        
-        uihandler.hideShimmer(binding.shimmerRoot, binding.contentContainer)
-        
-        uihandler.showThumbnail(binding.itemThumbnail,thumbnail.toString())
    
             }
         }
