@@ -196,6 +196,9 @@ binding.textInput.doOnTextChanged { text, start, before, count  ->
         val thumbnail = result?.get("thumbnail") ?: "-"
 
         binding.titleVideo.text = title.toString()
+        
+        if(result != null){
+        
         binding.buttonDownload.visibility = View.VISIBLE
         
         binding.buttonDownload.setOnClickListener {
@@ -252,6 +255,7 @@ binding.textInput.doOnTextChanged { text, start, before, count  ->
    
             }
         }
+      }
    }
 }
    
