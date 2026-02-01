@@ -59,6 +59,8 @@ import android.content.ClipboardManager
 import androidx.activity.result.contract.ActivityResultContracts
 import com.zandeveloper.tiktokly.utils.urlValidator.UrlValidator
 import androidx.core.view.doOnLayout
+import androidx.core.widget.doOnTextChanged
+import com.zandeveloper.tiktokly.MainActivity
 
 class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
@@ -165,6 +167,10 @@ binding.buttonPaste.setOnClickListener {
   
   binding.textInput.setText(text)
   
+}
+
+binding.textInput.doOnTextChanged { text, start, before, count  ->
+   Toast.makeText(this@MainActivity, text.toString(), Toast.LENGTH_SHORT).show()
 }
 
 
