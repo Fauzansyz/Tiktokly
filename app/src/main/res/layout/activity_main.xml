@@ -105,13 +105,13 @@
                      app:iconTint="@color/skeleton_bg"
                      android:textColor="?attr/colorPrimary"
                      android:layout_marginTop="20dp"
-                     app:icon="@drawable/ic_download_24"
+                     app:icon="@drawable/ic_settings_24px"
                      app:cornerRadius="20dp"
                      style="@style/Widget.Tiktokly.TonalButton"
                      android:layout_weight="1"
-                     android:id="@+id/buttonDownload"
+                     android:id="@+id/action_setting"
                      app:iconGravity="textStart"
-                     android:text="@string/text_button" />
+                     android:text="Setting" />
 
             </LinearLayout>
 

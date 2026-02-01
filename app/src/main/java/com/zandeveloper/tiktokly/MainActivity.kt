@@ -145,17 +145,10 @@ if (firstRun) {
 } else if (folderUri == null) {
    openFolderPicker()
 }
-        
-        binding.topAppBar.setOnMenuItemClickListener { item ->
-    when (item.itemId) {
-        R.id.action_setting -> {
-        val intent = Intent(this,SettingActivity::class.java)
-         startActivity(intent)
-            true
-        }
 
-        else -> false
-    }
+binding.actionSetting.setOnClickListener {
+  val intent = Intent(this,SettingActivity::class.java)
+         startActivity(intent)
 }
 
 binding.buttonPaste.setOnClickListener {
