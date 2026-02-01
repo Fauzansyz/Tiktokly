@@ -170,12 +170,7 @@ binding.buttonPaste.setOnClickListener {
 }
 
 binding.textInput.doOnTextChanged { text, start, before, count  ->
-   Toast.makeText(this@MainActivity, text.toString(), Toast.LENGTH_SHORT).show()
-}
-
-
-        binding.buttonDownload.setOnClickListener {
-    val inputUrl = binding.textInput.text.toString().trim()
+    val inputUrl = text.toString().trim()
     var urls = urlValidator.extractUrlsFromString(inputUrl)
     
     if (binding.textInput.hasFocus()) {
@@ -186,7 +181,7 @@ binding.textInput.doOnTextChanged { text, start, before, count  ->
       binding.inputTextContainer.setError(messageError)
       
       binding.inputTextContainer.setErrorIconDrawable(R.drawable.ic_error)
-        return@setOnClickListener
+      
      }
      uihandler.showShimmer(binding.shimmerRoot, binding.contentContainer)
     
@@ -260,9 +255,9 @@ binding.textInput.doOnTextChanged { text, start, before, count  ->
    
             }
     
-       }
-       
+   
    }
+}
    
 private fun openFolderPicker() {
     if (isPickingFolder) return
