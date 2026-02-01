@@ -114,7 +114,7 @@ private var dialogBinding: DialogDownloadProgressBinding? = null
 
         val settingButtonAnim = AnimationUtils.loadAnimation(this, R.anim.slide_up_fade)
         
-        downloadButtonAnim.startOffset = 1500
+        settingButtonAnim.startOffset = 1500
 binding.actionSetting.startAnimation(settingButtonAnim)
 
         val pasteButtonAnim = AnimationUtils.loadAnimation(this, R.anim.slide_up_fade)
@@ -196,9 +196,13 @@ binding.textInput.doOnTextChanged { text, start, before, count  ->
         val thumbnail = result?.get("thumbnail") ?: "-"
 
         binding.titleVideo.text = title.toString()
-        binding.textInput.text = null
+        binding.buttonDownload.visibility = View.VISIBLE
         
-          ads.showOrContinue(this@MainActivity) {
+        binding.buttonDownload.setOnClickListener {
+        
+         ads.showOrContinue(this@MainActivity) {
+         
+         binding.textInput.text = null
         
    if (platform == "TikTok") {
     val videoList = result?.get("video") as? List<*>
@@ -247,8 +251,7 @@ binding.textInput.doOnTextChanged { text, start, before, count  ->
         uihandler.showThumbnail(binding.itemThumbnail,thumbnail.toString())
    
             }
-    
-   
+        }
    }
 }
    

@@ -189,6 +189,7 @@
                      app:backgroundTint="?attr/colorSecondary"
                      app:iconTint="@color/skeleton_bg"
                      android:textColor="?attr/colorPrimary"
+                     android:visibility="gone"
                      android:layout_marginTop="20dp"
                      app:icon="@drawable/ic_download"
                      app:cornerRadius="20dp"
