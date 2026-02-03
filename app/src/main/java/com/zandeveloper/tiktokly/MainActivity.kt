@@ -87,7 +87,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var ads: AdsApp
     private var isPickingFolder = false
     private lateinit var savedUri: Uri
-    private var alreadyTriggered = false
     
     private var downloadDialog: AlertDialog? = null
 private var dialogBinding: DialogDownloadProgressBinding? = null
@@ -164,13 +163,9 @@ binding.buttonPaste.setOnClickListener {
 }
 
 binding.textInput.doOnTextChanged { text, start, before, count  ->
-
-  if (alreadyTriggered) return@doOnTextChanged
     
     val inputUrl = text.toString().trim()
     if(inputUrl.isNotEmpty()){
-    
-    alreadyTriggered = true
     var urls = urlValidator.extractUrlsFromString(inputUrl)
     
     if (binding.textInput.hasFocus()) {
