@@ -38,9 +38,9 @@
 
     <string name="tutorial_msg_first">Masukkan link video yang ingin diunduh</string>
 
-    <string name="tutorial_title_second">Unduh Sekarang!</string>
+    <string name="tutorial_title_second">Tempel dan unduh!</string>
 
-    <string name="tutorial_msg_second">Klik tombol Unduh untuk mulai mengunduh video</string>
+    <string name="tutorial_msg_second">Klik tombol Tempel untuk mulai mengunduh video</string>
 
 <!-- SETTING ( CUSTOM DIRECTORY ) -->
 
