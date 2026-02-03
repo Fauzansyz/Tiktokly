@@ -164,10 +164,10 @@ binding.buttonPaste.setOnClickListener {
 }
 
 binding.textInput.doOnTextChanged { text, start, before, count  ->
+
+  if (alreadyTriggered) return@doOnTextChanged
+    
     val inputUrl = text.toString().trim()
-    
-    if (alreadyTriggered) return@doOnTextChanged
-    
     if(inputUrl.isNotEmpty()){
     
     alreadyTriggered = true
