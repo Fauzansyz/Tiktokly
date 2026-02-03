@@ -20,7 +20,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:visibility="gone"
-    app:indeterminate="true"
     app:trackCornerRadius="12dp"
     android:progress="0"
     android:max="100"
