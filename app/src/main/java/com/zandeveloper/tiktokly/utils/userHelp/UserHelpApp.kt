@@ -41,11 +41,11 @@ class UserHelpApp private constructor(
             .build()  
   
         val target2 = Target.Builder()  
-            .setAnchor(binding.buttonDownload)  
+            .setAnchor(binding.buttonPaste)  
             .setShape(  
                 RoundedRectangle(  
-                    width = binding.buttonDownload.width + 40f,  
-                    height = binding.buttonDownload.height + 40f,  
+                    width = binding.buttonPaste.width + 40f,  
+                    height = binding.buttonPaste.height + 40f,  
                     radius = 20f  
                 )  
             )  
