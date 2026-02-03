@@ -15,15 +15,20 @@
          android:id="@+id/progressTitle"
          android:text="Downloading..." />
 
-    <com.google.android.material.progressindicator.LinearProgressIndicator
-         android:layout_height="wrap_content"
-         android:layout_width="match_parent"
-         android:max="100"
-         app:trackColor="@color/black_80"
-         android:layout_marginTop="16dp"
-         android:progress="0"
-         android:id="@+id/progressBar"
-         app:indicatorColor="@color/colorPrimary" />
+<com.google.android.material.progressindicator.LinearProgressIndicator
+    android:id="@+id/progressBar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:visibility="gone"
+    app:indeterminate="true"
+    app:trackCornerRadius="12dp"
+    android:progress="0"
+    android:max="100"
+    android:layout_marginTop="16dp"
+    app:indicatorColor="@color/colorPrimary"
+    app:trackColor="@color/black_80"
+    app:indicatorCornerRadius="12dp"
+    style="@style/Widget.Material3.LinearProgressIndicator"/>
 
     <TextView
          android:layout_height="wrap_content"
