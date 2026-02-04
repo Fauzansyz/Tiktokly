@@ -224,6 +224,7 @@ binding.textInput.doOnTextChanged { text, start, before, count  ->
       
       begin.startDownload(mp4.toString(), filename)
       uihandler.clearThumbnail(binding.itemThumbnail)
+      binding.buttonDownload.visibility = View.GONE
     
     }
 
@@ -233,6 +234,7 @@ binding.textInput.doOnTextChanged { text, start, before, count  ->
       Alerts.makeText(this@MainActivity,getString(R.string.alertDownloader), getString(R.string.alertDownloaderMessage), Alerts.ERROR).show()
       uihandler.clearAllText()
       uihandler.clearThumbnail(binding.itemThumbnail)
+      binding.buttonDownload.visibility = View.GONE
       
      }
      
@@ -247,6 +249,7 @@ binding.textInput.doOnTextChanged { text, start, before, count  ->
       
       begin.startDownload(videoUrl.toString(), filename)
       uihandler.clearThumbnail(binding.itemThumbnail)
+      binding.buttonDownload.visibility = View.GONE
         
   }
 }
