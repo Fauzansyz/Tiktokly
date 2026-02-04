@@ -24,8 +24,9 @@
     android:max="100"
     android:layout_marginTop="16dp"
     app:indicatorColor="@color/colorPrimary"
-    app:trackColor="@color/black_80"
-    style="@style/Widget.Material3Expressive.LinearProgressIndicator.Wavy" />
+    style="@style/Widget.Material3.LinearProgressIndicator"
+    android:indeterminate="true"
+    app:trackColor="@color/black_80" />
 
     <TextView
          android:layout_height="wrap_content"
