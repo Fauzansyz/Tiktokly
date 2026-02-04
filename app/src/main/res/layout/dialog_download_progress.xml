@@ -25,7 +25,7 @@
     android:layout_marginTop="16dp"
     app:indicatorColor="@color/colorPrimary"
     app:trackColor="@color/black_80"
-    style="@style/Widget.Material3.LinearProgressIndicator"/>
+    style="@style/Widget.Material3Expressive.LinearProgressIndicator.Wavy" />
 
     <TextView
          android:layout_height="wrap_content"
