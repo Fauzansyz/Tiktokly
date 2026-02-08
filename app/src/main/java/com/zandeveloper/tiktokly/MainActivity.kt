@@ -278,6 +278,8 @@ import com.zandeveloper.tiktokly.MainActivity
         }
        }
     }
+    
+    }
        
     private fun openFolderPicker() {
         if (isPickingFolder) return
