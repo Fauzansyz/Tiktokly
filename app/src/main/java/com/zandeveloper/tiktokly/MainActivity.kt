@@ -61,220 +61,220 @@ import com.zandeveloper.tiktokly.utils.urlValidator.UrlValidator
 import androidx.core.view.doOnLayout
 import androidx.core.widget.doOnTextChanged
 import com.zandeveloper.tiktokly.MainActivity
-
-class MainActivity : AppCompatActivity() {
-    private var _binding: ActivityMainBinding? = null
     
-    private val binding get() = _binding!!
-
-    private lateinit var df: DataFetch
-    private lateinit var dm: SafDownloader
-    private lateinit var urlValidator: UrlValidator
-    private lateinit var stringValidator: StringValidator
-    private val folderPickerLauncher =
-    registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri: Uri? ->
-        if (uri != null) {
-        contentResolver.takePersistableUriPermission(
-                uri,
-                Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
-            )
-            DirectoryManager.saveCustomDir(this, uri)
-            isPickingFolder = false
-        }
-    }
-    private lateinit var uihandler: UiHandler
+    class MainActivity : AppCompatActivity() {
+        private var _binding: ActivityMainBinding? = null
+        
+        private val binding get() = _binding!!
     
-    private lateinit var ads: AdsApp
-    private var isPickingFolder = false
-    private lateinit var savedUri: Uri
-    
-    private var downloadDialog: AlertDialog? = null
-private var dialogBinding: DialogDownloadProgressBinding? = null
-    
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        _binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        
-        dm = SafDownloader(this)
-        
-        ads = AdsApp(this)
-        
-        df = DataFetch(this)
-        stringValidator = StringValidator()
-        urlValidator = UrlValidator()
-        
-        uihandler = UiHandler(
-           binding.textInput,
-           binding.titleVideo,
-           binding.itemThumbnail
-    )
-        
-        ads.preload()
-
-        val settingButtonAnim = AnimationUtils.loadAnimation(this, R.anim.slide_up_fade)
-        
-        settingButtonAnim.startOffset = 1500
-binding.actionSetting.startAnimation(settingButtonAnim)
-
-        val pasteButtonAnim = AnimationUtils.loadAnimation(this, R.anim.slide_up_fade)
-
-        pasteButtonAnim.startOffset = 1700
-        
-        binding.buttonPaste.startAnimation(pasteButtonAnim)
-
-       
-        
-        val prefs = getSharedPreferences("tutorial", MODE_PRIVATE)
-        val firstRun = prefs.getBoolean("firstRun", true)
-        val tutorialDone = DirectoryManager.isTutorialFinish(this)
-        val folderUri = DirectoryManager.getCustomDir(this)
-        
-if (firstRun) {
-   val help = UserHelpApp.Builder()
-            .setActivity(this)
-            .setBinding(binding)
-            .setOnFinishListener {
-                prefs.edit().putBoolean("firstRun", false).apply()
-                openFolderPicker()
+        private lateinit var df: DataFetch
+        private lateinit var dm: SafDownloader
+        private lateinit var urlValidator: UrlValidator
+        private lateinit var stringValidator: StringValidator
+        private val folderPickerLauncher =
+        registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri: Uri? ->
+            if (uri != null) {
+            contentResolver.takePersistableUriPermission(
+                    uri,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                )
+                DirectoryManager.saveCustomDir(this, uri)
+                isPickingFolder = false
             }
-            .build()
-
-        binding.root.doOnLayout { help.startHelp() }
-
-} else if (folderUri == null) {
-   openFolderPicker()
-}
-
-binding.actionSetting.setOnClickListener {
-  val intent = Intent(this,SettingActivity::class.java)
-         startActivity(intent)
-}
-
-binding.buttonPaste.setOnClickListener {
-  val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-  var text = ""
-  
-  val item = clipboard?.primaryClip?.getItemAt(0)
-  text = item?.text.toString()
-  
-  binding.textInput.setText(text)
-  
-}
-
-binding.textInput.doOnTextChanged { text, start, before, count  ->
-    
-    val inputUrl = text.toString().trim()
-    if(inputUrl.isNotEmpty()){
-    var urls = urlValidator.extractUrlsFromString(inputUrl)
-    
-    if (binding.textInput.hasFocus()) {
-    binding.inputTextContainer.setErrorEnabled(false)
-}
-      if (urls == "") {
-      val messageError = getString(R.string.input_required_msg)
-      binding.inputTextContainer.setError(messageError)
-      
-      binding.inputTextContainer.setErrorIconDrawable(R.drawable.ic_error)
-      
-     }
-     uihandler.showShimmer(binding.shimmerRoot, binding.contentContainer)
-    
-    lifecycleScope.launch {
-        val apiUrl = "https://dl-server-core.vercel.app/download"
-        val data = df.fetchDataVideo(apiUrl, urls.toString())
-
-        if (data == null) {
-            uihandler.hideShimmer(binding.shimmerRoot, binding.contentContainer)
-
-            Alerts.makeText(this@MainActivity, getString(R.string.failed_alert_title), getString(R.string.failed_download_msg),Alerts.ERROR).show()
-            return@launch
         }
+        private lateinit var uihandler: UiHandler
         
-        val result = data["result"] as? Map<*, *>
-        val platform = data?.get("platform")
-        val title = result?.get("title") ?: "-"
-        val urlResult = result?.get("url") ?: "NaN"
-        val thumbnail = result?.get("thumbnail") ?: "-"
+        private lateinit var ads: AdsApp
+        private var isPickingFolder = false
+        private lateinit var savedUri: Uri
         
-        if(result != null){
-        uihandler.hideShimmer(binding.shimmerRoot, binding.contentContainer)
+        private var downloadDialog: AlertDialog? = null
+    private var dialogBinding: DialogDownloadProgressBinding? = null
         
-        binding.buttonDownload.visibility = View.VISIBLE
-         
-        uihandler.hideShimmer(binding.shimmerRoot, binding.contentContainer)
-        
-        uihandler.showThumbnail(binding.itemThumbnail,thumbnail.toString())
-        binding.titleVideo.text = title.toString()
-        
-        binding.buttonDownload.setOnClickListener {
-        
-         ads.showOrContinue(this@MainActivity) {
-         
-         binding.textInput.text = null
-        
-   if (platform == "TikTok") {
-    val videoList = result?.get("video") as? List<*>
-    val mp4 = videoList?.firstOrNull()?.toString() ?: "NaN"
-    lifecycleScope.launch {
-        
-      val filename = "tiktokly_${System.currentTimeMillis()}.mp4"
-       
-       val begin = StartDownload(this@MainActivity,dm,uiHandler = uihandler)
-      
-      begin.startDownload(mp4.toString(), filename)
-      uihandler.clearThumbnail(binding.itemThumbnail)
-      binding.buttonDownload.visibility = View.GONE
-    
-    }
-
-}
-        if(platform.toString() == "YouTube") {
-                
-      Alerts.makeText(this@MainActivity,getString(R.string.alertDownloader), getString(R.string.alertDownloaderMessage), Alerts.ERROR).show()
-      uihandler.clearAllText()
-      uihandler.clearThumbnail(binding.itemThumbnail)
-      binding.buttonDownload.visibility = View.GONE
-      
-     }
-     
-     if(platform.toString() == "Instagram") {
-     val videoUrl = result?.get("url") ?:"NaN"
-     
-     lifecycleScope.launch {
-        
-     val filename = "insta_${System.currentTimeMillis()}.mp4"
-     
-     val begin = StartDownload(this@MainActivity,dm,uiHandler = uihandler)
-      
-      begin.startDownload(videoUrl.toString(), filename)
-      uihandler.clearThumbnail(binding.itemThumbnail)
-      binding.buttonDownload.visibility = View.GONE
-        
-  }
-}
- 
+        override fun onCreate(savedInstanceState: Bundle?) {
+            super.onCreate(savedInstanceState)
+            _binding = ActivityMainBinding.inflate(layoutInflater)
+            setContentView(binding.root)
             
-        uihandler.hideShimmer(binding.shimmerRoot, binding.contentContainer)
-        }
-   
+            dm = SafDownloader(this)
+            
+            ads = AdsApp(this)
+            
+            df = DataFetch(this)
+            stringValidator = StringValidator()
+            urlValidator = UrlValidator()
+            
+            uihandler = UiHandler(
+               binding.textInput,
+               binding.titleVideo,
+               binding.itemThumbnail
+        )
+            
+            ads.preload()
+    
+            val settingButtonAnim = AnimationUtils.loadAnimation(this, R.anim.slide_up_fade)
+            
+            settingButtonAnim.startOffset = 1500
+    binding.actionSetting.startAnimation(settingButtonAnim)
+    
+            val pasteButtonAnim = AnimationUtils.loadAnimation(this, R.anim.slide_up_fade)
+    
+            pasteButtonAnim.startOffset = 1700
+            
+            binding.buttonPaste.startAnimation(pasteButtonAnim)
+    
+           
+            
+            val prefs = getSharedPreferences("tutorial", MODE_PRIVATE)
+            val firstRun = prefs.getBoolean("firstRun", true)
+            val tutorialDone = DirectoryManager.isTutorialFinish(this)
+            val folderUri = DirectoryManager.getCustomDir(this)
+            
+         if (firstRun) {
+          val help = UserHelpApp.Builder()
+                .setActivity(this)
+                .setBinding(binding)
+                    .setOnFinishListener {
+                    prefs.edit().putBoolean("firstRun", false).apply()
+                    openFolderPicker()
+                }
+                .build()
+    
+            binding.root.doOnLayout { help.startHelp() }
+    
+    } else if (folderUri == null) {
+       openFolderPicker()
+    }
+    
+    binding.actionSetting.setOnClickListener {
+      val intent = Intent(this,SettingActivity::class.java)
+             startActivity(intent)
+    }
+    
+    binding.buttonPaste.setOnClickListener {
+      val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+      var text = ""
+      
+      val item = clipboard?.primaryClip?.getItemAt(0)
+      text = item?.text.toString()
+      
+      binding.textInput.setText(text)
+      
+    }
+    
+    binding.textInput.doOnTextChanged { text, start, before, count  ->
+        
+        val inputUrl = text.toString().trim()
+        if(inputUrl.isNotEmpty()){
+        var urls = urlValidator.extractUrlsFromString(inputUrl)
+        
+        if (binding.textInput.hasFocus()) {
+        binding.inputTextContainer.setErrorEnabled(false)
+    }
+          if (urls == "") {
+          val messageError = getString(R.string.input_required_msg)
+          binding.inputTextContainer.setError(messageError)
+          
+          binding.inputTextContainer.setErrorIconDrawable(R.drawable.ic_error)
+          
+         }
+         uihandler.showShimmer(binding.shimmerRoot, binding.contentContainer)
+        
+        lifecycleScope.launch {
+            val apiUrl = "https://dl-server-core.vercel.app/download"
+            val data = df.fetchDataVideo(apiUrl, urls.toString())
+    
+            if (data == null) {
+                uihandler.hideShimmer(binding.shimmerRoot, binding.contentContainer)
+    
+                Alerts.makeText(this@MainActivity, getString(R.string.failed_alert_title), getString(R.string.failed_download_msg),Alerts.ERROR).show()
+                return@launch
             }
+            
+            val result = data["result"] as? Map<*, *>
+            val platform = data?.get("platform")
+            val title = result?.get("title") ?: "-"
+            val urlResult = result?.get("url") ?: "NaN"
+            val thumbnail = result?.get("thumbnail") ?: "-"
+            
+            if(result != null){
+            uihandler.hideShimmer(binding.shimmerRoot, binding.contentContainer)
+            
+            binding.buttonDownload.visibility = View.VISIBLE
+             
+            uihandler.hideShimmer(binding.shimmerRoot, binding.contentContainer)
+            
+            uihandler.showThumbnail(binding.itemThumbnail,thumbnail.toString())
+            binding.titleVideo.text = title.toString()
+            
+            binding.buttonDownload.setOnClickListener {
+            
+             ads.showOrContinue(this@MainActivity) {
+             
+             binding.textInput.text = null
+            
+       if (platform == "TikTok") {
+        val videoList = result?.get("video") as? List<*>
+        val mp4 = videoList?.firstOrNull()?.toString() ?: "NaN"
+        lifecycleScope.launch {
+            
+          val filename = "tiktokly_${System.currentTimeMillis()}.mp4"
+           
+           val begin = StartDownload(this@MainActivity,dm,uiHandler = uihandler)
+          
+          begin.startDownload(mp4.toString(), filename)
+          uihandler.clearThumbnail(binding.itemThumbnail)
+          binding.buttonDownload.visibility = View.GONE
+        
         }
+    
+    }
+            if(platform.toString() == "YouTube") {
+                    
+          Alerts.makeText(this@MainActivity,getString(R.string.alertDownloader), getString(R.string.alertDownloaderMessage), Alerts.ERROR).show()
+          uihandler.clearAllText()
+          uihandler.clearThumbnail(binding.itemThumbnail)
+          binding.buttonDownload.visibility = View.GONE
+          
+         }
+         
+         if(platform.toString() == "Instagram") {
+         val videoUrl = result?.get("url") ?:"NaN"
+         
+         lifecycleScope.launch {
+            
+         val filename = "insta_${System.currentTimeMillis()}.mp4"
+         
+         val begin = StartDownload(this@MainActivity,dm,uiHandler = uihandler)
+          
+          begin.startDownload(videoUrl.toString(), filename)
+          uihandler.clearThumbnail(binding.itemThumbnail)
+          binding.buttonDownload.visibility = View.GONE
+            
       }
-    
     }
-   }
-}
-   
-private fun openFolderPicker() {
-    if (isPickingFolder) return
-    isPickingFolder = true
-    folderPickerLauncher.launch(null)
-}
-    
-    
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
+     
+                
+            uihandler.hideShimmer(binding.shimmerRoot, binding.contentContainer)
+            }
+       
+                }
+            }
+          }
+        
+        }
+       }
     }
-}
+       
+    private fun openFolderPicker() {
+        if (isPickingFolder) return
+        isPickingFolder = true
+        folderPickerLauncher.launch(null)
+    }
+        
+        
+        override fun onDestroy() {
+            super.onDestroy()
+            _binding = null
+        }
+    }
