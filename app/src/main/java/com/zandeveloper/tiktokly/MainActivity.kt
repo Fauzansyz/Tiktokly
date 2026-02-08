@@ -108,7 +108,20 @@ import com.zandeveloper.tiktokly.MainActivity
                binding.textInput,
                binding.titleVideo,
                binding.itemThumbnail
-        )
+           )
+            
+            setSupportActionBar(binding.topAppBar)
+            
+            binding.topAppBar.setOnMenuItemClickListener { item ->
+        when (item.itemId) {
+           R.id.action_about -> {
+           val intent = Intent(this,AboutActivity::class.java)
+         startActivity(intent)
+            true
+        }
+
+        else -> false
+    }
             
             ads.preload()
     
