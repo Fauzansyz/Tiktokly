@@ -122,6 +122,8 @@ import com.zandeveloper.tiktokly.MainActivity
 
         else -> false
     }
+    
+}
             
             ads.preload()
     
@@ -277,8 +279,6 @@ import com.zandeveloper.tiktokly.MainActivity
         
         }
        }
-    }
-    
     }
        
     private fun openFolderPicker() {
