@@ -21,7 +21,6 @@ private val input: TextInputEditText,
           .load(url)
           .thumbnail(0.25f) 
           .override(600, 600)
-          .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
           .transform(
         CenterCrop(),
         RoundedCorners(20))
