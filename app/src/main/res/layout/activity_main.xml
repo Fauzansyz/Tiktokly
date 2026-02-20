@@ -18,7 +18,8 @@
              app:title="@string/app_name"
              app:menu="@menu/top_appbar_main_menu"
              android:fontFamily="@font/poppins_semibold"
-             app:titleCentered="true"
+             app:titleCentered="false"
+             app:paddingStart="12dp"
              app:titleTextColor="?attr/colorPrimary"
              android:id="@+id/topAppBar">
 
