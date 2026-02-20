@@ -59,7 +59,6 @@
                  app:boxCornerRadiusBottomStart="18dp"
                  app:hintTextColor="@color/skeleton_bg"
                  app:boxCornerRadiusBottomEnd="18dp"
-                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                  app:startIconDrawable="@drawable/ic_link_24"
                  app:boxCornerRadiusTopStart="18dp"
                  android:id="@+id/inputTextContainer">
